@@ -25,7 +25,13 @@ export default new VueRouter({
         {path: '/app-banner-sort-edit', name: 'appBannerSortEdit', component: page('banner/app-banner-sort-edit')},
         {path: '/app-banner-setup', name: 'appBannerSetup', component: page('banner/app-banner-setup')},
         {path: '/banner-detail', name: 'bannerDetail', component: page('banner/banner-detail')},
+        {path: '/wx-banner-setup', name: 'wxBannerSetup', component: page('banner/wx-banner-setup')},
+        {path: '/wx-banner-list', name: 'wxBannerList', component: page('banner/wx-banner-list')},
+        {path: '/wx-banner-sort-edit', name: 'wxBannerSortEdit', component: page('banner/wx-banner-sort-edit')},
+        {path: '/wx-banner-detail', name: 'wxBannerDetail', component: page('banner/wx-banner-detail')},
+        {path: '/book-seller-list', name: 'bookSellerList', component: page('bookseller/book-seller-list')},
         {path: '/loginInfo', name: 'loginInfo', component: page('loginInfo')},
+        {path: '/recommend-book', name: 'recommendBook', component: page('recommend/recommend-book')},
       ]
     },
     {path: '/login', name: 'login', component: page('login')}
