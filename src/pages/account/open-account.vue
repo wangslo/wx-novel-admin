@@ -40,18 +40,110 @@
         </el-form-item>
         <el-form-item label-width="0px" prop="power">
           <el-checkbox-group v-model="accountInfoForm.power">
-            <el-checkbox label="account">权限管理</el-checkbox>
-            <el-checkbox label="user">用户管理</el-checkbox>
-            <el-checkbox label="bookCity">书城管理</el-checkbox>
-            <el-checkbox label="book">书籍管理</el-checkbox>
-            <el-checkbox label="recommend">推荐管理</el-checkbox>
-            <el-checkbox label="bannerManger">banner管理</el-checkbox>
-            <el-checkbox label="adver">广告管理</el-checkbox>
-            <el-checkbox label="help">帮助与反馈</el-checkbox>
-            <el-checkbox label="activity">活动管理</el-checkbox>
-            <el-checkbox label="userData">用户数据</el-checkbox>
-            <el-checkbox label="message">消息管理</el-checkbox>
-            <el-checkbox label="recharge">充值记录</el-checkbox>
+
+            <div style="margin-left: 15px;width : 20%;float: left">
+
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">首页</el-checkbox>
+              <!--<div style="margin: 15px 0;"></div>-->
+              <div style="margin-left: 15px;width : 10%">
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <el-checkbox label="shouye">首页</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">公告中心</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </div>
+
+            <!--<template v-for="city in cities" :label="city" :key="city">{{city}}</template>-->
+
+            <div style="margin-left: 15px;width : 20%;float: left">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">权限管理</el-checkbox>
+              <!--<div style="margin: 15px 0;"></div>-->
+              <div style="margin-left: 15px;width : 10%">
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <el-checkbox label="shouye">账号管理</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">开设账号</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">设置权限</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </div>
+
+            <div style="margin-left: 15px;width : 20%;float: left">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">公众号管理</el-checkbox>
+              <!--<div style="margin: 15px 0;"></div>-->
+              <div style="margin-left: 15px;width : 10%">
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <el-checkbox label="shouye">账号管理</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxxx</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </div>
+
+
+            <div style="margin-left: 15px;width : 20%;float: left">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">xxxxx</el-checkbox>
+              <!--<div style="margin: 15px 0;"></div>-->
+              <div style="margin-left: 15px;width : 10%">
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <el-checkbox label="shouye">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxxx</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </div>
+
+            <div style="margin-left: 15px;width : 20%;float: left">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">xxxxx</el-checkbox>
+              <!--<div style="margin: 15px 0;"></div>-->
+              <div style="margin-left: 15px;width : 10%">
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <el-checkbox label="shouye">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxxx</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </div>
+
+
+            <div style="margin-left: 15px;width : 20%;float: left">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">xxxxx</el-checkbox>
+              <!--<div style="margin: 15px 0;"></div>-->
+              <div style="margin-left: 15px;width : 10%">
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <el-checkbox label="shouye">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxx</el-checkbox>
+                  <el-checkbox label="gonggaozhognxin">xxxxx</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </div>
+
+            <!--<div style="margin-left: 15px;width : 20%;float: left">-->
+              <!--<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">首页</el-checkbox>-->
+              <!--&lt;!&ndash;<div style="margin: 15px 0;"></div>&ndash;&gt;-->
+              <!--<div style="margin-left: 15px;width : 10%">-->
+                <!--<el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">-->
+                  <!--<el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>-->
+                <!--</el-checkbox-group>-->
+              <!--</div>-->
+            <!--</div>-->
+
+
+
+
+
+            <!--<el-checkbox label="account">首页</el-checkbox>-->
+            <!--<el-checkbox label="account">权限管理</el-checkbox>-->
+            <!--<el-checkbox label="user">用户管理</el-checkbox>-->
+            <!--<el-checkbox label="bookCity">书城管理</el-checkbox>-->
+            <!--<el-checkbox label="book">书籍管理</el-checkbox>-->
+            <!--<el-checkbox label="recommend">推荐管理</el-checkbox>-->
+            <!--<el-checkbox label="bannerManger">banner管理</el-checkbox>-->
+            <!--<el-checkbox label="adver">广告管理</el-checkbox>-->
+            <!--<el-checkbox label="help">帮助与反馈</el-checkbox>-->
+            <!--<el-checkbox label="activity">活动管理</el-checkbox>-->
+            <!--<el-checkbox label="userData">用户数据</el-checkbox>-->
+            <!--<el-checkbox label="message">消息管理</el-checkbox>-->
+            <!--<el-checkbox label="recharge">充值记录</el-checkbox>-->
           </el-checkbox-group>
         </el-form-item>
         <el-form-item>
@@ -62,6 +154,10 @@
   </div>
 </template>
 <script>
+
+    const cityOptions = ['上海', '北京', '广州', '深圳'];
+
+
   import {orgModuleApi} from '../../api/main'
   export default {
     name: 'openAccount',
@@ -119,9 +215,26 @@
           power: [{ type: 'array', required: true, message: '请至少选择一个权限', trigger: 'change' }],
         },
         isSave: false,
+
+        checkAll: false,
+        checkedCities: ['上海', '北京'],
+        cities: cityOptions,
+        isIndeterminate: true
+
       }
     },
     methods: {
+
+        handleCheckAllChange(val) {
+            this.checkedCities = val ? cityOptions : [];
+            this.isIndeterminate = false;
+        },
+        handleCheckedCitiesChange(value) {
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.cities.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+        },
+
       submitForm(formName) {
         this.isSave = true
         this.$refs[formName].validate((valid) => {
