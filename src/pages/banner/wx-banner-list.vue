@@ -99,7 +99,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="bannerName" label="banner名称" width="180" align="center"></el-table-column>
-                <el-table-column prop="bannerImage" label="图片" width="180" align="center"></el-table-column>
+                <el-table-column label="图片" width="90" align="center">
+                    <template slot-scope="scope">
+                        <img :src="scope.row.bannerImage" width="70" height="95"/>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="position" label="位置" width="180" align="center"></el-table-column>
                 <el-table-column prop="bannerUrl" label="跳转位置或链接" width="180" align="center"></el-table-column>
                 <el-table-column prop="showTime" label="展示时间" width="180" align="center"></el-table-column>
@@ -108,9 +112,9 @@
                 <el-table-column prop="status" label="状态" width="180" align="center"></el-table-column>
                 <el-table-column label="操作" min-width="250" align="center">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下线</el-button>
-                        <el-button size="mini" type="primary" @click="handleOnLine(scope.$index, scope.row)">上线</el-button>
-                        <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" :disabled="scope.row.status == 0 ? true:false" type="danger" @click="handleOffLine(scope.$index, scope.row)">下线</el-button>
+                        <el-button size="mini" v-show = "scope.row.status != 1 ? true:false" type="primary" @click="handleOnLine(scope.$index, scope.row)">上线</el-button>
+                        <el-button size="mini" v-show = "false" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                         <el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                     </template>
                 </el-table-column>
@@ -196,7 +200,7 @@
                     }
                 },
                 tableData: [
-                    {"bannerName":"xxxx","bannerImage":"http://images01.mopimg.cn/imgs/20180706/20180706_8c97b34a6c53fe256c5dc07493541df9.JPEG",
+                    {"bannerName":"xxxx","bannerImage":"http://images01.mopimg.cn/imgs/20180702/20180702_c12a04208c276a5f9adef630bda4dd61.JPEG",
                         "position":"男频","bannerUrl":"鬼吹灯","showTime":"2019-05-07 ~ 2019-09-15","createTime":"2019-05-07","status":"在线"
                     },
                     {"bannerName":"xxxx","bannerImage":"http://images01.mopimg.cn/imgs/20180706/20180706_8c97b34a6c53fe256c5dc07493541df9.JPEG",
@@ -208,6 +212,7 @@
                 currentPage: 1,
                 totalSize: 0,
                 offlineDialog: false,
+                offlineDialog2: true,
                 sort_prop: 'createTime',
                 sort_order: 'desc',
                 reason: '',
