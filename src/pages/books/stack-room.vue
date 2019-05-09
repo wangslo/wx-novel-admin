@@ -4,7 +4,7 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
         <el-breadcrumb-item >书籍管理</el-breadcrumb-item>
-        <el-breadcrumb-item >书库</el-breadcrumb-item>
+        <el-breadcrumb-item >书库列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="stack-room-body">
@@ -96,8 +96,8 @@
         <el-form-item style="float: right;">
           <el-button type="info" @click="clearData">清空</el-button>
           <el-button type="primary" @click="getBannerAppLists">查找</el-button>
-          <el-button type="warning" @click="getBannerAppLists">批量上架</el-button>
-          <el-button type="danger" @click="getBannerAppLists">批量下架</el-button>
+          <!--<el-button type="warning" @click="getBannerAppLists">批量上架</el-button>-->
+          <!--<el-button type="danger" @click="getBannerAppLists">批量下架</el-button>-->
         </el-form-item>
       </el-form>
       <el-table :data="tableData" style="width:100%;"
@@ -114,22 +114,25 @@
           </template>
         </el-table-column>
         <el-table-column prop="bookName" label="书籍名称" width="180" align="center"></el-table-column>
-        <el-table-column prop="author" label="作者" width="180" align="center"></el-table-column>
-        <el-table-column prop="category" label="书籍分类" width="180" align="center"></el-table-column>
+        <el-table-column prop="author" label="作者" width="80" align="center"></el-table-column>
+        <el-table-column prop="category" label="书籍分类" width="80" align="center"></el-table-column>
+        <el-table-column prop="category" label="男女分类" width="80" align="center"></el-table-column>
         <el-table-column prop="bookman" label="来源/书商" width="180" align="center"></el-table-column>
-        <el-table-column prop="book_status" label="书籍状态" width="180" align="center"></el-table-column>
-        <el-table-column prop="wordNum" label="字数" width="180" align="center"></el-table-column>
+        <el-table-column prop="book_status" label="书籍状态" width="80" align="center"></el-table-column>
+        <el-table-column prop="wordNum" label="字数" width="80" align="center"></el-table-column>
         <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
                          prop="updateTime" label="最近更新时间" width="180" align="center"></el-table-column>
-        <el-table-column prop="bookType" label="类型" width="180" align="center"></el-table-column>
-        <el-table-column prop="charge_ways" label="收费方式" width="180" align="center"></el-table-column>
-        <el-table-column prop="status" label="状态" width="180" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="250" align="center">
+        <el-table-column prop="bookType" label="类型" width="80" align="center"></el-table-column>
+        <el-table-column prop="charge_ways" label="收费方式" width="80" align="center"></el-table-column>
+        <el-table-column prop="charge_ways" label="收费起始章节" width="80" align="center"></el-table-column>
+        <el-table-column prop="charge_ways" label="审核通过时间" width="180" align="center"></el-table-column>
+        <el-table-column prop="status" label="展示状态" width="80" align="center"></el-table-column>
+        <el-table-column label="操作" min-width="50" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下架</el-button>
-            <el-button size="mini" type="primary" @click="handleOnLine(scope.$index, scope.row)">上架</el-button>
-            <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+            <!--<el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下架</el-button>-->
+            <!--<el-button size="mini" type="primary" @click="handleOnLine(scope.$index, scope.row)">上架</el-button>-->
+            <!--<el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+            <el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -145,8 +148,22 @@
       </el-pagination>
       <div class="dialog-div">
         <el-dialog title="" :visible.sync="offlineDialog" width="500px" center>
-          <span>你确认要将“banner名称”下线吗？</span>
-          <span>下线后，将无法再次进行修改！</span>
+          <span>设置收费起始章节</span>
+          <el-form  label-width="12px" size="small" class="account-info-form" label-position="left">
+            <el-form-item label="收费起始章节" required prop="realName" label-width="110px">
+              <el-input v-model="reason">222</el-input>
+            </el-form-item>
+          </el-form>
+          <!--<el-input-->
+                  <!--type="textarea"-->
+                  <!--:rows="3"-->
+                  <!--resize="none"-->
+                  <!--maxlength='50'-->
+                  <!--placeholder="请输入下线原因（不得少于5个汉字）"-->
+                  <!--@keyup.native = "watchSize"-->
+                  <!--v-model="reason">-->
+          <!--</el-input>-->
+          <!--<p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>-->
           <span slot="footer" class="dialog-footer">
             <el-button @click="offlineDialog = false">取 消</el-button>
             <el-button type="primary" @click="offlineDialog = false">确 认</el-button>
@@ -205,7 +222,7 @@
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
-        offlineDialog: false,
+        offlineDialog: true,
         sort_prop: 'updateTime',
         sort_order: 'desc',
       }

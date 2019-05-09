@@ -8,35 +8,44 @@ const menus = [
       {id: 'open-account', name: 'openAccount', label: '开设账号'},
     ]
   },
-  // {
-  //   id: 'user',
-  //   icon: 'fa fa-user-o',
-  //   label: '用户管理',
-  //   submenu: [
-  //     {id: 'userManger', name: 'userManger', label: '用户管理'},
-  //     {id: 'blacklist', name: 'blacklist', label: '黑名单'},
-  //   ]
-  // },
   {
-    id: 'bookCity',
-    icon: 'fa fa-book',
-    label: '书城管理',
+    id: 'user',
+    icon: 'fa fa-user-o',
+    label: '首页',
+    menu: {id: 'home', name: 'home2', label: '首页'},
+  },
+  {
+    id: 'user',
+    icon: 'fa fa-user-o',
+    label: '用户管理',
     submenu: [
-      {id: '', name: '', label: '书城管理'},
+      {id: 'userManger', name: 'userManger', label: '用户列表'},
+      {id: 'userInfo', name: 'userInfo', label: '用户详情'},
+      {id: 'blacklist', name: 'blacklist', label: '黑名单'},
+      {id: 'blacklistInfo', name: 'blacklistInfo', label: '黑名单用户详情'},
     ]
   },
   // {
-  //   id: 'book',
-  //   icon: 'fa fa-bookmark-o',
-  //   label: '书籍管理',
+  //   id: 'bookCity',
+  //   icon: 'fa fa-book',
+  //   label: '书城管理',
   //   submenu: [
-  //     {id: '', name: '', label: '待审核列表'},
-  //     {id: 'stack-room', name: 'stackRoom', label: '书库管理'},
-  //     {id: '', name: '', label: '设置收费书籍'},
-  //     {id: '', name: '', label: '充值记录'},
-  //     {id: '', name: '', label: '消费记录'},
+  //     {id: '', name: '', label: '书城管理'},
   //   ]
   // },
+  {
+    id: 'book',
+    icon: 'fa fa-bookmark-o',
+    label: '书库管理',
+    submenu: [
+      {id: '', name: '', label: '待审核列表'},
+      {id: 'stack-room', name: 'stackRoom', label: '书库列表'},
+      {id: 'stack-room-detail', name: 'stackRoomDetail', label: '书籍详情'},
+      // {id: '', name: '', label: '设置收费书籍'},
+      // {id: '', name: '', label: '充值记录'},
+      // {id: '', name: '', label: '消费记录'},
+    ]
+  },
   {
     id: 'recommend',
     icon: 'fa fa-hand-rock-o',
@@ -69,6 +78,8 @@ const menus = [
     label: '书商管理',
     submenu: [
       {id: 'bookSellerList', name: 'bookSellerList', label: '书商列表'},
+      {id: 'bookSellerDetail', name: 'bookSellerDetail', label: '书商详情'},
+      {id: 'createBookSeller', name: 'createBookSeller', label: '创建书商'},
     ]
   },
   {
@@ -112,13 +123,13 @@ const menus = [
   //     {id: '', name: '', label: '消息管理'},
   //   ]
   // },
-  {
-    id: 'recharge',
-    icon: 'fa fa-money',
-    label: '充值记录',
-    submenu: [
-      {id: '', name: '', label: '充值记录'},
-    ]
-  },
+  // {
+  //   id: 'recharge',
+  //   icon: 'fa fa-money',
+  //   label: '充值记录',
+  //   submenu: [
+  //     {id: '', name: '', label: '充值记录'},
+  //   ]
+  // },
 ]
 export default menus

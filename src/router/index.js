@@ -12,6 +12,7 @@ export default new VueRouter({
       component: Main,
       children: [
         {path: '/',name: 'home',component: Home},
+        {path: '/home',name: 'home2',component: page('home2')},
         {path: '/account-manger', name: 'accountManger', component: page('account/account-manger')},
         {path: '/open-account', name: 'openAccount', component: page('account/open-account')},
         {path: '/userManger', name: 'userManger', component: page('user/userManger')},
@@ -30,6 +31,8 @@ export default new VueRouter({
         {path: '/wx-banner-sort-edit', name: 'wxBannerSortEdit', component: page('banner/wx-banner-sort-edit')},
         {path: '/wx-banner-detail', name: 'wxBannerDetail', component: page('banner/wx-banner-detail')},
         {path: '/book-seller-list', name: 'bookSellerList', component: page('bookseller/book-seller-list')},
+        {path: '/book-seller-detail', name: 'bookSellerDetail', component: page('bookseller/book-seller-detail')},
+        {path: '/create-book-seller', name: 'createBookSeller', component: page('bookseller/create-book-seller')},
         {path: '/loginInfo', name: 'loginInfo', component: page('loginInfo')},
         {path: '/recommend-book', name: 'recommendBook', component: page('recommend/recommend-book')},
       ]

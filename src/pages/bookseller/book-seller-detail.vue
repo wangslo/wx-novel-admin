@@ -4,23 +4,99 @@
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
                 <el-breadcrumb-item >书商管理</el-breadcrumb-item>
-                <el-breadcrumb-item >书商列表</el-breadcrumb-item>
+                <el-breadcrumb-item >xxx详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
+
+        <div class="banner-detail-box">
+            <div class="banner-detail-item">
+                <span class="item-name">书商名称：</span>
+                <span class="item-value">XXXXXXX</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">标识：</span>
+                <span class="item-value">XXXXXXX</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">接入方式：</span>
+                <span class="item-value">2019-04-04 12:00 至 2019-05-01 12:00</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">书商姓名：</span>
+                <span class="item-value">书籍名称或跳转链接</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">书商电话：</span>
+                <span class="item-value">2019-04-06 12:00:00</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">书籍总量：</span>
+                <span class="item-value">在线</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">审核通过：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">审核未通过：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">展示中：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">未展示：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">收费书籍：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">免费书籍：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">书币：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">创建时间：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">创建人：</span>
+                <span class="item-value">xxx</span>
+            </div>
+            <div class="banner-detail-item">
+                <span class="item-name">备注：</span>
+                <span class="item-value">xxx</span>
+            </div>
+
+            <div style="float: right;">
+                <el-button type="warning" size="mini" @click="clearData">停用</el-button>
+                <el-button type="success" size="mini" @click="getBannerAppLists">启用</el-button>
+                <!--<el-button type="warning" @click="getBannerAppLists">批量上架</el-button>-->
+                <!--<el-button type="danger" @click="getBannerAppLists">批量下架</el-button>-->
+            </div>
+        </div>
+        <br />
+        <div class="line"></div>
         <div class="book-seller-list-body">
-            <el-form ref="stackRoomForm" :model="book_seller_list_condition" :rules="book_seller_list_rules" class="book-seller-list-form" label-width="80px" size="small">
-                <el-form-item label="类型" label-width="60px" prop="bookType">
-                    <el-select v-model="book_seller_list_condition.bookType" placeholder="请选择类型">
+            <el-form ref="stackRoomForm" :model="book_seller_detail_condition" :rules="book_seller_detail_rules" class="book-seller-list-form" label-width="80px" size="small">
+                <el-form-item label="书籍" label-width="60px" prop="bookType">
+                    <el-select v-model="book_seller_detail_condition.bookType" placeholder="请选择类型">
                         <el-option label="全部" value="999"></el-option>
                         <el-option label="收费" value="0"></el-option>
                         <el-option label="免费" value="1"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="书籍名称/作者" label-width="110px" prop="author">
-                    <el-input v-model="book_seller_list_condition.author"></el-input>
+                    <el-input v-model="book_seller_detail_condition.author"></el-input>
                 </el-form-item>
                 <el-form-item label="收费方式" prop="charge_ways">
-                    <el-select v-model="book_seller_list_condition.charge_ways" placeholder="请选择收费方式">
+                    <el-select v-model="book_seller_detail_condition.charge_ways" placeholder="请选择收费方式">
                         <el-option label="全部" value="999"></el-option>
                         <el-option label="书币" value="0"></el-option>
                         <el-option label="积分" value="1"></el-option>
@@ -28,7 +104,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="状态" label-width="60px" prop="status">
-                    <el-select v-model="book_seller_list_condition.status" placeholder="请选择状态">
+                    <el-select v-model="book_seller_detail_condition.status" placeholder="请选择状态">
                         <el-option label="全部" value="999"></el-option>
                         <el-option label="上架中" value="0"></el-option>
                         <el-option label="下架中" value="1"></el-option>
@@ -41,7 +117,7 @@
                                     type="date"
                                     format="yyyy-MM-dd"
                                     placeholder="起始时间"
-                                    v-model="book_seller_list_condition.update_start_time"
+                                    v-model="book_seller_detail_condition.update_start_time"
                                     :picker-options="pickerBeginDateBefore"
                                     style="width: 100%;"
                             ></el-date-picker>
@@ -55,7 +131,7 @@
                                     type="date"
                                     format="yyyy-MM-dd"
                                     placeholder="结束时间"
-                                    v-model="book_seller_list_condition.update_end_time"
+                                    v-model="book_seller_detail_condition.update_end_time"
                                     :picker-options="pickerBeginDateAfter"
                                     style="width: 100%;"
                             ></el-date-picker>
@@ -63,14 +139,14 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item label="书籍状态" prop="bookStatus">
-                    <el-select v-model="book_seller_list_condition.bookStatus" placeholder="请选择书籍状态">
+                    <el-select v-model="book_seller_detail_condition.bookStatus" placeholder="请选择书籍状态">
                         <el-option label="全部" value="999"></el-option>
                         <el-option label="完结" value="0"></el-option>
                         <el-option label="连载" value="1"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="书籍分类" prop="category">
-                    <el-select v-model="book_seller_list_condition.category" placeholder="请选择书籍分类">
+                    <el-select v-model="book_seller_detail_condition.category" placeholder="请选择书籍分类">
                         <el-option label="全部" value="999"></el-option>
                         <el-option label="玄幻" value="0"></el-option>
                         <el-option label="武侠" value="1"></el-option>
@@ -86,7 +162,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="来源/书商" prop="bookman">
-                    <el-select v-model="book_seller_list_condition.bookman" placeholder="请选择来源/书商">
+                    <el-select v-model="book_seller_detail_condition.bookman" placeholder="请选择来源/书商">
                         <el-option label="全部" value="999"></el-option>
                         <el-option label="baike.com" value="0"></el-option>
                         <el-option label="quang.com" value="1"></el-option>
@@ -110,27 +186,27 @@
                         type="selection"
                         width="40">
                 </el-table-column>
-                <el-table-column label="序号" width="80" align="center">
+                <el-table-column label="序号" width="60" align="center">
                     <template slot-scope="scope">
                         <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="bookName" label="书商名称" width="180" align="center"></el-table-column>
-                <el-table-column prop="author" label="标示" width="180" align="center"></el-table-column>
-                <el-table-column prop="category" label="接入方式" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookman" label="书籍总量" width="180" align="center"></el-table-column>
-                <el-table-column prop="book_status" label="审核通过" width="180" align="center"></el-table-column>
-                <el-table-column prop="wordNum" label="审核未通过" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="展示中" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="未展示" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="收费书籍" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="免费书籍" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="书币" width="180" align="center"></el-table-column>
+                <el-table-column prop="author" label="标示" width="60" align="center"></el-table-column>
+                <el-table-column prop="category" label="接入方式" width="90" align="center"></el-table-column>
+                <el-table-column prop="bookman" label="书籍总量" width="80" align="center"></el-table-column>
+                <el-table-column prop="book_status" label="审核通过" width="80" align="center"></el-table-column>
+                <el-table-column prop="wordNum" label="审核未通过" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="展示中" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="未展示" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="收费书籍" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="免费书籍" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="书币" width="60" align="center"></el-table-column>
 
 
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
                                  prop="updateTime" label="创建时间" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="创建人" width="180" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="创建人" width="100" align="center"></el-table-column>
                 <el-table-column label="操作" min-width="250" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下架</el-button>
@@ -169,7 +245,7 @@
     name: 'stackRoomList',
     data() {
       return {
-        book_seller_list_condition: {
+        book_seller_detail_condition: {
           bookType: '999',
           author: '',
           charge_ways: '999',
@@ -180,7 +256,7 @@
           category: '999',
           bookman: '999',
         },
-        book_seller_list_rules: {
+        book_seller_detail_rules: {
           bookType: '999',
           author: '',
           charge_ways: '999',
@@ -193,7 +269,7 @@
         },
         pickerBeginDateBefore:{
           disabledDate: (time) => {
-            let beginDateVal = this.book_seller_list_condition.update_end_time;
+            let beginDateVal = this.book_seller_detail_condition.update_end_time;
             if (beginDateVal) {
               return time.getTime() > beginDateVal;
             }
@@ -201,7 +277,7 @@
         },
         pickerBeginDateAfter:{
           disabledDate: (time) => {
-            let beginDateVal = this.book_seller_list_condition.update_start_time;
+            let beginDateVal = this.book_seller_detail_condition.update_start_time;
             if (beginDateVal) {
               return time.getTime() < beginDateVal;
             }
@@ -244,6 +320,24 @@
   }
 </script>
 <style lang="scss">
+    .banner-detail-box{
+        width: 95%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 5px;
+    }
+    .banner-detail-item{
+        margin-right: 20px;
+        margin-bottom: 10px;
+        .item-name{
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+
+
     .book-seller-list-page{
         .book-seller-list-header{
             height: 50px;
@@ -272,5 +366,19 @@
                 margin-bottom: 10px;
             }
         }
+    }
+    .operat-reason{
+        float: left;
+        span{
+            display: block;
+            margin: 10px 0;
+        }
+    }
+
+    .line{
+        width: 100%;
+        height: 2px;
+        background: #e0e0e0;
+        margin-bottom: 10px;
     }
 </style>
