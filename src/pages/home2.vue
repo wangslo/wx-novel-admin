@@ -8,32 +8,32 @@
         <div class="accountInfo-body">
             <el-row :gutter="80">
                 <el-col :span="4"><div class="grid-content bg-purple">
-                    <span>XXXX.XX</span><br />
+                    <span style="color: red">{{today_income_total}}</span><br />
                     <span>今日总收入（元）</span>
                 </div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple">
-                    <span>XXXX.XX</span><br />
-                    <span>今日总收入（元）</span>
+                    <span style="color: red">{{today_general_rechare}}</span><br />
+                    <span>今日普通充值（元）</span>
                 </div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple">
-                    <span>XXXX.XX</span><br />
-                    <span>今日总收入（元）</span>
+                    <span style="color: red">{{today_year_rechare}}</span><br />
+                    <span>今日包年充值（元）</span>
                 </div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple">
-                    <span>XXXX.XX</span><br />
-                    <span>今日总收入（元）</span>
+                    <span style="color: red">{{today_new_user}}</span><br />
+                    <span>今日新增用户（人）</span>
                 </div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple">
-                    <span>XXXX.XX</span><br />
-                    <span>今日总收入（元）</span>
+                    <span style="color: red">{{today_new_concern}}</span><br />
+                    <span>今日新增关注（人）</span>
                 </div></el-col>
             </el-row>
             <el-row>
                 展示时间：
                 <el-button-group >
-                <el-button autofocus="true" size="mini" style="width: 70px">7天</el-button>
-                <el-button size="mini" style="width: 70px">15天</el-button>
-                <el-button type="primary" size="mini" style="width: 70px">30天</el-button>
+                <el-button autofocus="true" size="mini" style="width: 70px" @click="reds(1)">7天</el-button>
+                <el-button  size="mini" style="width: 70px" @click="reds(2)">15天</el-button>
+                <el-button  size="mini" style="width: 70px" @click="reds(3)">30天</el-button>
             </el-button-group>
             </el-row>
             <el-row>
@@ -55,6 +55,46 @@
     name: 'Home2',
     data() {
       return {
+        today_income_total:"xxxx.xxx",
+        today_general_rechare:"123.23",
+        today_year_rechare:"45,32",
+        today_new_user:"23",
+        today_new_concern:"34",
+        x_data:['2019-04-22','2019-04-23','2019-04-24','2019-04-25','2019-04-26','2019-04-27','2019-04-28'],
+        y_data:[
+          {
+            name:'总收入',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name:'普通充值',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+          },
+          {
+            name:'包年充值',
+            type:'line',
+            stack: '总量',
+            data:[150, 232, 201, 154, 190, 330, 410]
+          },
+          {
+            name:'新增用户',
+            type:'line',
+            stack: '总量',
+            data:[320, 332, 301, 334, 390, 330, 320]
+          },
+          {
+            name:'新增关注',
+            type:'line',
+            stack: '总量',
+            data:[820, 932, 901, 934, 1290, 1330, 1320]
+          }
+        ],
+        changeRed:0,
+
       }
     },
     mounted() {
@@ -69,7 +109,7 @@
             trigger: 'axis'
           },
           legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            data:['总收入','普通充值','包年充值','新增用户','新增关注']
           },
           toolbox: {
             show : true,
@@ -86,7 +126,7 @@
             {
               type : 'category',
               boundaryGap : false,
-              data : ['2019-04-22','2019-04-23','2019-04-24','2019-04-25','2019-04-26','2019-04-27','2019-04-28']
+              data :this.x_data,
             }
           ],
           yAxis : [
@@ -94,39 +134,11 @@
               type : 'value'
             }
           ],
-          series : [
-            {
-              name:'邮件营销',
-              type:'line',
-              stack: '总量',
-              data:[120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-              name:'联盟广告',
-              type:'line',
-              stack: '总量',
-              data:[220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-              name:'视频广告',
-              type:'line',
-              stack: '总量',
-              data:[150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-              name:'直接访问',
-              type:'line',
-              stack: '总量',
-              data:[320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-              name:'搜索引擎',
-              type:'line',
-              stack: '总量',
-              data:[820, 932, 901, 934, 1290, 1330, 1320]
-            }
-          ]
+          series :this.y_data,
         });
+      },
+      reds:function(index){
+        this.changeRed = index;
       }
     }
   }
@@ -146,7 +158,8 @@
         background: #99a9bf;
     }
     .bg-purple {
-        background: #d3dce6;
+        /*background: #d3dce6;*/
+        background: white;
     }
     .bg-purple-light {
         background: #e5e9f2;
