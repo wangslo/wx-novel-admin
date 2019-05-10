@@ -8,19 +8,13 @@
             </el-breadcrumb>
         </div>
         <div style="width: 100%">
-            <div  style="margin-left: 15px;width : 50%;float: left" class="banner-wx-setup-body">
+            <div  style="margin-left: 15px;width : 40%;float: left" class="banner-wx-setup-body">
                 <el-form ref="bannerWxSetupForm" :model="banner_wx_setup_condition" class="banner-wx-setup-form" label-width="140px" size="small">
-                    <el-form-item label="banner名称：">
-                        <el-input v-model="banner_wx_setup_condition.bannerName" placeholder="请输入banner名称（情况控制在20个汉字内）"></el-input>
-                    </el-form-item>
                     <el-form-item label="选择位置：">
                         <el-select v-model="banner_wx_setup_condition.position" placeholder="请选择展示位置">
                             <el-option label="请选择展示位置" value="999"></el-option>
-                            <el-option label="APP书城一位" value="0"></el-option>
-                            <el-option label="APP书城二位" value="1"></el-option>
-                            <el-option label="APP书城三位" value="2"></el-option>
-                            <el-option label="APP我的一位" value="3"></el-option>
-                            <el-option label="APP书架一位" value="4"></el-option>
+                            <el-option label="男频" value="1"></el-option>
+                            <el-option label="女频" value="2"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="上传图片：" class="banner-wx-setup-img">
@@ -37,11 +31,11 @@
                             <el-button size="small" type="primary">点击上传</el-button>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="跳转位置或链接：">
+                    <el-form-item label="书籍名称：">
                         <el-autocomplete
-                                v-model="banner_wx_setup_condition.banner_url"
+                                v-model="banner_wx_setup_condition.banner_name"
                                 :fetch-suggestions="queryBannerUrl"
-                                placeholder="请输入书籍名称检索或h5链接"
+                                placeholder="请输入书籍名称检索"
                                 style="width: 420px;"
                                 :hide-loading="loading"
                         ></el-autocomplete>
@@ -81,7 +75,7 @@
             <div style="margin-left: 15px;width : 40%;float: left">
 
                 <el-form ref="recommendForm" :model="recommend_condition2" class="recommend-form" :rules="recommendRules2" label-width="10px" size="small">
-                    <el-form-item label="书籍搜索结果" prop="keyword" label-width="100px">
+                    <el-form-item label="书籍搜索结果" prop="keyword" label-width="130px">
                         <!--<el-input v-model="xx"></el-input>-->
                     </el-form-item>
                     <!--<el-form-item style="float: right;" label-width="30px" >-->
@@ -100,10 +94,11 @@
                     </el-table-column>
                     <el-table-column prop="bookName" label="书籍名称" width="180" align="center"></el-table-column>
                     <el-table-column prop="author" label="作者" width="150" align="center"></el-table-column>
+                    <el-table-column prop="bookid" label="书本id" v-if="false" align="center"></el-table-column>
                     <el-table-column prop="source" label="来源" width="100" align="center"></el-table-column>
                     <el-table-column label="操作" min-width="80" align="center">
                         <template slot-scope="scope">
-                            <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">确认</el-button>
+                            <el-button size="mini" @click="addItem(scope.$index, scope.row)">确认</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -128,13 +123,13 @@
         name: 'wxBannerSetup',
         data() {
             return {
-                search_banner_url: [],
+                search_banner_name: [],
                 loading: false,
                 banner_wx_setup_condition: {
-                    bannerName: '',
                     position: '999',
                     bannerImg: '',
-                    banner_url: '',
+                    banner_name: '',
+                    book_id:0,
                     show_start_time: '',
                     show_end_time: '',
                 },
@@ -154,6 +149,20 @@
                         }
                     }
                 },
+              pageNo: 1,
+              pageSize: 10,
+              currentPage: 1,
+              totalSize: 0,
+              offlineDialog: false,
+              offlineDialog2: true,
+              sort_prop: 'createTime',
+              sort_order: 'desc',
+              reason: '',
+              textSize: 0,
+              tableData1:[
+                {"bookName":"张三三的20岁1",'author':"张1",'bookid':0,'source':'来源1'},
+                {"bookName":"张三三的20岁2",'author':"张2",'bookid':0,'source':'来源2'},
+              ],
             }
         },
         methods: {
@@ -163,7 +172,7 @@
             },
             uploadBanner(e){
                 let uploadData = new FormData();
-                uploadData.wxend('file', e.file);
+                uploadData.append('thumb', e.file);
                 uploadModuleApi.uploadImg(uploadData).then(res=>{
                     console.log(res)
                 })
@@ -171,17 +180,23 @@
             queryBannerUrl(params,cb) {
                 if(params != ''){
                     this.loading = false
-                    this.search_banner_url = [{value:'gggfffdddsss'}]
+                    this.search_banner_name = [{value:'gggfffdddsss'}]
                 }else {
                     this.loading = true
-                    this.search_banner_url = []
+                    this.search_banner_name = []
                 }
                 setTimeout(() => {
-                    cb(this.search_banner_url);
+                    cb(this.search_banner_name);
                 }, 300);
             },
             saveBannerWx() {
-                console.log(this.banner_wx_setup_condition.banner_url)
+                console.log('提交了')
+                console.log(this.banner_wx_setup_condition.banner_name)
+            },
+            addItem(index,row){
+                this.banner_wx_setup_condition.banner_name = row.bookName
+                this.banner_wx_setup_condition.book_id = row.bookid
+                console.log(index,row);
             }
         }
     }
@@ -203,8 +218,8 @@
                 width: 560px;
                 .banner-wx-setup-img{
                     .img-box{
-                        width: 100px;
-                        height: 100px;
+                        width: 300px;
+                        height: 180px;
                         border: 1px solid #e0e0e0;
                         float: left;
                         img{

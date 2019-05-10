@@ -1,5 +1,13 @@
 const menus = [
   {
+    id: 'user',
+    icon: 'fa fa-user-o',
+    label: '首页',
+    submenu: [
+      {id: 'home', name: 'home2', label: '首页'},
+    ]
+  },
+  {
     id: 'account',
     icon: 'fa fa-file-powerpoint-o',
     label: '权限管理',
@@ -7,12 +15,6 @@ const menus = [
       {id: 'account-manger', name: 'accountManger', label: '账号管理'},
       {id: 'open-account', name: 'openAccount', label: '开设账号'},
     ]
-  },
-  {
-    id: 'user',
-    icon: 'fa fa-user-o',
-    label: '首页',
-    menu: {id: 'home', name: 'home2', label: '首页'},
   },
   {
     id: 'user',
