@@ -172,7 +172,7 @@
             },
             uploadBanner(e){
                 let uploadData = new FormData();
-                uploadData.wxend('file', e.file);
+                uploadData.append('thumb', e.file);
                 uploadModuleApi.uploadImg(uploadData).then(res=>{
                     console.log(res)
                 })
