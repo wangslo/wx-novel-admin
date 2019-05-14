@@ -242,6 +242,11 @@
       this.getStackRoomLists()
     },
     methods: {
+      handleDetail(index,row){
+        this.$router.push({
+          path:'/stack-room-detail'
+        })
+      },
       getStackRoomLists() {
 
       },

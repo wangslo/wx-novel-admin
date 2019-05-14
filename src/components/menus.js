@@ -31,7 +31,6 @@ const menus = [
     label: '用户管理',
     submenu: [
       {id: 'userManger', name: 'userManger', label: '用户列表'},
-      {id: 'userInfo', name: 'userInfo', label: '用户详情'},
       {id: 'blacklist', name: 'blacklist', label: '黑名单'},
       // {id: 'blacklistInfo', name: 'blacklistInfo', label: '黑名单用户详情'},
     ]
@@ -51,7 +50,7 @@ const menus = [
     submenu: [
       {id: '', name: '', label: '待审核列表'},
       {id: 'stack-room', name: 'stackRoom', label: '书库列表'},
-      {id: 'stack-room-detail', name: 'stackRoomDetail', label: '书籍详情'},
+      // {id: 'stack-room-detail', name: 'stackRoomDetail', label: '书籍详情'},
       // {id: '', name: '', label: '设置收费书籍'},
       // {id: '', name: '', label: '充值记录'},
       // {id: '', name: '', label: '消费记录'},
@@ -85,10 +84,10 @@ const menus = [
       // {id: '', name: '', label: '设置PC'},
       // {id: 'appBannerSortEdit', name: 'appBannerSortEdit', label: '更改APP排序'},
       // {id: '', name: '', label: '更改PC排序'},
-      {id: 'wxBannerSetup', name: 'wxBannerSetup', label: '设置wx'},
-      {id: 'wxBannerList', name: 'wxBannerList', label: 'wx banner管理'},
-      {id: 'wxBannerSortEdit', name: 'wxBannerSortEdit', label: '更改wx排序'},
-      {id: 'wxBannerDetail', name: 'wxBannerDetail', label: 'wx banner 详情'},
+      {id: 'wxBannerSetup', name: 'wxBannerSetup', label: '创建banner'},
+      {id: 'wxBannerList', name: 'wxBannerList', label: 'banner列表'},
+      {id: 'wxBannerSortEdit', name: 'wxBannerSortEdit', label: '更改banner排序'},
+      // {id: 'wxBannerDetail', name: 'wxBannerDetail', label: 'wx banner 详情'},
     ]
   },
   {
@@ -97,7 +96,7 @@ const menus = [
     label: '书商管理',
     submenu: [
       {id: 'bookSellerList', name: 'bookSellerList', label: '书商列表'},
-      {id: 'bookSellerDetail', name: 'bookSellerDetail', label: '书商详情'},
+      // {id: 'bookSellerDetail', name: 'bookSellerDetail', label: '书商详情'},
       {id: 'createBookSeller', name: 'createBookSeller', label: '创建书商'},
     ]
   },
