@@ -307,7 +307,7 @@
       }
     },
     created() {
-      this.fetch.getAccountList('',res=>{
+      orgModuleApi.getAccountList().then((res)=>{
         console.log(res)
       })
     },

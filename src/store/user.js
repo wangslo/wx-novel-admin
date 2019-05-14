@@ -1,6 +1,4 @@
 import {orgModuleApi} from '../api/main'
-import fetch from '../api/fetch'
-
 const state = {
   user: null,
   role: null,
@@ -12,8 +10,7 @@ const actions = {
     commit('SET_DOING_LOGIN', true)
     // 模拟登录
     return new Promise((resolve, reject) => {
-      fetch.login(user,res=>{
-        console.log(res)
+      orgModuleApi.login(user).then((res)=>{
         if(res.success){
           let data = res.data.data
           sessionStorage.setItem('role', JSON.stringify(data))
@@ -25,6 +22,8 @@ const actions = {
         }else{
           resolve(res)
         }
+      }).catch(error => {
+        reject(error)
       })
     })
   },
