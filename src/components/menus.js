@@ -17,6 +17,15 @@ const menus = [
     ]
   },
   {
+    id: 'wechatPublic',
+    icon: 'fa fa-file-powerpoint-o',
+    label: '公众号管理',
+    submenu: [
+      {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
+      {id: 'authorization-manager', name: 'authorizationManager', label: '授权管理'},
+    ]
+  },
+  {
     id: 'user',
     icon: 'fa fa-user-o',
     label: '用户管理',
@@ -24,7 +33,7 @@ const menus = [
       {id: 'userManger', name: 'userManger', label: '用户列表'},
       {id: 'userInfo', name: 'userInfo', label: '用户详情'},
       {id: 'blacklist', name: 'blacklist', label: '黑名单'},
-      {id: 'blacklistInfo', name: 'blacklistInfo', label: '黑名单用户详情'},
+      // {id: 'blacklistInfo', name: 'blacklistInfo', label: '黑名单用户详情'},
     ]
   },
   // {
@@ -55,6 +64,14 @@ const menus = [
     submenu: [
       {id: 'recommend-book', name: 'recommendBook', label: '推荐书籍'},
       // {id: 'recommend-banner', name: 'recommendBanner', label: 'banner管理'},
+    ]
+  },
+  {
+    id: 'bookcoins',
+    icon: 'fa fa-file-powerpoint-o',
+    label: '书币管理',
+    submenu: [
+      {id: 'recharge-list', name: 'rechargeList', label: '充值列表'},
     ]
   },
   {

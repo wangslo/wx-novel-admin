@@ -11,17 +11,23 @@ export default new VueRouter({
       name: 'Main',
       component: Main,
       children: [
-        {path: '/',name: 'home',component: Home},
+        // {path: '/',name: 'home',component: Home},
+        {path: '/',name: 'home',component: page('home2')},
         {path: '/home',name: 'home2',component: page('home2')},
+
         {path: '/account-manger', name: 'accountManger', component: page('account/account-manger')},
         {path: '/open-account', name: 'openAccount', component: page('account/open-account')},
+
         {path: '/userManger', name: 'userManger', component: page('user/userManger')},
         {path: '/userInfo', name: 'userInfo', component: page('user/userInfo')},
         {path: '/blacklist', name: 'blacklist', component: page('user/blacklist')},
         {path: '/blacklistInfo', name: 'blacklistInfo', component: page('user/blacklistInfo')},
+
         {path: '/stack-room', name: 'stackRoom', component: page('books/stack-room')},
         {path: '/stack-room-detail', name: 'stackRoomDetail', component: page('books/stack-room-detail')},
+
         {path: '/adver-data', name: 'adver-data', component: page('adver')},
+
         {path: '/app-banner-list', name: 'appBannerList', component: page('banner/app-banner-list')},
         {path: '/app-banner-sort-edit', name: 'appBannerSortEdit', component: page('banner/app-banner-sort-edit')},
         {path: '/app-banner-setup', name: 'appBannerSetup', component: page('banner/app-banner-setup')},
@@ -30,11 +36,18 @@ export default new VueRouter({
         {path: '/wx-banner-list', name: 'wxBannerList', component: page('banner/wx-banner-list')},
         {path: '/wx-banner-sort-edit', name: 'wxBannerSortEdit', component: page('banner/wx-banner-sort-edit')},
         {path: '/wx-banner-detail', name: 'wxBannerDetail', component: page('banner/wx-banner-detail')},
+
         {path: '/book-seller-list', name: 'bookSellerList', component: page('bookseller/book-seller-list')},
         {path: '/book-seller-detail', name: 'bookSellerDetail', component: page('bookseller/book-seller-detail')},
         {path: '/create-book-seller', name: 'createBookSeller', component: page('bookseller/create-book-seller')},
+
         {path: '/loginInfo', name: 'loginInfo', component: page('loginInfo')},
         {path: '/recommend-book', name: 'recommendBook', component: page('recommend/recommend-book')},
+        //公众号
+        {path: '/wechat-list', name: 'wechatList', component: page('wechat/wechatlist')},
+        {path: '/authorization-manager', name: 'authorizationManager', component: page('wechat/authorization-manager')},
+        //书币管理
+        {path: '/recharge-list', name: 'rechargeList', component: page('bookcoins/recharge-list')},
       ]
     },
     {path: '/login', name: 'login', component: page('login')}

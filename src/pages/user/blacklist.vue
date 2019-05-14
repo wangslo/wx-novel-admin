@@ -39,7 +39,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col class="line" :span="2" style="text-align:center">至</el-col>
+          <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
           <el-col :span="10" class="endTime">
             <el-form-item  prop="create_end_time">
               <el-date-picker
@@ -66,7 +66,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col class="line" :span="2" style="text-align:center">至</el-col>
+          <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
           <el-col :span="10" class="endTime">
             <el-form-item  prop="bolding_end_time">
               <el-date-picker

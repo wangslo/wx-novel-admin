@@ -27,7 +27,7 @@ orgAxios.interceptors.response.use(
 
 export const orgModuleApi = {
   login:(params) =>{
-    return orgAxios.get('/d_login/loginwithpwd',{params:params}).then(res=>res.data);
+    return orgAxios.get('/novelcms/pub/dologin.html',{params:params}).then(res=>res.data);
   },
   loginout:(params) =>{
     return orgAxios.get('/d_login/logout',{params:params}).then(res=>res.data);

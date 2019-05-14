@@ -115,12 +115,12 @@
                         <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="bookName" label="书商名称" width="180" align="center"></el-table-column>
-                <el-table-column prop="author" label="标示" width="180" align="center"></el-table-column>
-                <el-table-column prop="category" label="接入方式" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookman" label="书籍总量" width="180" align="center"></el-table-column>
-                <el-table-column prop="book_status" label="审核通过" width="180" align="center"></el-table-column>
-                <el-table-column prop="wordNum" label="审核未通过" width="180" align="center"></el-table-column>
+                <el-table-column prop="booksellerName" label="书商名称" width="180" align="center"></el-table-column>
+                <el-table-column prop="identification" label="标识" width="180" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="接入方式" width="180" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="书籍总量" width="180" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="审核通过" width="180" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="审核未通过" width="180" align="center"></el-table-column>
                 <el-table-column prop="bookType" label="展示中" width="180" align="center"></el-table-column>
                 <el-table-column prop="bookType" label="未展示" width="180" align="center"></el-table-column>
                 <el-table-column prop="bookType" label="收费书籍" width="180" align="center"></el-table-column>
@@ -131,11 +131,18 @@
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
                                  prop="updateTime" label="创建时间" width="180" align="center"></el-table-column>
                 <el-table-column prop="bookType" label="创建人" width="180" align="center"></el-table-column>
+                <!--<el-table-column label="操作" min-width="250" align="center">-->
+                    <!--<template slot-scope="scope">-->
+                        <!--<el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下架</el-button>-->
+                        <!--<el-button size="mini" type="primary" @click="handleOnLine(scope.$index, scope.row)">上架</el-button>-->
+                        <!--<el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+                        <!--<el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>-->
+                    <!--</template>-->
+                <!--</el-table-column>-->
                 <el-table-column label="操作" min-width="250" align="center">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下架</el-button>
-                        <el-button size="mini" type="primary" @click="handleOnLine(scope.$index, scope.row)">上架</el-button>
-                        <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" v-if="scope.row.status == '正常'? true:false" type="danger" @click="handleOffLine(scope.$index, scope.row)">停用</el-button>
+                        <el-button size="mini" v-if="scope.row.status != '正常'? true:false" type="primary" @click="handleOnLine(scope.$index, scope.row)">启用</el-button>
                         <el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                     </template>
                 </el-table-column>
@@ -152,8 +159,7 @@
             </el-pagination>
             <div class="dialog-div">
                 <el-dialog title="" :visible.sync="offlineDialog" width="500px" center>
-                    <span>你确认要将“banner名称”下线吗？</span>
-                    <span>下线后，将无法再次进行修改！</span>
+                    <span>你确认{{tmpAction}}“{{tmpBookSellerName}}”书商吗？</span>
                     <span slot="footer" class="dialog-footer">
             <el-button @click="offlineDialog = false">取 消</el-button>
             <el-button type="primary" @click="offlineDialog = false">确 认</el-button>
@@ -191,6 +197,8 @@
           category: '999',
           bookman: '999',
         },
+        tmpBookSellerName:'xxxx',
+        tmpAction:'启用',
         pickerBeginDateBefore:{
           disabledDate: (time) => {
             let beginDateVal = this.book_seller_list_condition.update_end_time;
@@ -207,7 +215,10 @@
             }
           }
         },
-        tableData: [],
+        tableData: [
+          {booksellerName:'tao书商',identification:'yh08',bookType:83,status:'正常'},
+          {booksellerName:'jsy书商',identification:'fd21',bookType:83,status:'!正常'},
+        ],
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
@@ -221,6 +232,16 @@
       this.getStackRoomLists()
     },
     methods: {
+     handleOffLine(index, row){
+        this.offlineDialog = true
+        this.tmpAction = '停用'
+        this.tmpBookSellerName = row.booksellerName;
+     },
+      handleOnLine(index, row){
+        this.offlineDialog = true
+        this.tmpAction = '启用'
+        this.tmpBookSellerName = row.booksellerName;
+      },
       getStackRoomLists() {
 
       },

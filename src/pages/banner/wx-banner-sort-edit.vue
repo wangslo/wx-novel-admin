@@ -4,17 +4,14 @@
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
                 <el-breadcrumb-item >banner管理</el-breadcrumb-item>
-                <el-breadcrumb-item >更改APP排序</el-breadcrumb-item>
+                <el-breadcrumb-item >更改banner排序</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="banner-wx-sort-body">
             <div class="banner-wx-sort-position">
                 <span>选择位置：</span>
-                <el-radio v-model="position" label="1" @change="getPosition">书城一位</el-radio>
-                <el-radio v-model="position" label="2" @change="getPosition">书城二位</el-radio>
-                <el-radio v-model="position" label="3" @change="getPosition">书城三位</el-radio>
-                <el-radio v-model="position" label="4" @change="getPosition">书架一位</el-radio>
-                <el-radio v-model="position" label="5" @change="getPosition">我的一位</el-radio>
+                <el-radio v-model="position" label="1" @change="getPosition">男频</el-radio>
+                <el-radio v-model="position" label="2" @change="getPosition">女频</el-radio>
                 <span style="display: block;margin-top: 10px;color:#888888;">长按banner区域可进行拖动</span>
                 <div class="banner-wx-sort-btn">
                     <el-button type="success" size="mini">保存</el-button>
