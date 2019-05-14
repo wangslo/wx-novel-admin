@@ -110,22 +110,22 @@
                         type="selection"
                         width="40">
                 </el-table-column>
-                <el-table-column label="序号" width="80" align="center">
+                <el-table-column label="序号" width="40" align="center">
                     <template slot-scope="scope">
                         <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="booksellerName" label="书商名称" width="180" align="center"></el-table-column>
-                <el-table-column prop="identification" label="标识" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="接入方式" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="书籍总量" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="审核通过" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="审核未通过" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="展示中" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="未展示" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="收费书籍" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="免费书籍" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookType" label="书币" width="180" align="center"></el-table-column>
+                <el-table-column prop="booksellerName" label="书商名称" width="100" align="center"></el-table-column>
+                <el-table-column prop="identification" label="标识" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="接入方式" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="书籍总量" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="审核通过" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="审核未通过" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="展示中" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="未展示" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="收费书籍" width="80" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="免费书籍" width="50" align="center"></el-table-column>
+                <el-table-column prop="bookType" label="书币" width="80" align="center"></el-table-column>
 
 
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
@@ -139,11 +139,11 @@
                         <!--<el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>-->
                     <!--</template>-->
                 <!--</el-table-column>-->
-                <el-table-column label="操作" min-width="250" align="center">
+                <el-table-column label="操作" min-width="150" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" v-if="scope.row.status == '正常'? true:false" type="danger" @click="handleOffLine(scope.$index, scope.row)">停用</el-button>
                         <el-button size="mini" v-if="scope.row.status != '正常'? true:false" type="primary" @click="handleOnLine(scope.$index, scope.row)">启用</el-button>
-                        <el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+                        <el-button size="mini" type="success" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -241,6 +241,11 @@
         this.offlineDialog = true
         this.tmpAction = '启用'
         this.tmpBookSellerName = row.booksellerName;
+      },
+      handleDetail(index,row){
+        this.$router.push({
+          path:'/book-seller-detail'
+        })
       },
       getStackRoomLists() {
 

@@ -115,7 +115,7 @@
                         <el-button size="mini" :disabled="scope.row.status == 0 ? true:false" type="danger" @click="handleOffLine(scope.$index, scope.row)">下线</el-button>
                         <el-button size="mini" v-show = "scope.row.status != 1 ? true:false" type="primary" @click="handleOnLine(scope.$index, scope.row)">上线</el-button>
                         <el-button size="mini" v-show = "false" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+                        <el-button size="mini" type="success" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -224,6 +224,11 @@
             this.getBannerWxLists()
         },
         methods: {
+          handleDetail(index,row){
+            this.$router.push({
+              path:'/wx-banner-detail'
+            })
+          },
             watchSize() {
                 if(this.reason.length == 50){
                     this.textSize = 50
