@@ -15,7 +15,7 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-/*router.beforeEach((to,from,next)=>{
+router.beforeEach((to,from,next)=>{
   NProgress.start()
   var token = sessionStorage.getItem('token')
   if(!token && to.name != 'login'){
@@ -29,7 +29,7 @@ router.afterEach(transition => {
   setTimeout(() => {
     NProgress.done()
   })
-})*/
+})
 
 var app = new Vue({
   el: '#app',

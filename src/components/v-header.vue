@@ -5,9 +5,9 @@
     </el-col>
     <el-col :span="20">
       <div class="v-user" style="float: right;">
-        <el-dropdown v-if="user" @command="handleCommand">
+        <el-dropdown @command="handleCommand">
           <span class="el-dropdown-link user">
-            {{user.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
+            admin <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="loginInfo">账号信息</el-dropdown-item>
@@ -19,14 +19,14 @@
   </el-row>
 </template>
 <script type="text/javascript">
-  import {mapActions, mapState} from 'vuex'
+  // import {mapActions, mapState} from 'vuex'
   export default {
     name: 'Vheader',
     data () {
       return {
         mini: false,
       }
-    },
+    },/*
     computed: {
       ...mapState({
         user: ({user}) => JSON.parse(user.user)
@@ -34,9 +34,9 @@
     },
     created() {
       this.getLoginUser()
-    },
+    },*/
     methods: {
-      ...mapActions(['getLoginUser','logout']),
+      // ...mapActions(['getLoginUser','logout']),
       handleSwitchSide () {
         this.mini = !this.mini
         this.$emit('switch', this.mini)

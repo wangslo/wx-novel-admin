@@ -1,3 +1,4 @@
+import qs from 'qs'
 var baseURLStr = process.env.API_ROOT
 const orgAxios = axios.create({
   baseURL: baseURLStr,
@@ -27,7 +28,7 @@ orgAxios.interceptors.response.use(
 
 export const orgModuleApi = {
   login:(params) =>{
-    return orgAxios.get('/novelcms/pub/dologin.html',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/pub/dologin.html',qs.stringify(params)).then(res=>res.data);
   },
   loginout:(params) =>{
     return orgAxios.get('/d_login/logout',{params:params}).then(res=>res.data);
