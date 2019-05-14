@@ -31,7 +31,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col class="line" :span="2" style="text-align:center">至</el-col>
+          <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
           <el-col :span="10" class="endTime">
             <el-form-item prop="create_end_time">
               <el-date-picker
@@ -73,7 +73,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col class="line" :span="2" style="text-align:center">至</el-col>
+          <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
           <el-col :span="10" class="endTime">
             <el-form-item prop="login_end_time">
               <el-date-picker
@@ -88,7 +88,7 @@
           </el-col>
         </el-form-item>
         <el-form-item style="float: right;">
-          <el-button type="primary" @click="clearData">清空</el-button>
+          <el-button  @click="clearData">清空</el-button>
           <el-button type="primary" @click="onsubmit">查找</el-button>
         </el-form-item>
       </el-form>
@@ -125,7 +125,8 @@
         <el-table-column label="操作" min-width="250" align="center">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
-            <el-button size="mini" type="danger" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
+            <el-button size="mini" v-if="scope.row.status == '正常' ? true:false" type="danger" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
+            <el-button size="mini" v-if="scope.row.status != '正常' ? true:false" type="primary" @click="handleEnable(scope.$index, scope.row)">启用</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -142,7 +143,7 @@
       <div class="dialog-div">
         <el-dialog title="加入黑名单" :visible.sync="defriendDialog" width="500px" center>
           <span>加入黑名单后，用户将无法在登录魅狐文学进行阅读操作。</span>
-          <span>确认将“XXXXX”加入黑名单吗？</span>
+          <span>确认将“{{tmpNickname}}”加入黑名单吗？</span>
           <el-input
             type="textarea"
             :rows="3"
@@ -156,6 +157,16 @@
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog = false">取 消</el-button>
             <el-button type="primary" @click="defriendDialog = false">确 认</el-button>
+          </span>
+        </el-dialog>
+      </div>
+      <div class="dialog-div">
+        <el-dialog title="" :visible.sync="defriendDialog2" width="500px" center>
+          <span>确认启用“{{tmpNickname}}”用户吗？</span>
+
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="defriendDialog2 = false">取 消</el-button>
+            <el-button type="primary" @click="defriendDialog2 = false">确 认</el-button>
           </span>
         </el-dialog>
       </div>
@@ -191,6 +202,7 @@
           login_end_time: '',
           status: '999',
         },
+        tmpNickname:"xAx",
         pickerBeginDateBefore:{
           disabledDate: (time) => {
             let beginDateVal = this.user_condition.create_end_time;
@@ -223,11 +235,15 @@
             }
           }
         },
-        tableData: [],
+        tableData: [
+          {headImg:'',nickName:"nike",login_time:"2019-05-13 13:53",status:'正常',bookMoney:5000},
+          {headImg:'',nickName:"2323",login_time:"2019-05-13 13:53",status:'!正常',bookMoney:7000},
+        ],
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
         defriendDialog:false,
+        defriendDialog2:false,
       }
     },
     methods: {
@@ -247,6 +263,12 @@
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
+        this.tmpNickname = row.nickName
+        console.log(row)
+      },
+      handleEnable(idx,row) {
+        this.defriendDialog2 = true
+        this.tmpNickname = row.nickName
         console.log(row)
       },
       handleSearch(idx,row) {

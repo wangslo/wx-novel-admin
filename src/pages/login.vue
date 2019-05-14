@@ -9,7 +9,7 @@
         <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="form.password" placeholder="请输入密码" @keyup.enter.native="onSubmit('loginForm')"></el-input>
+        <el-input v-model="form.password" show-password placeholder="请输入密码" @keyup.enter.native="onSubmit('loginForm')"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button class="login-btn" type="primary" @click.prevent="onSubmit('loginForm')" :loading="isLogin">登录</el-button>
@@ -35,7 +35,7 @@
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 8, message: '长度在 6 到 8 个字符', trigger: 'blur' }
+            //{ min: 6, max: 8, message: '长度在 6 到 8 个字符', trigger: 'blur' }
           ],
         }
       }

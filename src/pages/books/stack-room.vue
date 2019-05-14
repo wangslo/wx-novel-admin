@@ -47,7 +47,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col class="line" :span="2" style="text-align:center">至</el-col>
+          <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
           <el-col :span="11" class="endTime">
             <el-form-item prop="update_end_time">
               <el-date-picker
@@ -117,14 +117,21 @@
         <el-table-column prop="author" label="作者" width="80" align="center"></el-table-column>
         <el-table-column prop="category" label="书籍分类" width="80" align="center"></el-table-column>
         <el-table-column prop="category" label="男女分类" width="80" align="center"></el-table-column>
-        <el-table-column prop="bookman" label="来源/书商" width="180" align="center"></el-table-column>
-        <el-table-column prop="book_status" label="书籍状态" width="80" align="center"></el-table-column>
+        <el-table-column prop="bookSeller" label="来源/书商" width="180" align="center"></el-table-column>
+        <el-table-column prop="bookStatus" label="书籍状态" width="80" align="center"></el-table-column>
         <el-table-column prop="wordNum" label="字数" width="80" align="center"></el-table-column>
         <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
                          prop="updateTime" label="最近更新时间" width="180" align="center"></el-table-column>
         <el-table-column prop="bookType" label="类型" width="80" align="center"></el-table-column>
         <el-table-column prop="charge_ways" label="收费方式" width="80" align="center"></el-table-column>
-        <el-table-column prop="charge_ways" label="收费起始章节" width="80" align="center"></el-table-column>
+        <el-table-column prop="charge_start" label="收费起始章节" width="80" align="center"><i class="el-icon-edit"></i></el-table-column>
+
+        <el-table-column label="收费起始章节2" width="180" align="center">
+          <template slot-scope="scope">
+            <i class="el-icon-edit"></i>
+            {{scope.row.charge_start}}
+          </template>
+        </el-table-column>
         <el-table-column prop="charge_ways" label="审核通过时间" width="180" align="center"></el-table-column>
         <el-table-column prop="status" label="展示状态" width="80" align="center"></el-table-column>
         <el-table-column label="操作" min-width="50" align="center">
@@ -217,12 +224,16 @@
             }
           }
         },
-        tableData: [],
+        tableData: [
+          {bookName:'20岁',author:'张三三',category:'都市',bookSeller:'quang',bookStatus:'完结',wordNum:'200万字',bookType:'收费',charge_ways:'书币',charge_start:13,status:'展示中'},
+          {bookName:'20岁',author:'张三三',category:'都市',bookSeller:'quang',bookStatus:'完结',wordNum:'200万字',bookType:'收费',charge_ways:'书币',charge_start:18,status:'展示中'},
+          {bookName:'20岁',author:'张三三',category:'都市',bookSeller:'quang',bookStatus:'完结',wordNum:'200万字',bookType:'收费',charge_ways:'书币',charge_start:15,status:'未展示'},
+        ],
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
-        offlineDialog: true,
+        offlineDialog: false,
         sort_prop: 'updateTime',
         sort_order: 'desc',
       }

@@ -84,11 +84,6 @@
         <div class="book-seller-list-body">
             <el-button type="warning" size="mini" @click="clearData">设置收费章节</el-button>
         </div>
-        <el-row :gutter="20">
-            <el-col :span="4"><div class="grid-content bg-purple">222</div></el-col>
-            <el-col :span="16"><div class="grid-content bg-purple">333</div></el-col>
-            <el-col :span="4"><div class="grid-content bg-purple">444</div></el-col>
-        </el-row>
         <div class="book-seller-list-body">
             <div class="banner-detail-box">
                 <!--<div class="banner-detail-item">-->

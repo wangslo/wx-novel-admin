@@ -20,11 +20,8 @@
                 <el-form-item label="位置" label-width="60px">
                     <el-select v-model="banner_wx_condition.position" placeholder="请选择位置">
                         <el-option label="全部" value="999"></el-option>
-                        <el-option label="APP书城一位" value="0"></el-option>
-                        <el-option label="APP书城二位" value="1"></el-option>
-                        <el-option label="APP书城三位" value="2"></el-option>
-                        <el-option label="APP我的一位" value="3"></el-option>
-                        <el-option label="APP书架一位" value="4"></el-option>
+                        <el-option label="男频" value="1"></el-option>
+                        <el-option label="女频" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="发布时间">
@@ -81,8 +78,11 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="banner名称" label-width="100px">
-                    <el-input v-model="banner_wx_condition.bannerName"></el-input>
+                <el-form-item label="书籍名" label-width="100px">
+                    <el-input v-model="banner_wx_condition.bookName"></el-input>
+                </el-form-item>
+                <el-form-item label="创建人" label-width="100px">
+                    <el-input v-model="banner_wx_condition.createAdmin"></el-input>
                 </el-form-item>
                 <el-form-item style="float: right;">
                     <el-button type="primary" @click="clearData">清空</el-button>
@@ -98,18 +98,18 @@
                         <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="bannerName" label="banner名称" width="180" align="center"></el-table-column>
                 <el-table-column label="图片" width="90" align="center">
                     <template slot-scope="scope">
                         <img :src="scope.row.bannerImage" width="70" height="95"/>
                     </template>
                 </el-table-column>
-                <el-table-column prop="position" label="位置" width="180" align="center"></el-table-column>
-                <el-table-column prop="bannerUrl" label="跳转位置或链接" width="180" align="center"></el-table-column>
-                <el-table-column prop="showTime" label="展示时间" width="180" align="center"></el-table-column>
+                <el-table-column prop="position" label="位置" width="100" align="center"></el-table-column>
+                <el-table-column prop="bookName" label="书籍名称" width="180" align="center"></el-table-column>
+                <el-table-column prop="showTime" label="展示时间" width="280" align="center"></el-table-column>
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                                 prop="createTime" label="发布时间" width="180" align="center"></el-table-column>
-                <el-table-column prop="status" label="状态" width="180" align="center"></el-table-column>
+                                 prop="createTime" label="创建时间" width="180" align="center"></el-table-column>
+                <el-table-column prop="createAdmin" label="创建人" width="80" align="center"></el-table-column>
+                <el-table-column prop="status" label="状态" width="80" align="center"></el-table-column>
                 <el-table-column label="操作" min-width="250" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" :disabled="scope.row.status == 0 ? true:false" type="danger" @click="handleOffLine(scope.$index, scope.row)">下线</el-button>
@@ -165,7 +165,8 @@
                     create_end_time: '',
                     show_start_time: '',
                     show_end_time: '',
-                    bannerName: '',
+                    bookName: '',
+                    createAdmin:"",
                 },
                 pickerBeginDateBefore:{
                     disabledDate: (time) => {
@@ -200,11 +201,11 @@
                     }
                 },
                 tableData: [
-                    {"bannerName":"xxxx","bannerImage":"http://images01.mopimg.cn/imgs/20180702/20180702_c12a04208c276a5f9adef630bda4dd61.JPEG",
-                        "position":"男频","bannerUrl":"鬼吹灯","showTime":"2019-05-07 ~ 2019-09-15","createTime":"2019-05-07","status":"在线"
+                    {"bannerImage":"http://images01.mopimg.cn/imgs/20180702/20180702_c12a04208c276a5f9adef630bda4dd61.JPEG",
+                        "position":"男频","bookName":"鬼吹灯","showTime":"2019-05-07 ~ 2019-09-15","createTime":"2019-05-07","status":"在线","createAdmin":"A"
                     },
-                    {"bannerName":"xxxx","bannerImage":"http://images01.mopimg.cn/imgs/20180706/20180706_8c97b34a6c53fe256c5dc07493541df9.JPEG",
-                        "position":"女频","bannerUrl":"鬼吹灯1","showTime":"2019-05-07 ~ 2019-09-15","createTime":"2019-05-07","status":"在线"
+                    {"bannerImage":"http://images01.mopimg.cn/imgs/20180706/20180706_8c97b34a6c53fe256c5dc07493541df9.JPEG",
+                        "position":"女频","bookName":"鬼吹灯1","showTime":"2019-05-07 ~ 2019-09-15","createTime":"2019-05-07","status":"在线","createAdmin":"B"
                     },
                 ],
                 pageNo: 1,
@@ -245,7 +246,7 @@
             clearData() {
                 this.$refs.bannerWxForm.resetFields()
                 this.banner_wx_condition.status = '999'
-                this.banner_wx_condition.bannerName = ''
+                this.banner_wx_condition.bookName = ''
                 this.banner_wx_condition.position = '999'
             },
             sortChange: function(column, prop, order) {
