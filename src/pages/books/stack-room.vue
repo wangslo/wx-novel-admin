@@ -3,7 +3,7 @@
     <div class="stack-room-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item >书籍管理</el-breadcrumb-item>
+        <el-breadcrumb-item >书库管理</el-breadcrumb-item>
         <el-breadcrumb-item >书库列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>

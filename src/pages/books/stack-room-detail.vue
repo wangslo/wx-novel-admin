@@ -3,7 +3,8 @@
         <div class="book-seller-list-header">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-                <el-breadcrumb-item >书商管理</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{path: '/stack-room'}">书库管理</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{path: '/stack-room'}">书库列表</el-breadcrumb-item>
                 <el-breadcrumb-item >xxx详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>

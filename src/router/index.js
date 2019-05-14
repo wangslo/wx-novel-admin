@@ -22,9 +22,12 @@ export default new VueRouter({
         {path: '/userInfo', name: 'userInfo', component: page('user/userInfo')},
         {path: '/blacklist', name: 'blacklist', component: page('user/blacklist')},
         {path: '/blacklistInfo', name: 'blacklistInfo', component: page('user/blacklistInfo')},
-
+        //书库管理
         {path: '/stack-room', name: 'stackRoom', component: page('books/stack-room')},
         {path: '/stack-room-detail', name: 'stackRoomDetail', component: page('books/stack-room-detail')},
+        {path: '/be-audited-list', name: 'beAuditedList', component: page('books/be-audited-list')},
+        {path: '/book-detail', name: 'bookDetail', component: page('books/book-detail')},
+
 
         {path: '/adver-data', name: 'adver-data', component: page('adver')},
 
