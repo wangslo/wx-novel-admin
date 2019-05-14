@@ -2,13 +2,19 @@
   <div class="userInfo-page">
     <div class="userInfo-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <template v-if="">
-
+        <template v-if="this.$route.query.from == 'recharge-list'">
+          <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{path: '/recharge-list'}">书币管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{path: '/recharge-list'}">充值列表</el-breadcrumb-item>
+          <el-breadcrumb-item >个人详情</el-breadcrumb-item>
         </template>
-        <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/userManger'}">用户管理</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/userManger'}">用户列表</el-breadcrumb-item>
-        <el-breadcrumb-item >个人详情</el-breadcrumb-item>
+        <template v-else>
+          <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{path: '/userManger'}">用户管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{path: '/userManger'}">用户列表</el-breadcrumb-item>
+          <el-breadcrumb-item >个人详情</el-breadcrumb-item>
+        </template>
+
       </el-breadcrumb>
     </div>
     <div class="userInfo-body">
