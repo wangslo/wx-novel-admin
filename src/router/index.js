@@ -4,7 +4,7 @@ import Home from '@/pages/home'
 const page = name => () => import('@/pages/' + name)
 
 export default new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',

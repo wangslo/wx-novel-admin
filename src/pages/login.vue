@@ -55,12 +55,12 @@
       },
       onLogin() {
         this.login(this.form).then(res=>{
-          if(res.code == 0){
+          if(res.success){
             this.$message.success('登录成功')
             this.$router.push({path: '/'})
             this.isLogin = false
           }else {
-            this.$message.error(res.message)
+            this.$message.error(res.msg)
             this.isLogin = false
           }
         }).catch((error)=>{

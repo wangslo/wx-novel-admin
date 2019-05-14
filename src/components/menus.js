@@ -1,6 +1,6 @@
 const menus = [
   {
-    id: 'user',
+    id: 'index',
     icon: 'fa fa-user-o',
     label: '首页',
     submenu: [

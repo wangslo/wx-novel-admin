@@ -11,9 +11,9 @@ const actions = {
     // 模拟登录
     return new Promise((resolve, reject) => {
       orgModuleApi.login(user).then((res)=>{
-        if(res.code === '0'){
-          let data = res.data
-          commit('SET_LOGIN_TOKEN', data.login_token)
+        if(res.success){
+          let data = res.data.data
+          commit('SET_LOGIN_TOKEN', 'ddddd')
           commit('SET_DOING_LOGIN', false)
           setTimeout(() => {
             resolve(res)
