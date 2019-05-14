@@ -11,6 +11,8 @@ import './assets/font-awesome-4.7.0/css/font-awesome.min.css'
 import NProgress from 'nprogress'
 import common from './assets/js/common'
 Vue.prototype.common = common
+import fetch from './api/fetch'
+Vue.prototype.fetch = fetch
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false

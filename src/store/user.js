@@ -1,4 +1,6 @@
 import {orgModuleApi} from '../api/main'
+import fetch from '../api/fetch'
+
 const state = {
   user: null,
   role: null,
@@ -10,9 +12,11 @@ const actions = {
     commit('SET_DOING_LOGIN', true)
     // 模拟登录
     return new Promise((resolve, reject) => {
-      orgModuleApi.login(user).then((res)=>{
+      fetch.login(user,res=>{
+        console.log(res)
         if(res.success){
           let data = res.data.data
+          sessionStorage.setItem('role', JSON.stringify(data))
           commit('SET_LOGIN_TOKEN', 'ddddd')
           commit('SET_DOING_LOGIN', false)
           setTimeout(() => {
@@ -21,8 +25,6 @@ const actions = {
         }else{
           resolve(res)
         }
-      }).catch(error => {
-        reject(error)
       })
     })
   },
@@ -36,7 +38,6 @@ const actions = {
         if(res.code === '0'){
           let data = res.data
           sessionStorage.setItem('user', JSON.stringify(data.info))
-          sessionStorage.setItem('role', JSON.stringify(data.role))
           commit('SET_LOGIN_USER', JSON.stringify(data.info))
           commit('SET_LOGIN_ROLE', JSON.stringify(data.role))
           setTimeout(() => {

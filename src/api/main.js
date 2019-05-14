@@ -1,8 +1,10 @@
 import qs from 'qs'
 var baseURLStr = process.env.API_ROOT
+
 const orgAxios = axios.create({
   baseURL: baseURLStr,
   timeout: 5000,
+  withCredentials: true,
 });
 
 // http request 拦截器
@@ -40,7 +42,7 @@ export const orgModuleApi = {
     return orgAxios.get('/d_auth/list',{params:params}).then(res=>res.data);
   },
   getAccountList:(params) =>{
-    return orgAxios.get('/d_daccount/index',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/privileges.html',qs.stringify(params)).then(res=>res.data);
   },
   getAccountInfo:(params) =>{
     return orgAxios.get('/d_daccount/info',{params:params}).then(res=>res.data);

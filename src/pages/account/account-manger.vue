@@ -306,6 +306,11 @@
         pwd_placeholder: '******'
       }
     },
+    created() {
+      this.fetch.getAccountList('',res=>{
+        console.log(res)
+      })
+    },
     methods: {
       operatAccount(status,id) {
         var _this = this

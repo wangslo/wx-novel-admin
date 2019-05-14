@@ -43,13 +43,38 @@
       setCurrentRoute () {
         this.defaultActive = this.$route.name
       },
+      getSubMenu(qxlist) {
+        var submenuList = []
+        if(qxlist.children != undefined){
+          if(qxlist.children.length > 0){
+            for(var i in qxlist.children){
+              this.getSubMenu(qxlist.children)
+              var submenu = {
+                id: qxlist.children[i].id,
+                path: qxlist.children[i].url,
+                label: qxlist.children[i].name
+              }
+              submenuList.push(submenu)
+            }
+          }
+        }
+        return submenuList
+      },
       setMenuList() {
-        // this.qxlist = sessionStorage.getItem('role')
         var _this = this
+        /*_this.qxlist = JSON.parse(sessionStorage.getItem('role'))
+        for(var item in _this.qxlist){
+          var submenuList = _this.getSubMenu(_this.qxlist[item])
+          var arr = {
+            id: _this.qxlist[item].id,
+            icon: 'fa ' + _this.qxlist[item].icon,
+            label: _this.qxlist[item].name,
+            submenu: submenuList
+          }
+          _this.menuList.push(arr)
+        }*/
         menus.map((item,index)=>{
-          // if(_this.qxlist.indexOf(item.id) > -1){
-            _this.menuList.push(item)
-          // }
+          _this.menuList.push(item)
         })
       }
     }

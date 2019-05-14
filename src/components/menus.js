@@ -1,24 +1,24 @@
 const menus = [
   {
-    id: 'index',
-    icon: 'fa fa-user-o',
+    id: 1000,
+    icon: 'fa fa-home',
     label: '首页',
     submenu: [
-      {id: 'home', name: 'home2', label: '首页'},
+      {id: 1100, name: 'home2', label: '首页'},
     ]
   },
   {
-    id: 'account',
+    id: 2000,
     icon: 'fa fa-file-powerpoint-o',
     label: '权限管理',
     submenu: [
-      {id: 'account-manger', name: 'accountManger', label: '账号管理'},
+      {id: 2100, name: 'accountManger', label: '账号管理'},
       {id: 'open-account', name: 'openAccount', label: '开设账号'},
     ]
   },
   {
     id: 'wechatPublic',
-    icon: 'fa fa-file-powerpoint-o',
+    icon: 'fa fa-telegram',
     label: '公众号管理',
     submenu: [
       {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
@@ -57,17 +57,17 @@ const menus = [
     ]
   },
   {
-    id: 'recommend',
+    id: 6000,
     icon: 'fa fa-hand-rock-o',
     label: '推荐管理',
     submenu: [
-      {id: 'recommend-book', name: 'recommendBook', label: '推荐书籍'},
+      {id: 6100, name: 'recommendBook', label: '推荐书籍'},
       // {id: 'recommend-banner', name: 'recommendBanner', label: 'banner管理'},
     ]
   },
   {
     id: 'bookcoins',
-    icon: 'fa fa-file-powerpoint-o',
+    icon: 'fa fa-money',
     label: '书币管理',
     submenu: [
       {id: 'recharge-list', name: 'rechargeList', label: '充值列表'},
@@ -92,7 +92,7 @@ const menus = [
   },
   {
     id: 'bookSeller',
-    icon: 'fa fa-file-image-o',
+    icon: 'fa fa-address-book-o',
     label: '书商管理',
     submenu: [
       {id: 'bookSellerList', name: 'bookSellerList', label: '书商列表'},
