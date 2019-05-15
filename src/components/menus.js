@@ -23,6 +23,7 @@ const menus = [
     submenu: [
       {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
       {id: 'authorization-manager', name: 'authorizationManager', label: '授权管理'},
+      {id: 'menu-config', name: 'menuConfig', label: '菜单配置'},
     ]
   },
   {

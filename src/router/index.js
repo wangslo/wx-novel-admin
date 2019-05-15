@@ -49,6 +49,7 @@ export default new VueRouter({
         //公众号
         {path: '/wechat-list', name: 'wechatList', component: page('wechat/wechatlist')},
         {path: '/authorization-manager', name: 'authorizationManager', component: page('wechat/authorization-manager')},
+        {path: '/menu-config', name: 'menuConfig', component: page('wechat/menu-config')},
         //书币管理
         {path: '/recharge-list', name: 'rechargeList', component: page('bookcoins/recharge-list')},
       ]
