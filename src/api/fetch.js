@@ -14,6 +14,18 @@ export default fetch = {
       }
     })
   },
+  initNoData(url,callback) {
+    var _this = this
+    $.ajax({
+      type: 'POST',
+      url: _this.api_url + url,
+      xhrFields: {withCredentials: true},
+      crossDomain: true,
+      success: function (res) {
+        callback(res)
+      }
+    })
+  },
   login(params,callback) {
     return this.init('/novelcms/pub/dologin.html', params, callback);
   },
