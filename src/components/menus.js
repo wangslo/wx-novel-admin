@@ -23,6 +23,7 @@ const menus = [
     submenu: [
       {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
       {id: 'authorization-manager', name: 'authorizationManager', label: '授权管理'},
+      {id: 'menu-config', name: 'menuConfig', label: '菜单配置'},
     ]
   },
   {
@@ -48,8 +49,8 @@ const menus = [
     icon: 'fa fa-bookmark-o',
     label: '书库管理',
     submenu: [
-      {id: '', name: '', label: '待审核列表'},
       {id: 'stack-room', name: 'stackRoom', label: '书库列表'},
+      {id: 'be-audited-list', name: 'beAuditedList', label: '待审核列表'},
       // {id: 'stack-room-detail', name: 'stackRoomDetail', label: '书籍详情'},
       // {id: '', name: '', label: '设置收费书籍'},
       // {id: '', name: '', label: '充值记录'},
