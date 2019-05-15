@@ -38,10 +38,10 @@ export const orgModuleApi = {
     return orgAxios.get('/d_myaccount/index',{params:params}).then(res=>res.data);
   },
   getAuthList:(params) =>{
-    return orgAxios.get('/d_auth/list',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/privileges.html',qs.stringify(params)).then(res=>res.data);
   },
   getAccountList:(params) =>{
-    return orgAxios.post('/novelcms/user/privileges.html',qs.stringify(params)).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/list.html',qs.stringify(params)).then(res=>res.data);
   },
   getAccountInfo:(params) =>{
     return orgAxios.get('/d_daccount/info',{params:params}).then(res=>res.data);
@@ -50,7 +50,7 @@ export const orgModuleApi = {
     return orgAxios.get('/d_daccount/edit',{params:params}).then(res=>res.data);
   },
   addAccountInfo:(params) =>{
-    return orgAxios.get('/d_daccount/create',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/create.html',qs.stringify(params)).then(res=>res.data);
   },
   operatAccount:(params) =>{
     return orgAxios.get('/d_daccount/status',{params:params}).then(res=>res.data);

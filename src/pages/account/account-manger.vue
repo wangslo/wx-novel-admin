@@ -9,24 +9,11 @@
     </div>
     <div class="account-body">
       <el-form ref="accountForm" :model="account_condition" class="account-form" label-width="80px" :rules="accountRules" size="small">
-        <el-form-item label="账号" prop="account" label-width="60px">
+        <el-form-item label="邮箱" prop="account" label-width="60px">
           <el-input v-model="account_condition.account"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input v-model="account_condition.phone"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="nickName" label-width="60px" >
           <el-input v-model="account_condition.nickName"></el-input>
-        </el-form-item>
-        <el-form-item label="部门" prop="branch" label-width="60px">
-          <el-select v-model="account_condition.branch" placeholder="请选择部门">
-            <el-option label="全部" value="999"></el-option>
-            <el-option label="运营" value="0"></el-option>
-            <el-option label="产品" value="1"></el-option>
-            <el-option label="测试" value="2"></el-option>
-            <el-option label="开发" value="3"></el-option>
-            <el-option label="商务" value="4"></el-option>
-          </el-select>
         </el-form-item>
         <el-form-item label="创建时间">
           <el-col :span="10" class="startTime">
@@ -57,9 +44,19 @@
         </el-form-item>
         <el-form-item label="账号状态" prop="status">
           <el-select v-model="account_condition.status" placeholder="请选择账号状态">
-            <el-option label="全部" value="999"></el-option>
+            <el-option label="全部" value=""></el-option>
             <el-option label="正常" value="0"></el-option>
             <el-option label="禁用" value="1"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="部门" prop="branch" label-width="60px">
+          <el-select v-model="account_condition.branch" placeholder="请选择部门">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="运营" value="0"></el-option>
+            <el-option label="产品" value="1"></el-option>
+            <el-option label="测试" value="2"></el-option>
+            <el-option label="开发" value="3"></el-option>
+            <el-option label="商务" value="4"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item style="float: right;">
@@ -77,8 +74,7 @@
             <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="account" label="账号" width="180" align="center"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
+        <el-table-column prop="account" label="邮箱" width="180" align="center"></el-table-column>
         <el-table-column prop="realName" label="真实姓名" width="180" align="center"></el-table-column>
         <el-table-column prop="branch" label="部门" width="180" align="center"></el-table-column>
         <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
@@ -89,6 +85,7 @@
             <el-button size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button v-if="scope.row.status=='正常'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">禁用</el-button>
             <el-button v-if="scope.row.status=='禁用'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">启用</el-button>
+            <el-button size="mini" type="danger" @click="handleDel(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -120,11 +117,19 @@
             <el-button type="primary" @click="operatAccount('qiyong',use.id)">启 用</el-button>
           </span>
         </el-dialog>
+        <el-dialog title="" :visible.sync="delDialog" width="300px" center>
+          <span>你确定要【删除】</span>
+          <span>账号：{{del.account}}</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="delDialog = false">取 消</el-button>
+            <el-button type="primary" @click="delAccount(del.id)">删 除</el-button>
+          </span>
+        </el-dialog>
         <el-dialog title="编辑权限" :visible.sync="editDialog" width="50%" center>
           <el-form ref="accountInfoForm" :model="accountInfoForm" :rules="accountInfoRules" label-width="100px" size="small" class="account-info-form" label-position="left">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="账号" class="accountInfoForm-item">
+                <el-form-item label="邮箱" class="accountInfoForm-item">
                   <el-input v-model="accountInfoForm.account" disabled></el-input>
                 </el-form-item>
               </el-col>
@@ -138,22 +143,9 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="手机号" prop="phone" class="accountInfoForm-item">
-                  <el-input v-model="accountInfoForm.phone" :disabled="phone_status"></el-input>
-                </el-form-item>
-              </el-col>
-              <!--<el-col :span="8">
-                <el-form-item label="（请输入手机号）" label-width="300px"></el-form-item>
-              </el-col>-->
-              <el-col :span="12">
-                <el-button type="success" size="small" @click="setPhoneInput">更改手机号</el-button>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
                 <el-form-item label="部门" class="accountInfoForm-item">
                   <el-select v-model="accountInfoForm.branch" placeholder="请选择部门">
-                    <el-option label="全部" value="999"></el-option>
+                    <el-option label="全部" value=""></el-option>
                     <el-option label="运营" value="0"></el-option>
                     <el-option label="产品" value="1"></el-option>
                     <el-option label="测试" value="2"></el-option>
@@ -181,20 +173,7 @@
               <el-form-item label="权限选择（可多选）" label-width="300px">
               </el-form-item>
               <el-form-item prop="power" label-width="0px" class="accountInfoForm-check">
-                <el-checkbox-group v-model="accountInfoForm.power">
-                  <el-checkbox label="account">权限管理</el-checkbox>
-                  <el-checkbox label="user">用户管理</el-checkbox>
-                  <el-checkbox label="bookCity">书城管理</el-checkbox>
-                  <el-checkbox label="book">书籍管理</el-checkbox>
-                  <el-checkbox label="recommend">推荐管理</el-checkbox>
-                  <el-checkbox label="bannerManger">banner管理</el-checkbox>
-                  <el-checkbox label="adver">广告管理</el-checkbox>
-                  <el-checkbox label="help">帮助与反馈</el-checkbox>
-                  <el-checkbox label="activity">活动管理</el-checkbox>
-                  <el-checkbox label="userData">用户数据</el-checkbox>
-                  <el-checkbox label="message">消息管理</el-checkbox>
-                  <el-checkbox label="recharge">充值记录</el-checkbox>
-                </el-checkbox-group>
+
               </el-form-item>
             </el-row>
           </el-form>
@@ -211,22 +190,6 @@
   export default {
     name: 'account',
     data() {
-      var checkPhone = (rule, value, callback) => {
-        const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/
-        // const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-        if (!value) {
-          // return callback(new Error('手机号不能为空'));
-          callback()
-        }else {
-          setTimeout(() => {
-            if (!phoneReg.test(value)) {
-              callback(new Error('手机号格式不正确'))
-            } else {
-              callback()
-            }
-          }, 1000);
-        }
-      }
       var checkPassword = (rule, value, callback) => {
         const pswReg = /^[a-zA-Z0-9]{6,12}$/
           if (!value) {
@@ -243,24 +206,21 @@
       return {
         account_condition: {
           account: '',
-          phone: '',
           nickName: '',
-          branch: '999',
+          branch: '',
           create_start_time: '',
           create_end_time: '',
-          status: '999',
+          status: '',
         },
         accountInfoForm: {
           id: '',
           account: '',
-          phone: '',
           realName: '',
           branch: '',
           password: '',
           power: [],
         },
         accountInfoRules: {
-          phone: [{ validator: checkPhone, trigger: 'blur' }],
           password: [{ validator: checkPassword, trigger: 'blur' }],
           power: [{ type: 'array', required: true, message: '请至少选择一个权限', trigger: 'change' }],
         },
@@ -282,7 +242,6 @@
         },
         accountRules: {
           account: [/*{ validator: validateAccount, trigger: 'blur' }*/],
-          phone: [],
           nickName:[],
           branch: [],
           create_start_time: [],
@@ -296,22 +255,21 @@
         totalSize: 0,
         forbidDialog:false,
         useDialog:false,
+        delDialog:false,
         forbid: {account:'',id:''},
         use: {account:'',id:''},
-        editDialog:false,
-        phone_status: true,
+        del: {account:'',id:''},
+        editDialog: false,
         psw_status: true,
         sort_prop: 'createTime',
         sort_order: 'desc',
-        pwd_placeholder: '******'
+        pwd_placeholder: '******',
       }
     },
-    created() {
-      orgModuleApi.getAccountList().then((res)=>{
-        console.log(res)
-      })
-    },
     methods: {
+      delAccount(id) {
+        this.delDialog = false
+      },
       operatAccount(status,id) {
         var _this = this
         var params = {
@@ -332,35 +290,30 @@
           }
         })
       },
-      setPhoneInput() {
-        this.phone_status = false
-      },
       setPswInput() {
         this.psw_status = false
         this.pwd_placeholder = ''
       },
       getAccountLists() {
         var params = {
-          token: sessionStorage.getItem('token'),
           page: this.pageNo,
           size: this.pageSize,
-          account	: this.account_condition.account,
-          nickname: this.account_condition.nickName,
-          mobile: this.account_condition.phone,
-          department: this.account_condition.branch,
-          status: this.account_condition.status,
-          order: this.sort_order,
-          sort: this.sort_prop
+          username	: this.account_condition.account,
+          name: this.account_condition.nickName,
+          dept: this.account_condition.branch,
+          lock: this.account_condition.status,
+          registDate_s: this.account_condition.create_start_time,
+          registDate_e: this.account_condition.create_end_time,
         }
         var _this = this
         _this.tableData = []
         orgModuleApi.getAccountList(params).then((res)=>{
-          if(res.code == 0){
-            res.data.list.map((item,index)=>{
+          console.log(res)
+          if(res.success){
+            res.data.content.map((item,index)=>{
               _this.tableData.push({
                 id: item.id,
                 account: item.account,
-                phone: item.mobile,
                 realName: item.nickname,
                 branch: item.department,
                 createTime: _this.common.getDate(item.createTime),
@@ -394,6 +347,13 @@
           }
         }
       },
+      handleDel(idx,row) {
+        this.delDialog = true
+        this.del = {
+          account: row.account,
+          id: row.id
+        }
+      },
       handleEdit(idx,row) {
         var _this = this
         var params = {
@@ -405,14 +365,12 @@
             _this.accountInfoForm = {
               id: row.id,
               account: row.account,
-              phone: row.phone,
               realName: row.realName,
               branch: row.branch,
               password: '',
               power: res.data.role,
             }
             _this.editDialog = true
-            _this.phone_status = true
             _this.psw_status = true
             _this.pwd_placeholder = '******'
           }else {
@@ -444,7 +402,6 @@
           token: sessionStorage.getItem('token'),
           id: _this.accountInfoForm.id,
           nickname: _this.accountInfoForm.realName,
-          mobile: _this.accountInfoForm.phone,
           password: _this.accountInfoForm.password,
           department: _this.accountInfoForm.branch,
           auths: _this.accountInfoForm.power.join('-'),
