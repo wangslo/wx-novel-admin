@@ -71,7 +71,7 @@
                 @sort-change='sortChange'>
         <el-table-column label="序号" width="80" align="center">
           <template slot-scope="scope">
-            <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
+            <span>{{scope.$index+(pageNo) * pageSize + 1}} </span>
           </template>
         </el-table-column>
         <el-table-column prop="account" label="邮箱" width="180" align="center"></el-table-column>
@@ -249,7 +249,7 @@
           status: [],
         },
         tableData: [],
-        pageNo: 1,
+        pageNo: 0,
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
@@ -266,6 +266,9 @@
         pwd_placeholder: '******',
       }
     },
+//    created() {
+//      this.getAccountLists()
+//    },
     methods: {
       delAccount(id) {
         this.delDialog = false
@@ -310,17 +313,17 @@
         orgModuleApi.getAccountList(params).then((res)=>{
           console.log(res)
           if(res.success){
-            res.data.content.map((item,index)=>{
+            res.data.data.map((item,index)=>{
               _this.tableData.push({
                 id: item.id,
-                account: item.account,
-                realName: item.nickname,
-                branch: item.department,
-                createTime: _this.common.getDate(item.createTime),
+                account: item.username,
+                realName: item.name,
+                branch: item.dept,
+                createTime: _this.common.getDate((item.registDate/1000)),
                 status: item.status==1?'正常':'禁用',
               })
             })
-            _this.totalSize = parseInt(res.data.page.all_count)
+            _this.totalSize = parseInt(res.data.total)
           }
         })
       },
