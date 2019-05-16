@@ -128,8 +128,10 @@
 
         <el-table-column label="收费起始章节2" width="180" align="center">
           <template slot-scope="scope">
-            <i class="el-icon-edit"></i>
-            {{scope.row.charge_start}}
+            <span @click="changeStartChapter(scope.$index, scope.row)">
+              <i class="el-icon-edit"></i>
+              {{scope.row.charge_start}}
+            </span>
           </template>
         </el-table-column>
         <el-table-column prop="charge_ways" label="审核通过时间" width="180" align="center"></el-table-column>
@@ -157,8 +159,8 @@
         <el-dialog title="" :visible.sync="offlineDialog" width="500px" center>
           <span>设置收费起始章节</span>
           <el-form  label-width="12px" size="small" class="account-info-form" label-position="left">
-            <el-form-item label="收费起始章节" required prop="realName" label-width="110px">
-              <el-input v-model="reason">222</el-input>
+            <el-form-item label="收费起始章节" required  label-width="110px">
+              <el-input v-model="chargeStartChapter">222</el-input>
             </el-form-item>
           </el-form>
           <!--<el-input-->
@@ -236,6 +238,7 @@
         offlineDialog: false,
         sort_prop: 'updateTime',
         sort_order: 'desc',
+        chargeStartChapter:'',
       }
     },
     created() {
@@ -246,6 +249,9 @@
         this.$router.push({
           path:'/stack-room-detail'
         })
+      },
+      changeStartChapter(index,row){
+          this.offlineDialog = true;
       },
       getStackRoomLists() {
 

@@ -58,6 +58,17 @@ export const orgModuleApi = {
   updatePwd:(params) =>{
     return orgAxios.get('/d_myaccount/edit',{params:params}).then(res=>res.data);
   },
+
+  //公众号
+  wechatList:(params) =>{
+    return orgAxios.post('/novelcms/gzh/list.html',qs.stringify(params)).then(res=>res.data);
+  },
+  createWechat:(params) =>{
+    return orgAxios.post('/novelcms/gzh/create.html',qs.stringify(params)).then(res=>res.data);
+  },
+  wechatRelationToUser:(params) =>{
+    return orgAxios.post('/novelcms/user/umap.html',qs.stringify(params)).then(res=>res.data);
+  },
 }
 export const uploadModuleApi = {
   uploadImg: (params) =>{

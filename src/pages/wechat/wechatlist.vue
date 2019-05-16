@@ -93,7 +93,7 @@
                 </el-form-item>
                 <el-form-item style="float: right;">
                     <el-button type="primary" @click="clearData">清空</el-button>
-                    <el-button type="primary" @click="onsubmit">查找</el-button>
+                    <el-button type="primary" @click="getWechatLists">查找</el-button>
                 </el-form-item>
             </el-form>
             <el-table :data="tableData" style="width:100%;"
@@ -171,6 +171,7 @@
     </div>
 </template>
 <script>
+  import {orgModuleApi} from '../../api/main'
   export default {
     name: 'user',
     data() {
@@ -232,10 +233,22 @@
           }
         },
         tableData: [
-          {'wechatId':"x11x",'wechatName':'好多好书1','wechatType':'A','company':'公司1','dailyRecharge':13,'dailyConcernS':'12/34','dailyChargeS':'12/4556','allConcernS':'12345/2345','accumulatedCost':'xxx','createTime':'2019-01-21 11:00:00','createAdmin':'Tom'},
+          {
+            'wechatId':"x11x",
+            'wechatName':'好多好书1',
+            'wechatType':'A',
+            'company':'公司1',
+            'dailyRecharge':13,
+            'dailyConcernS':'12/34',
+            'dailyChargeS':'12/4556',
+            'allConcernS':'12345/2345',
+            'accumulatedCost':'xxx',
+            'createTime':'2019-01-21 11:00:00',
+            'createAdmin':'Tom'
+          },
           {'wechatId':"x22x",'wechatName':'好多好书2','wechatType':'A','company':'公司2','dailyRecharge':13,'dailyConcernS':'12/34','dailyChargeS':'12/4556','allConcernS':'12345/2345','accumulatedCost':'xxx','createTime':'2019-01-21 11:00:00','createAdmin':'Tom'}
         ],
-        pageNo: 1,
+        pageNo: 0,
         pageSize: 10,
         currentPage: 1,
         defriendDialog:false,
@@ -259,6 +272,38 @@
       handleDefriend(idx,row) {
         this.defriendDialog = true
         console.log(row)
+      },
+      getWechatLists(){
+        console.log('wechatlist')
+        var params = {
+          page: this.pageNo,
+          size: this.pageSize,
+          appid	: '',
+          name: '',
+          belongto:'',
+          uid:'',
+          registDate_s:'',
+          registDate_e:'',
+        }
+        var _this = this
+        _this.tableData = []
+        orgModuleApi.wechatList(params).then((res)=>{
+          console.log(res)
+//          if(res.success){
+//            res.data.content.map((item,index)=>{
+//              _this.tableData.push({
+//                id: item.id,
+//                account: item.account,
+//                realName: item.nickname,
+//                branch: item.department,
+//                createTime: _this.common.getDate(item.createTime),
+//                status: item.status==1?'正常':'禁用',
+//              })
+//            })
+//            _this.totalSize = parseInt(res.data.page.all_count)
+//          }
+        })
+
       },
       handleSearch(idx,row) {
         this.$router.push({
