@@ -42,6 +42,7 @@ const menus = [
     label: '推广中心',
     submenu: [
       {id: 'novelPromotion', name: 'novelPromotion', label: '小说推广'},
+      {id: 'pagePromotion', name: 'pagePromotion', label: '页面推广'},
     ]
   },
   {

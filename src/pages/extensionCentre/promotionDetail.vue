@@ -53,7 +53,7 @@
           </el-table-column>
           <el-table-column label="图文推广" width="100" align="center">
             <template slot-scope="scope">
-              <div class="img-promotion" style="color: blue;cursor: pointer;">生成图文</div>
+              <div class="img-promotion" style="color: blue;cursor: pointer;" @click="openImgPage(scope.$index, scope.row)">生成图文</div>
             </template>
           </el-table-column>
           <el-table-column label="H5推广" width="100" align="center">
@@ -85,7 +85,14 @@
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="createDialog = false">取 消</el-button>
-          <el-button type="primary" @click="createDialog = false">确 定</el-button>
+          <el-button type="primary" @click="closeCreateBox">确 定</el-button>
+        </span>
+      </el-dialog>
+      <el-dialog title="消息提示" :visible.sync="msgDialog" width="500px">
+        <span>推广链接已生成，推广效果在推广统计中查看。</span>
+        <el-button type="primary" size="mini">复制链接</el-button>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="msgDialog = false">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -149,14 +156,29 @@
           },
         ],
         createDialog: false,
+        msgDialog: false,
         concern: 2,
         channel_name: '',
         promotion_page: '',
       }
     },
     methods: {
+      closeCreateBox() {
+        this.createDialog = false
+        this.msgDialog = true
+      },
       openCreateBox(idx, row) {
         this.createDialog = true
+      },
+      openImgPage(idx, row) {
+        this.$router.push({
+          name: 'imgPromotion',
+        })
+        const {href} = this.$router.resolve({
+          path: '/imgPromotion',
+          query: {}
+        })
+        window.open(href, '_blank')
       },
     }
   }
@@ -234,7 +256,7 @@
           margin-top: 5px;
         }
         .el-radio{
-          margin-right: 2px;
+          margin-right: 10px;
           line-height: 1;
           margin-top: 5px;
         }
