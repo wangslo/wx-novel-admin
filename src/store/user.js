@@ -53,7 +53,13 @@ const actions = {
   async logout ({commit},params) {
     // 模拟退出
     return new Promise((resolve, reject) => {
-      orgModuleApi.loginout(params).then((res)=>{
+      setTimeout(() => {
+        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('role')
+        commit('SET_LOGIN_USER', null)
+        resolve()
+      }, 100)
+      /*orgModuleApi.loginout(params).then((res)=>{
         if(res.code == 0){
           setTimeout(() => {
             sessionStorage.removeItem('user')
@@ -65,7 +71,7 @@ const actions = {
         }else {
           resolve(res)
         }
-      })
+      })*/
     })
   }
 }

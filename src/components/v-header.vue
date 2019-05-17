@@ -19,7 +19,7 @@
   </el-row>
 </template>
 <script type="text/javascript">
-  // import {mapActions, mapState} from 'vuex'
+  import {mapActions, mapState} from 'vuex'
   export default {
     name: 'Vheader',
     data () {
@@ -36,7 +36,7 @@
       this.getLoginUser()
     },*/
     methods: {
-      // ...mapActions(['getLoginUser','logout']),
+      ...mapActions(['getLoginUser','logout']),
       handleSwitchSide () {
         this.mini = !this.mini
         this.$emit('switch', this.mini)
