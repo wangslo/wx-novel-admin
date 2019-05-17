@@ -65,27 +65,24 @@
           <el-button type="primary">开设账号</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="tableData" style="width:100%;"
-                :default-sort = "{prop: 'createTime', order: 'descending'}"
-                stripe border
-                @sort-change='sortChange'>
+      <el-table :data="tableData" style="width:100%;" stripe border>
         <el-table-column label="序号" width="80" align="center">
           <template slot-scope="scope">
-            <span>{{scope.$index+(pageNo) * pageSize + 1}} </span>
+            <span>{{scope.$index+pageNo * pageSize + 1}} </span>
           </template>
         </el-table-column>
         <el-table-column prop="account" label="邮箱" width="180" align="center"></el-table-column>
         <el-table-column prop="realName" label="真实姓名" width="180" align="center"></el-table-column>
         <el-table-column prop="branch" label="部门" width="180" align="center"></el-table-column>
-        <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                         prop="createTime" label="创建时间" width="180" align="center"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="180" align="center"></el-table-column>
         <el-table-column prop="status" label="账号状态" width="180" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="250" align="center">
+        <el-table-column label="操作" min-width="300" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button v-if="scope.row.status=='正常'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">禁用</el-button>
             <el-button v-if="scope.row.status=='禁用'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">启用</el-button>
             <el-button size="mini" type="danger" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" type="primary" @click="handleInfo(scope.$index, scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -261,14 +258,12 @@
         del: {account:'',id:''},
         editDialog: false,
         psw_status: true,
-        sort_prop: 'createTime',
-        sort_order: 'desc',
         pwd_placeholder: '******',
       }
     },
-//    created() {
-//      this.getAccountLists()
-//    },
+    created() {
+      this.getAccountLists()
+    },
     methods: {
       delAccount(id) {
         this.delDialog = false
@@ -319,11 +314,11 @@
                 account: item.username,
                 realName: item.name,
                 branch: item.dept,
-                createTime: _this.common.getDate((item.registDate/1000)),
-                status: item.status==1?'正常':'禁用',
+                createTime: _this.common.getDate(item.registDate),
+                status: item.lock?'正常':'禁用',
               })
             })
-            _this.totalSize = parseInt(res.data.total)
+            _this.totalSize = parseInt(res.data.totalElements)
           }
         })
       },
@@ -357,14 +352,21 @@
           id: row.id
         }
       },
+      handleInfo(idx,row) {
+        this.$router.push({
+          name:'accountInfo',
+          params:{
+            id: row.id
+          }
+        })
+      },
       handleEdit(idx,row) {
         var _this = this
         var params = {
-          token: sessionStorage.getItem('token'),
-          id: row.id
+          uid: row.id
         }
         orgModuleApi.getAccountInfo(params).then(res=>{
-          if(res.code == 0){
+          if(res.success){
             _this.accountInfoForm = {
               id: row.id,
               account: row.account,
@@ -383,11 +385,6 @@
       },
       clearData() {
         this.$refs.accountForm.resetFields()
-      },
-      sortChange: function(column, prop, order) {
-        this.sort_prop = column.prop
-        this.sort_order = column.order.replace('ending','')
-        this.getAccountLists()
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

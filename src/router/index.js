@@ -17,6 +17,7 @@ export default new VueRouter({
 
         {path: '/account-manger', name: 'accountManger', component: page('account/account-manger')},
         {path: '/open-account', name: 'openAccount', component: page('account/open-account')},
+        {path: '/accountInfo/:id', name: 'accountInfo', component: page('account/accountInfo')},
 
         {path: '/userManger', name: 'userManger', component: page('user/userManger')},
         {path: '/userInfo', name: 'userInfo', component: page('user/userInfo')},
@@ -28,6 +29,12 @@ export default new VueRouter({
         {path: '/be-audited-list', name: 'beAuditedList', component: page('books/be-audited-list')},
         {path: '/book-detail', name: 'bookDetail', component: page('books/book-detail')},
 
+        {path: '/replyMsg', name: 'replyMsg', component: page('message/replyMsg')},
+        {path: '/create-msg', name: 'create-msg', component: page('message/create-msg')},
+
+        {path: '/novelPromotion', name: 'novelPromotion', component: page('extensionCentre/novelPromotion')},
+        {path: '/promotionDetail', name: 'promotionDetail', component: page('extensionCentre/promotionDetail')},
+        {path: '/pagePromotion', name: 'pagePromotion', component: page('extensionCentre/pagePromotion')},
 
         {path: '/adver-data', name: 'adver-data', component: page('adver')},
 
@@ -63,6 +70,8 @@ export default new VueRouter({
 
       ]
     },
-    {path: '/login', name: 'login', component: page('login')}
+    {path: '/login', name: 'login', component: page('login')},
+    {path: '/imgPromotion', name: 'imgPromotion', component: page('extensionCentre/imgPromotion')},
+    {path: '/promotion', name: 'promotion', component: page('extensionCentre/promotion')},
   ]
 })

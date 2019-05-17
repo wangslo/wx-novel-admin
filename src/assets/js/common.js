@@ -2,7 +2,7 @@ export default {
   getDate: function(value){
     var s = '';
     var date = new Date();
-    date.setTime(value * 1000);
+    date.setTime(value);
     // 计算本地时间与GMT时间的偏移量
     var len = date.getTime();
     var offset = date.getTimezoneOffset() * 60000;

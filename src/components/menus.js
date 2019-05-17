@@ -28,6 +28,23 @@ const menus = [
     ]
   },
   {
+    id: 'msg',
+    icon: 'fa  fa-commenting-o',
+    label: '消息服务',
+    submenu: [
+      {id: 'replyMsg', name: 'replyMsg', label: '消息回复'},
+    ]
+  },
+  {
+    id: 'extension',
+    icon: 'fa fa-expand',
+    label: '推广中心',
+    submenu: [
+      {id: 'novelPromotion', name: 'novelPromotion', label: '小说推广'},
+      {id: 'pagePromotion', name: 'pagePromotion', label: '页面推广'},
+    ]
+  },
+  {
     id: 'user',
     icon: 'fa fa-user-o',
     label: '用户管理',
@@ -69,7 +86,7 @@ const menus = [
   },
   {
     id: 'dataStatistics',
-    icon: 'fa fa-hand-rock-o',
+    icon: 'fa fa-database',
     label: '数据统计',
     submenu: [
       {id: 'data-overview', name: 'dataOverview', label: '数据概览'},
