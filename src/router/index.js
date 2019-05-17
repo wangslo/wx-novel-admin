@@ -57,6 +57,9 @@ export default new VueRouter({
         //数据统计
         {path: '/data-overview', name: 'dataOverview', component: page('datastatistics/data-overview')},
         {path: '/promotion-statistics', name: 'promotionStatistics', component: page('datastatistics/promotion-statistics')},
+        {path: '/data-detail', name: 'dataDetail', component: page('datastatistics/data-detail')},
+        {path: '/re-recharge-rate-first', name: 'reRechargeRateFirst', component: page('datastatistics/re-recharge-rate-first')},
+        {path: '/re-recharge-rate', name: 'reRechargeRate', component: page('datastatistics/re-recharge-rate')},
 
       ]
     },

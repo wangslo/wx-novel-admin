@@ -109,10 +109,11 @@
                     <el-table-column label="操作" min-width="60" align="center">
                         <template slot-scope="scope">
                             <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">数据明细</el-button>
-                            <el-button size="mini"  type="danger" @click="handleOffLine(scope.$index, scope.row)">删除</el-button>
+                            <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">删除</el-button>
                             <!--<el-button size="mini" v-if="scope.row.status != '正常'? true:false" type="primary" @click="handleOnLine(scope.$index, scope.row)">启用</el-button>-->
-                            <el-button size="mini" type="success" @click="handleDetail(scope.$index, scope.row)">查看图文</el-button>
-                            <el-button size="mini" type="success" @click="handleDetail(scope.$index, scope.row)">二维码</el-button>
+                            <el-button size="mini" v-if="button_type < 3 ? true:false" type="success" @click="copyUrl(scope.$index, scope.row)">复制链接</el-button>
+                            <el-button size="mini" v-if="button_type == 3 ? true:false" type="success" @click="viewText(scope.$index, scope.row)">查看图文</el-button>
+                            <el-button size="mini" type="success" @click="handelQrcode(scope.$index, scope.row)">二维码</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -128,7 +129,7 @@
                 </el-pagination>
                 <div class="dialog-div">
                     <el-dialog title="" :visible.sync="offlineDialog" width="500px" center>
-                        <span>你确认{{tmpAction}}“{{tmpBookSellerName}}”书商吗？</span>
+                        <span>你确认{{tmpAction}}“{{tmpBookSellerName}}”删除吗？</span>
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="offlineDialog = false">取 消</el-button>
                             <el-button type="primary" @click="offlineDialog = false">确 认</el-button>
@@ -200,7 +201,7 @@
           bookman: '999',
         },
         tmpBookSellerName:'xxxx',
-        tmpAction:'启用',
+        tmpAction:'',
         pickerBeginDateBefore:{
           disabledDate: (time) => {
             let beginDateVal = this.book_seller_list_condition.update_end_time;
@@ -274,7 +275,7 @@
       },
       handleOffLine(index, row){
         this.offlineDialog = true
-        this.tmpAction = '停用'
+        this.tmpAction = ''
         this.tmpBookSellerName = row.booksellerName;
       },
       handleOnLine(index, row){
@@ -284,8 +285,20 @@
       },
       handleDetail(index,row){
         this.$router.push({
-          path:'/book-seller-detail'
+          path:'/data-detail'
         })
+      },
+      handelQrcode(index,row){
+
+      },
+      copyUrl(index,row){
+        console.log('copy start')
+        window.copy("http://www.baidu.com")
+      },
+      viewText(){
+//        this.$router.push({
+//          path:'/book-seller-detail'
+//        })
       },
       reds:function(index){
         this.button_type = index;
