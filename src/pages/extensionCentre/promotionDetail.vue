@@ -171,9 +171,6 @@
         this.createDialog = true
       },
       openImgPage(idx, row) {
-        this.$router.push({
-          name: 'imgPromotion',
-        })
         const {href} = this.$router.resolve({
           path: '/imgPromotion',
           query: {}
