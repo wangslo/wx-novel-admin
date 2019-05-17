@@ -28,14 +28,15 @@
                     <span>今日新增关注（人）</span>
                 </div></el-col>
             </el-row>
-            <el-row>
+            <br />
+            <el-row style="width: 95%;margin: 0 auto;">
                 展示时间：
                 <el-button-group >
-                <el-button autofocus="true" size="mini" style="width: 70px" @click="reds(1)">7天</el-button>
-                <el-button  size="mini" style="width: 70px" @click="reds(2)">15天</el-button>
-                <el-button  size="mini" style="width: 70px" @click="reds(3)">30天</el-button>
-            </el-button-group>
-            </el-row>
+                    <el-button :type="button_type == 1 ? 'primary':''" size="mini" style="width: 70px" @click="reds(1)">7天</el-button>
+                    <el-button :type="button_type == 2 ? 'primary':''" size="mini" style="width: 70px" @click="reds(2)">30天</el-button>
+                    <el-button :type="button_type == 3 ? 'primary':''" size="mini" style="width: 70px" @click="reds(3)">30天</el-button>
+                </el-button-group>
+            </el-row><br />
             <el-row>
                 <div id="dataMap" style="width: 1400px;height: 500px;">
                 </div>
@@ -55,6 +56,7 @@
     name: 'Home2',
     data() {
       return {
+        button_type:1,
         today_income_total:"xxxx.xxx",
         today_general_rechare:"123.23",
         today_year_rechare:"45,32",
@@ -112,7 +114,7 @@
             data:['总收入','普通充值','包年充值','新增用户','新增关注']
           },
           toolbox: {
-            show : true,
+            show : false,
             feature : {
               mark : {show: true},
               dataView : {show: true, readOnly: false},
@@ -138,7 +140,7 @@
         });
       },
       reds:function(index){
-        this.changeRed = index;
+        this.button_type = index;
       }
     }
   }

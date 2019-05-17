@@ -56,8 +56,14 @@ export default new VueRouter({
         {path: '/wechat-list', name: 'wechatList', component: page('wechat/wechatlist')},
         {path: '/authorization-manager', name: 'authorizationManager', component: page('wechat/authorization-manager')},
         {path: '/menu-config', name: 'menuConfig', component: page('wechat/menu-config')},
+        {path: '/create-wechat', name: 'createWechat', component: page('wechat/create-wechat')},
         //书币管理
         {path: '/recharge-list', name: 'rechargeList', component: page('bookcoins/recharge-list')},
+
+        //数据统计
+        {path: '/data-overview', name: 'dataOverview', component: page('datastatistics/data-overview')},
+        {path: '/promotion-statistics', name: 'promotionStatistics', component: page('datastatistics/promotion-statistics')},
+
       ]
     },
     {path: '/login', name: 'login', component: page('login')}

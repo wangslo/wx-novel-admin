@@ -93,7 +93,7 @@
                 </el-form-item>
                 <el-form-item style="float: right;">
                     <el-button type="primary" @click="clearData">清空</el-button>
-                    <el-button type="primary" @click="onsubmit">查找</el-button>
+                    <el-button type="primary" @click="getWechatLists">查找</el-button>
                 </el-form-item>
             </el-form>
             <el-table :data="tableData" style="width:100%;"
@@ -102,7 +102,7 @@
                       @sort-change='sortChange'>
                 <el-table-column label="序号" width="50" align="center">
                     <template slot-scope="scope">
-                        <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
+                        <span>{{scope.$index+(pageNo) * pageSize + 1}} </span>
                     </template>
                 </el-table-column>
                 <!--<el-table-column label="头像" width="180" align="center">-->
@@ -120,20 +120,20 @@
                 <el-table-column prop="wechatName" label="公众号名称" width="180" align="center"></el-table-column>
                 <el-table-column prop="wechatType" label="公众号类型" width="180" align="center"></el-table-column>
                 <el-table-column prop="company" label="认证主体" width="180" align="center"></el-table-column>
-                <el-table-column prop="dailyRecharge" label="日充值" width="180" align="center"></el-table-column>
-                <el-table-column prop="dailyConcernS" label="日引流/日关注" width="180" align="center"></el-table-column>
-                <el-table-column prop="dailyChargeS" label="日付费(人)/总付费(人)" width="180" align="center"></el-table-column>
-                <el-table-column prop="allConcernS" label="总引流/总关注" width="180" align="center"></el-table-column>
-                <el-table-column prop="accumulatedCost" label="累计成本/累计充值" width="180" align="center"></el-table-column>
+                <el-table-column prop="dailyRecharge" label="日充值" width="50" align="center"></el-table-column>
+                <el-table-column prop="dailyConcernS" label="日引流/日关注" width="50" align="center"></el-table-column>
+                <el-table-column prop="dailyChargeS" label="日付费(人)/总付费(人)" width="50" align="center"></el-table-column>
+                <el-table-column prop="allConcernS" label="总引流/总关注" width="50" align="center"></el-table-column>
+                <el-table-column prop="accumulatedCost" label="累计成本/累计充值" width="50" align="center"></el-table-column>
+                <el-table-column v-if="false" sortable='custom' :sort-orders="['ascending', 'descending']"
+                                 prop="login_time" label="最近登录时间" width="50" align="center"></el-table-column>
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                                 prop="login_time" label="最近登录时间" width="180" align="center"></el-table-column>
-                <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                                 prop="createTime" label="创建时间" width="180" align="center"></el-table-column>
-                <el-table-column prop="createAdmin" label="创建人" width="180" align="center"></el-table-column>
+                                 prop="createTime" label="创建时间" width="100" align="center"></el-table-column>
+                <el-table-column prop="createAdmin" label="创建人" width="40" align="center"></el-table-column>
                 <el-table-column label="操作" min-width="250" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
-                        <el-button size="mini" type="warning" @click="handleDefriend(scope.$index, scope.row)">编辑</el-button>
+                        <!--<el-button size="mini" type="warning" @click="handleDefriend(scope.$index, scope.row)">编辑</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -171,6 +171,7 @@
     </div>
 </template>
 <script>
+  import {orgModuleApi} from '../../api/main'
   export default {
     name: 'user',
     data() {
@@ -232,14 +233,41 @@
           }
         },
         tableData: [
-          {'wechatId':"x11x",'wechatName':'好多好书1','wechatType':'A','company':'公司1','dailyRecharge':13,'dailyConcernS':'12/34','dailyChargeS':'12/4556','allConcernS':'12345/2345','accumulatedCost':'xxx','createTime':'2019-01-21 11:00:00','createAdmin':'Tom'},
-          {'wechatId':"x22x",'wechatName':'好多好书2','wechatType':'A','company':'公司2','dailyRecharge':13,'dailyConcernS':'12/34','dailyChargeS':'12/4556','allConcernS':'12345/2345','accumulatedCost':'xxx','createTime':'2019-01-21 11:00:00','createAdmin':'Tom'}
+          {
+            'wechatId':"x11x",
+            'wechatName':'好多好书1',
+            'wechatType':'A',
+            'company':'公司1',
+            'dailyRecharge':13,
+            'dailyConcernS':'12/34',
+            'dailyChargeS':'12/4556',
+            'allConcernS':'12345/2345',
+            'accumulatedCost':'xxx',
+            'createTime':'2019-01-21 11:00:00',
+            'createAdmin':'Tom'
+          },
+          {
+            'wechatId':"x22x",
+            'wechatName':'好多好书2',
+            'wechatType':'A',
+            'company':'公司2',
+            'dailyRecharge':13,
+            'dailyConcernS':'12/34',
+            'dailyChargeS':'12/4556',
+            'allConcernS':'12345/2345',
+            'accumulatedCost':'xxx',
+            'createTime':'2019-01-21 11:00:00',
+            'createAdmin':'Tom'
+          }
         ],
-        pageNo: 1,
+        pageNo: 0,
         pageSize: 10,
         currentPage: 1,
         defriendDialog:false,
       }
+    },
+    created() {
+      this.getWechatLists()
     },
     methods: {
       watchSize() {
@@ -260,9 +288,54 @@
         this.defriendDialog = true
         console.log(row)
       },
+      getWechatLists(){
+        console.log('wechatlist')
+        var params = {
+          page: this.pageNo,
+          size: this.pageSize,
+          appid	: '',
+          name: '',
+          belongto:'',
+          uid:'',
+          registDate_s:'',
+          registDate_e:'',
+        }
+        var _this = this
+        _this.tableData = []
+        orgModuleApi.wechatList(params).then((res)=>{
+          console.log(res)
+          if(res.success){
+            res.data.data.map((item,index)=>{
+              _this.tableData.push({
+//              {
+//                'wechatId':"x11x",
+//                'wechatName':'好多好书1',
+//                'wechatType':'A',
+//                'company':'公司1',
+//                'dailyRecharge':13,
+//                'dailyConcernS':'12/34',
+//                'dailyChargeS':'12/4556',
+//                'allConcernS':'12345/2345',
+//                'accumulatedCost':'xxx',
+//                'createTime':'2019-01-21 11:00:00',
+//                'createAdmin':'Tom'
+//              },
+                wechatId: item.appid,
+                wechatName: item.name,
+                company: item.belongto,
+                wechatType: item.type,
+                createTime: _this.common.getDate(item.registDate/1000),
+//                status: item.status==1?'正常':'禁用',
+              })
+            })
+            _this.totalSize = parseInt(res.data.total)
+          }
+        })
+
+      },
       handleSearch(idx,row) {
         this.$router.push({
-          name:'userInfo'
+          name:'authorizationManager'
         })
       },
       clearData() {

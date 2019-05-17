@@ -24,6 +24,7 @@ const menus = [
       {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
       {id: 'authorization-manager', name: 'authorizationManager', label: '授权管理'},
       {id: 'menu-config', name: 'menuConfig', label: '菜单配置'},
+      {id: 'create-wechat', name: 'createWechat', label: '开设公众号'},
     ]
   },
   {
@@ -80,6 +81,16 @@ const menus = [
     label: '推荐管理',
     submenu: [
       {id: 6100, name: 'recommendBook', label: '推荐书籍'},
+      // {id: 'recommend-banner', name: 'recommendBanner', label: 'banner管理'},
+    ]
+  },
+  {
+    id: 'dataStatistics',
+    icon: 'fa fa-hand-rock-o',
+    label: '数据统计',
+    submenu: [
+      {id: 'data-overview', name: 'dataOverview', label: '数据概览'},
+      {id: 'promotion-statistics', name: 'promotionStatistics', label: '推广统计'},
       // {id: 'recommend-banner', name: 'recommendBanner', label: 'banner管理'},
     ]
   },
