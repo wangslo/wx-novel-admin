@@ -15,8 +15,8 @@
                 </el-form-item>
                 <el-form-item label="公众号类型" required prop="wechatType">
                     <template>
-                        <el-radio v-model="wechatType" label="1">服务号</el-radio>
-                        <el-radio v-model="wechatType" label="2">订阅号</el-radio>
+                        <el-radio v-model="wechatForm.wechatType" label="fuwuhao">服务号</el-radio>
+                        <el-radio v-model="wechatForm.wechatType" label="dingyuehao">订阅号</el-radio>
                     </template>
                 </el-form-item>
                 <el-form-item label="认证主体" required prop="company">
@@ -48,17 +48,32 @@
                 </el-form-item>
 
                 <!--<el-form-item label="是否收费" required prop="realName">-->
-                    <!--<el-checkbox-group v-model="checkList">-->
-                        <!--<el-checkbox label="jiekou">收费</el-checkbox>-->
-                        <!--<el-checkbox label="wenben">免费</el-checkbox>-->
+                <!--<el-checkbox-group v-model="checkList">-->
+                <!--<el-checkbox label="jiekou">收费</el-checkbox>-->
+                <!--<el-checkbox label="wenben">免费</el-checkbox>-->
+                <!--</el-checkbox-group>-->
+                <!--<span>（可多选，必选项）</span>-->
+                <!--</el-form-item>-->
+
+
+                <el-form-item label="用户选择*" required prop="uid">
+                    <template v-for="(name,key,index) in users">
+                        <el-radio v-model="wechatForm.uid" :label="key">{{name}}</el-radio>
+                    </template>
+                </el-form-item>
+                <!--<el-form-item label-width="0px" prop="power">-->
+
+                    <!--<el-checkbox-group v-model="accountInfoForm.power">-->
+                        <!--<div v-for="(item,idx) in authList"  :key="idx">-->
+                            <!--<el-checkbox :label="item.id">{{item.name}}</el-checkbox>-->
+                        <!--</div>-->
                     <!--</el-checkbox-group>-->
-                    <!--<span>（可多选，必选项）</span>-->
                 <!--</el-form-item>-->
 
 
 
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('wechatForm')" :loading="isSave">保存</el-button>
+                    <el-button type="primary" @click="submitWechat('wechatForm')" :loading="isSave">保存</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -110,13 +125,15 @@
       }
       return {
         wechatForm: {
-          account: '',
-          phone: '',
-          realName: '',
-          branch: '999',
-          password: '',
-          power: [],
+          wechatName: '',
+          wechatType: '',
+          company: '',
+          originId: '',
+          appId:'',
+          qrcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAIAAACzY+a1AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADZ0lEQVR4nO2dS27kMAwF48Hc/8o9yzgNMKBMUnZNVy0DWzK6wDzI+vh4vV5fQubP3Q8gVVSIR4V4VIhHhXhUiEeFeFSIR4V4VIhHhXhUiEeFeFSIR4V4VIjn74V7juNof47zzPO5/WhGOnqG1etXn62rzdW+fsEqxKNCPCrEcyULz1RWT2XybDXzIipZm7l+4ndIYhXiUSEeFeKpZuGZzP/0rgyL+q2M4TLtZJj4HX7BKsSjQjwqxNOZhdNU8iPK1K78uxGrEI8K8agQz9OzMMqqrrHg6vUPzEurEI8K8agQT2cWTuREJv+iv2fer0Z9nVnN1M15aRXiUSEeFeKpZuHEWsqJebtKpq72tRmrEI8K8agQz5UsfMJ7wkrOrbYf8YTf4csq/A9QIR4V4uncX7i6F6Lr3WaGTG6t9js9fk1iFeJRIR4V4plaO7O6bnPnfF7lGSbW7BTHl1YhHhXiUSGeqf2F0Tgvuv5M5frMHsTo79N7E4fmFK1CPCrEo0I8x4VBycTYLmq/QlcGR/dWzsdp3NdoFeJRIR4V4rmShaX+mjJjNXen++1ad+p84SeiQjwqxLNjT8XqGZ5dc4ereTaxBnViHdAbViEeFeJRIZ7qOtKJ9ZOV+b8zE2efZtYEVdq/gFWIR4V4VIhnxxlslTUvGSrzfJlrunJu6OxTqxCPCvGoEM/u+cIffQ/vPejKv8rZNBNn3LxhFeJRIR4V4pl6R/qEc2Em7t3ZZhKrEI8K8agQT3VPxSoTuTixFyLT18S9riP9RFSIR4V47szCTJt3vYcEfdfCKsSjQjwqxNOZhdPfF5xoZ/q8mImzCN6wCvGoEI8K8dy5diZiej971OZd5+Y4Lvx0VIhHhXg6v1NRYfX80sq70K45y65+i1iFeFSIR4V4qvsLu/baV/qayKGudS6ZZ/abTZ+OCvGoEM/UdyoiKu8YK/dWzmPL/H0Vx4XyjQrxqBDPjnNnKnTtf1/N1659/Ru+V2wV4lEhHhXieWIWrubc9HcHM1TmGotYhXhUiEeFeDqzsGtJ6sSZNZUcndhf77hQvlEhHhXi2b3XPqLyjYjomjMT71cjhs4djbAK8agQjwrxPHF/oSxhFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhnn/+wiZlJ+LAFwAAAABJRU5ErkJggg==',
+          uid:'',
         },
+        users:{},
         accountInfoRules: {
 //          account: [{ validator: checkAccount, trigger: 'blur' }],
 //          phone: [{ validator: checkPhone, trigger: 'blur' }],
@@ -136,15 +153,16 @@
     },
     created() {
       this.getWechatUsers()
+      this.submitWechat()
     },
     methods: {
       getWechatUsers(){
-        var params = {
-        }
+        var params = {}
         var _this = this
         _this.tableData = []
         orgModuleApi.wechatRelationToUser(params).then((res)=>{
           console.log(res)
+          this.users = res.data
 //          if(res.success){
 //            res.data.data.map((item,index)=>{
 //              _this.tableData.push({
@@ -161,26 +179,25 @@
         })
 
       },
-      submitWehat(){
+      submitWechat(formName){
         var params = {
+          uid:this.wechatForm.uid,
+          appid: this.wechatForm.appId,
+          name:this.wechatForm.wechatName,
+          type:this.wechatForm.wechatType,
+          originId:this.wechatForm.originId,
+          appsecret: 1,
+          qrcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAIAAACzY+a1AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADZ0lEQVR4nO2dS27kMAwF48Hc/8o9yzgNMKBMUnZNVy0DWzK6wDzI+vh4vV5fQubP3Q8gVVSIR4V4VIhHhXhUiEeFeFSIR4V4VIhHhXhUiEeFeFSIR4V4VIjn74V7juNof47zzPO5/WhGOnqG1etXn62rzdW+fsEqxKNCPCrEcyULz1RWT2XybDXzIipZm7l+4ndIYhXiUSEeFeKpZuGZzP/0rgyL+q2M4TLtZJj4HX7BKsSjQjwqxNOZhdNU8iPK1K78uxGrEI8K8agQz9OzMMqqrrHg6vUPzEurEI8K8agQT2cWTuREJv+iv2fer0Z9nVnN1M15aRXiUSEeFeKpZuHEWsqJebtKpq72tRmrEI8K8agQz5UsfMJ7wkrOrbYf8YTf4csq/A9QIR4V4uncX7i6F6Lr3WaGTG6t9js9fk1iFeJRIR4V4plaO7O6bnPnfF7lGSbW7BTHl1YhHhXiUSGeqf2F0Tgvuv5M5frMHsTo79N7E4fmFK1CPCrEo0I8x4VBycTYLmq/QlcGR/dWzsdp3NdoFeJRIR4V4rmShaX+mjJjNXen++1ad+p84SeiQjwqxLNjT8XqGZ5dc4ereTaxBnViHdAbViEeFeJRIZ7qOtKJ9ZOV+b8zE2efZtYEVdq/gFWIR4V4VIhnxxlslTUvGSrzfJlrunJu6OxTqxCPCvGoEM/u+cIffQ/vPejKv8rZNBNn3LxhFeJRIR4V4pl6R/qEc2Em7t3ZZhKrEI8K8agQT3VPxSoTuTixFyLT18S9riP9RFSIR4V47szCTJt3vYcEfdfCKsSjQjwqxNOZhdPfF5xoZ/q8mImzCN6wCvGoEI8K8dy5diZiej971OZd5+Y4Lvx0VIhHhXg6v1NRYfX80sq70K45y65+i1iFeFSIR4V4qvsLu/baV/qayKGudS6ZZ/abTZ+OCvGoEM/UdyoiKu8YK/dWzmPL/H0Vx4XyjQrxqBDPjnNnKnTtf1/N1659/Ru+V2wV4lEhHhXieWIWrubc9HcHM1TmGotYhXhUiEeFeDqzsGtJ6sSZNZUcndhf77hQvlEhHhXi2b3XPqLyjYjomjMT71cjhs4djbAK8agQjwrxPHF/oSxhFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhnn/+wiZlJ+LAFwAAAABJRU5ErkJggg==',
         }
         var _this = this
         _this.tableData = []
-        orgModuleApi.wechatRelationToUser(params).then((res)=>{
+        orgModuleApi.createWechat(params).then((res)=>{
           console.log(res)
-//          if(res.success){
-//            res.data.data.map((item,index)=>{
-//              _this.tableData.push({
-//                id: item.id,
-//                account: item.username,
-//                realName: item.name,
-//                branch: item.dept,
-//                createTime: _this.common.getDate((item.registDate/1000)),
-//                status: item.status==1?'正常':'禁用',
-//              })
-//            })
-//            _this.totalSize = parseInt(res.data.total)
-//          }
+          if(res.success) {
+            this.$message.success('保存成功')
+            this.$refs.wechatForm.resetFields()
+            _this.isSave = false
+          }
         })
       },
       handleCheckAllChange(val) {
