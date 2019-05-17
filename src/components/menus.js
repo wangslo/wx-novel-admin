@@ -91,6 +91,8 @@ const menus = [
     submenu: [
       {id: 'data-overview', name: 'dataOverview', label: '数据概览'},
       {id: 'promotion-statistics', name: 'promotionStatistics', label: '推广统计'},
+      {id: 're-recharge-rate-first', name: 'reRechargeRateFirst', label: '复充率-首充'},
+      {id: 're-recharge-rate', name: 'reRechargeRate', label: '复充率'},
       // {id: 'recommend-banner', name: 'recommendBanner', label: 'banner管理'},
     ]
   },
