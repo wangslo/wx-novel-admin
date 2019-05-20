@@ -324,7 +324,7 @@
                 wechatName: item.name,
                 company: item.belongto,
                 wechatType: item.type,
-                createTime: _this.common.getDate(item.registDate/1000),
+                createTime: _this.common.getDate(item.registDate),
 //                status: item.status==1?'正常':'禁用',
               })
             })

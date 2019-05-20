@@ -69,6 +69,14 @@ export const orgModuleApi = {
   wechatRelationToUser:(params) =>{
     return orgAxios.post('/novelcms/user/umap.html',qs.stringify(params)).then(res=>res.data);
   },
+
+  //充值档位
+  gradeList:(params) =>{
+    return orgAxios.post('/novelcms/pay/gradelist.html',qs.stringify(params)).then(res=>res.data);
+  },
+  optionList:(params) =>{
+    return orgAxios.post('/novelcms/pay/optionslist.html',qs.stringify(params)).then(res=>res.data);
+  },
 }
 export const uploadModuleApi = {
   uploadImg: (params) =>{

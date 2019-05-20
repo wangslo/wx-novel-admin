@@ -15,8 +15,8 @@
                 </el-form-item>
                 <el-form-item label="公众号类型" required prop="wechatType">
                     <template>
-                        <el-radio v-model="wechatForm.wechatType" label="fuwuhao">服务号</el-radio>
-                        <el-radio v-model="wechatForm.wechatType" label="dingyuehao">订阅号</el-radio>
+                        <el-radio v-model="wechatForm.wechatType" label="服务号">服务号</el-radio>
+                        <el-radio v-model="wechatForm.wechatType" label="订阅号">订阅号</el-radio>
                     </template>
                 </el-form-item>
                 <el-form-item label="认证主体" required prop="company">
@@ -33,13 +33,14 @@
                 </el-form-item>
                 <el-form-item label="二维码：" class="banner-wx-setup-img">
                     <div class="img-box">
-                        <img v-show="wechatForm.qrcode != ''" :src="wechatForm.qrcode"/>
+                        <img v-if="wechatForm.qrcode" :src="wechatForm.qrcode" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </div>
                     <el-upload
                             class="banner-wx-img-upload"
                             action="http://test-dev.admin.dftoutiao.com/banner/upload"
                             :http-request="uploadBanner"
-                            :on-success="getImg"
+                            :before-upload="beforeAvatarUpload"
                             list-type="picture"
                             :show-file-list="false">
                         <el-button size="small" type="primary" style="margin-left:10px;">上传二维码</el-button>
@@ -130,7 +131,8 @@
           company: '',
           originId: '',
           appId:'',
-          qrcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAIAAACzY+a1AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADZ0lEQVR4nO2dS27kMAwF48Hc/8o9yzgNMKBMUnZNVy0DWzK6wDzI+vh4vV5fQubP3Q8gVVSIR4V4VIhHhXhUiEeFeFSIR4V4VIhHhXhUiEeFeFSIR4V4VIjn74V7juNof47zzPO5/WhGOnqG1etXn62rzdW+fsEqxKNCPCrEcyULz1RWT2XybDXzIipZm7l+4ndIYhXiUSEeFeKpZuGZzP/0rgyL+q2M4TLtZJj4HX7BKsSjQjwqxNOZhdNU8iPK1K78uxGrEI8K8agQz9OzMMqqrrHg6vUPzEurEI8K8agQT2cWTuREJv+iv2fer0Z9nVnN1M15aRXiUSEeFeKpZuHEWsqJebtKpq72tRmrEI8K8agQz5UsfMJ7wkrOrbYf8YTf4csq/A9QIR4V4uncX7i6F6Lr3WaGTG6t9js9fk1iFeJRIR4V4plaO7O6bnPnfF7lGSbW7BTHl1YhHhXiUSGeqf2F0Tgvuv5M5frMHsTo79N7E4fmFK1CPCrEo0I8x4VBycTYLmq/QlcGR/dWzsdp3NdoFeJRIR4V4rmShaX+mjJjNXen++1ad+p84SeiQjwqxLNjT8XqGZ5dc4ereTaxBnViHdAbViEeFeJRIZ7qOtKJ9ZOV+b8zE2efZtYEVdq/gFWIR4V4VIhnxxlslTUvGSrzfJlrunJu6OxTqxCPCvGoEM/u+cIffQ/vPejKv8rZNBNn3LxhFeJRIR4V4pl6R/qEc2Em7t3ZZhKrEI8K8agQT3VPxSoTuTixFyLT18S9riP9RFSIR4V47szCTJt3vYcEfdfCKsSjQjwqxNOZhdPfF5xoZ/q8mImzCN6wCvGoEI8K8dy5diZiej971OZd5+Y4Lvx0VIhHhXg6v1NRYfX80sq70K45y65+i1iFeFSIR4V4qvsLu/baV/qayKGudS6ZZ/abTZ+OCvGoEM/UdyoiKu8YK/dWzmPL/H0Vx4XyjQrxqBDPjnNnKnTtf1/N1659/Ru+V2wV4lEhHhXieWIWrubc9HcHM1TmGotYhXhUiEeFeDqzsGtJ6sSZNZUcndhf77hQvlEhHhXi2b3XPqLyjYjomjMT71cjhs4djbAK8agQjwrxPHF/oSxhFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhnn/+wiZlJ+LAFwAAAABJRU5ErkJggg==',
+          qrcode:'',
+          //qrcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAIAAACzY+a1AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADZ0lEQVR4nO2dS27kMAwF48Hc/8o9yzgNMKBMUnZNVy0DWzK6wDzI+vh4vV5fQubP3Q8gVVSIR4V4VIhHhXhUiEeFeFSIR4V4VIhHhXhUiEeFeFSIR4V4VIjn74V7juNof47zzPO5/WhGOnqG1etXn62rzdW+fsEqxKNCPCrEcyULz1RWT2XybDXzIipZm7l+4ndIYhXiUSEeFeKpZuGZzP/0rgyL+q2M4TLtZJj4HX7BKsSjQjwqxNOZhdNU8iPK1K78uxGrEI8K8agQz9OzMMqqrrHg6vUPzEurEI8K8agQT2cWTuREJv+iv2fer0Z9nVnN1M15aRXiUSEeFeKpZuHEWsqJebtKpq72tRmrEI8K8agQz5UsfMJ7wkrOrbYf8YTf4csq/A9QIR4V4uncX7i6F6Lr3WaGTG6t9js9fk1iFeJRIR4V4plaO7O6bnPnfF7lGSbW7BTHl1YhHhXiUSGeqf2F0Tgvuv5M5frMHsTo79N7E4fmFK1CPCrEo0I8x4VBycTYLmq/QlcGR/dWzsdp3NdoFeJRIR4V4rmShaX+mjJjNXen++1ad+p84SeiQjwqxLNjT8XqGZ5dc4ereTaxBnViHdAbViEeFeJRIZ7qOtKJ9ZOV+b8zE2efZtYEVdq/gFWIR4V4VIhnxxlslTUvGSrzfJlrunJu6OxTqxCPCvGoEM/u+cIffQ/vPejKv8rZNBNn3LxhFeJRIR4V4pl6R/qEc2Em7t3ZZhKrEI8K8agQT3VPxSoTuTixFyLT18S9riP9RFSIR4V47szCTJt3vYcEfdfCKsSjQjwqxNOZhdPfF5xoZ/q8mImzCN6wCvGoEI8K8dy5diZiej971OZd5+Y4Lvx0VIhHhXg6v1NRYfX80sq70K45y65+i1iFeFSIR4V4qvsLu/baV/qayKGudS6ZZ/abTZ+OCvGoEM/UdyoiKu8YK/dWzmPL/H0Vx4XyjQrxqBDPjnNnKnTtf1/N1659/Ru+V2wV4lEhHhXieWIWrubc9HcHM1TmGotYhXhUiEeFeDqzsGtJ6sSZNZUcndhf77hQvlEhHhXi2b3XPqLyjYjomjMT71cjhs4djbAK8agQjwrxPHF/oSxhFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhnn/+wiZlJ+LAFwAAAABJRU5ErkJggg==',
           uid:'',
         },
         users:{},
@@ -153,9 +155,24 @@
     },
     created() {
       this.getWechatUsers()
-      this.submitWechat()
     },
     methods: {
+      beforeAvatarUpload(file){
+        var params = {}
+        var _this = this
+        _this.tableData = []
+
+        var reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onload = function(e){
+          console.log(e.target.result)
+          _this.wechatForm.qrcode = e.target.result
+        }
+        console.log(file)
+
+        return false
+
+      },
       getWechatUsers(){
         var params = {}
         var _this = this
@@ -245,6 +262,22 @@
   }
 </script>
 <style lang="scss" scoped>
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+
+
     .accountInfo-page{
         .accountInfo-header{
             height: 50px;

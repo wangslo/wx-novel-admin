@@ -19,9 +19,9 @@ Vue.config.productionTip = false
   NProgress.start()
   var token = sessionStorage.getItem('token')
   if(!token && to.name != 'login'){
-    app && app.$message.warning('未授权,请登录后继续')
-    NProgress.done()
-    return next({name: 'login'})
+    // app && app.$message.warning('未授权,请登录后继续')
+    // NProgress.done()
+    // return next({name: 'login'})
   }
   return next()
 })*/
