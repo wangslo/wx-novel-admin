@@ -10,39 +10,33 @@
         <div class="wechatlist-body">
             <el-form ref="userForm" :model="wechatlist_condition" class="wechatlist-form" :rules="userRules" label-width="80px" size="small">
                 <el-form-item label="公众号ID" label-width="90px" prop="wechatId">
-                    <el-select v-model="wechatlist_condition.wechatId" placeholder="请选择">
-                        <el-option label="全部" value="999"></el-option>
-                        <el-option label="adsfasd" value="0"></el-option>
-                        <el-option label="dfdfd" value="1"></el-option>
-                        <el-option label="erew" value="2"></el-option>
-                    </el-select>
+                    <el-input v-model="wechatlist_condition.wechatId"></el-input>
+                    <!--<el-select v-model="wechatlist_condition.wechatId" placeholder="请选择">-->
+                        <!--<el-option label="全部" value="999"></el-option>-->
+                        <!--<el-option label="adsfasd" value="0"></el-option>-->
+                        <!--<el-option label="dfdfd" value="1"></el-option>-->
+                        <!--<el-option label="erew" value="2"></el-option>-->
+                    <!--</el-select>-->
                 </el-form-item>
                 <el-form-item label="公众号名称" label-width="90px" prop="wechatName">
-                    <el-select v-model="wechatlist_condition.wechatName" placeholder="请选择">
-                        <el-option label="全部" value="999"></el-option>
-                        <el-option label="A" value="0"></el-option>
-                        <el-option label="B" value="1"></el-option>
-                        <el-option label="C" value="2"></el-option>
-                    </el-select>
+                    <el-input v-model="wechatlist_condition.wechatName"></el-input>
+                    <!--<el-select v-model="wechatlist_condition.wechatName" placeholder="请选择">-->
+                        <!--<el-option label="全部" value="999"></el-option>-->
+                        <!--<el-option label="A" value="0"></el-option>-->
+                        <!--<el-option label="B" value="1"></el-option>-->
+                        <!--<el-option label="C" value="2"></el-option>-->
+                    <!--</el-select>-->
                 </el-form-item>
                 <el-form-item label="创建人" label-width="100px">
                     <el-input v-model="wechatlist_condition.createAdmin"></el-input>
                 </el-form-item>
-                <el-form-item label="昵称" label-width="60px" prop="nickName">
-                    <el-input v-model="wechatlist_condition.nickName"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" label-width="70px" prop="phone">
-                    <el-input v-model="wechatlist_condition.phone"></el-input>
-                </el-form-item>
-                <el-form-item label="ACCID" label-width="70px" prop="accid">
-                    <el-input v-model="wechatlist_condition.accid"></el-input>
-                </el-form-item>
-                <el-form-item label="注册时间" label-width="80px">
+                <el-form-item label="创建时间" label-width="80px">
                     <el-col :span="10" class="startTime">
                         <el-form-item prop="create_start_time">
                             <el-date-picker
                                     type="date"
                                     format="yyyy-MM-dd"
+                                    value-format="yyyy-MM-dd"
                                     placeholder="起始时间"
                                     v-model="wechatlist_condition.create_start_time"
                                     :picker-options="pickerBeginDateBefore"
@@ -56,6 +50,7 @@
                             <el-date-picker
                                     type="date"
                                     format="yyyy-MM-dd"
+                                    value-format="yyyy-MM-dd"
                                     placeholder="结束时间"
                                     v-model="wechatlist_condition.create_end_time"
                                     :picker-options="pickerBeginDateAfter"
@@ -64,12 +59,13 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="最近登录时间" label-width="110px">
+                <el-form-item v-if="false" label="创建时间" label-width="110px">
                     <el-col :span="10" class="startTime">
                         <el-form-item prop="login_start_time">
                             <el-date-picker
                                     type="date"
                                     format="yyyy-MM-dd"
+                                    value-format="yyyy-MM-dd"
                                     placeholder="起始时间"
                                     v-model="wechatlist_condition.login_start_time"
                                     :picker-options="loginBeginDateBefore"
@@ -92,7 +88,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item style="float: right;">
-                    <el-button type="primary" @click="clearData">清空</el-button>
+                    <el-button  @click="clearData">清空</el-button>
                     <el-button type="primary" @click="getWechatLists">查找</el-button>
                 </el-form-item>
             </el-form>
@@ -120,16 +116,16 @@
                 <el-table-column prop="wechatName" label="公众号名称" width="180" align="center"></el-table-column>
                 <el-table-column prop="wechatType" label="公众号类型" width="180" align="center"></el-table-column>
                 <el-table-column prop="company" label="认证主体" width="180" align="center"></el-table-column>
-                <el-table-column prop="dailyRecharge" label="日充值" width="50" align="center"></el-table-column>
-                <el-table-column prop="dailyConcernS" label="日引流/日关注" width="50" align="center"></el-table-column>
-                <el-table-column prop="dailyChargeS" label="日付费(人)/总付费(人)" width="50" align="center"></el-table-column>
-                <el-table-column prop="allConcernS" label="总引流/总关注" width="50" align="center"></el-table-column>
-                <el-table-column prop="accumulatedCost" label="累计成本/累计充值" width="50" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="dailyRecharge" label="日充值" width="50" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="dailyConcernS" label="日引流/日关注" width="50" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="dailyChargeS" label="日付费(人)/总付费(人)" width="50" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="allConcernS" label="总引流/总关注" width="50" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="accumulatedCost" label="累计成本/累计充值" width="50" align="center"></el-table-column>
                 <el-table-column v-if="false" sortable='custom' :sort-orders="['ascending', 'descending']"
                                  prop="login_time" label="最近登录时间" width="50" align="center"></el-table-column>
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                                 prop="createTime" label="创建时间" width="100" align="center"></el-table-column>
-                <el-table-column prop="createAdmin" label="创建人" width="40" align="center"></el-table-column>
+                                 prop="createTime" label="创建时间" min-width="80" align="center"></el-table-column>
+                <el-table-column prop="createAdmin" label="创建人" min-width="80" align="center"></el-table-column>
                 <el-table-column label="操作" min-width="250" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
@@ -181,7 +177,8 @@
         wechatlist_condition: {
           accid: '',
           phone: '',
-          nickName: '',
+          wechatId:'',
+          wechatName: '',
           loginType: '999',
           create_start_time: '',
           create_end_time: '',
@@ -289,16 +286,15 @@
         console.log(row)
       },
       getWechatLists(){
-        console.log('wechatlist')
         var params = {
           page: this.pageNo,
           size: this.pageSize,
-          appid	: '',
-          name: '',
+          appid	: this.wechatlist_condition.wechatId,
+          name: this.wechatlist_condition.wechatName,
           belongto:'',
           uid:'',
-          registDate_s:'',
-          registDate_e:'',
+          registDate_s:this.wechatlist_condition.create_start_time,
+          registDate_e:this.wechatlist_condition.create_end_time,
         }
         var _this = this
         _this.tableData = []

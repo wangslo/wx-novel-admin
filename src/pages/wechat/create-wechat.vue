@@ -27,11 +27,22 @@
                     <el-input v-model="wechatForm.originId" maxlength="11"></el-input>
                     <span></span>
                 </el-form-item>
+                <el-form-item label="appSecret" required prop="appSecret">
+                    <el-input
+                            type="textarea"
+                            :autosize="{ minRows: 2, maxRows: 4}"
+                            placeholder="请输入内容"
+                            v-model="wechatForm.appSecret"
+                            style="width: 17%"
+                    >
+                    </el-input>
+                    <span></span>
+                </el-form-item>
                 <el-form-item label="APPID" required prop="appId">
                     <el-input v-model="wechatForm.appId" maxlength="11"></el-input>
                     <span></span>
                 </el-form-item>
-                <el-form-item label="二维码：" class="banner-wx-setup-img">
+                <el-form-item label="二维码：" required prop="qrcode" class="banner-wx-setup-img">
                     <div class="img-box">
                         <img v-if="wechatForm.qrcode" :src="wechatForm.qrcode" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -74,7 +85,7 @@
 
 
                 <el-form-item>
-                    <el-button type="primary" @click="submitWechat('wechatForm')" :loading="isSave">保存</el-button>
+                    <el-button type="primary" @click="submitForm('wechatForm')" :loading="isSave">保存</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -87,7 +98,7 @@
 
   import {orgModuleApi} from '../../api/main'
   export default {
-    name: 'openAccount',
+    name: 'openWechat',
     data() {
       var checkPhone = (rule, value, callback) => {
         const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/
@@ -131,18 +142,21 @@
           company: '',
           originId: '',
           appId:'',
+          appSecret:'',
           qrcode:'',
           //qrcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAIAAACzY+a1AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADZ0lEQVR4nO2dS27kMAwF48Hc/8o9yzgNMKBMUnZNVy0DWzK6wDzI+vh4vV5fQubP3Q8gVVSIR4V4VIhHhXhUiEeFeFSIR4V4VIhHhXhUiEeFeFSIR4V4VIjn74V7juNof47zzPO5/WhGOnqG1etXn62rzdW+fsEqxKNCPCrEcyULz1RWT2XybDXzIipZm7l+4ndIYhXiUSEeFeKpZuGZzP/0rgyL+q2M4TLtZJj4HX7BKsSjQjwqxNOZhdNU8iPK1K78uxGrEI8K8agQz9OzMMqqrrHg6vUPzEurEI8K8agQT2cWTuREJv+iv2fer0Z9nVnN1M15aRXiUSEeFeKpZuHEWsqJebtKpq72tRmrEI8K8agQz5UsfMJ7wkrOrbYf8YTf4csq/A9QIR4V4uncX7i6F6Lr3WaGTG6t9js9fk1iFeJRIR4V4plaO7O6bnPnfF7lGSbW7BTHl1YhHhXiUSGeqf2F0Tgvuv5M5frMHsTo79N7E4fmFK1CPCrEo0I8x4VBycTYLmq/QlcGR/dWzsdp3NdoFeJRIR4V4rmShaX+mjJjNXen++1ad+p84SeiQjwqxLNjT8XqGZ5dc4ereTaxBnViHdAbViEeFeJRIZ7qOtKJ9ZOV+b8zE2efZtYEVdq/gFWIR4V4VIhnxxlslTUvGSrzfJlrunJu6OxTqxCPCvGoEM/u+cIffQ/vPejKv8rZNBNn3LxhFeJRIR4V4pl6R/qEc2Em7t3ZZhKrEI8K8agQT3VPxSoTuTixFyLT18S9riP9RFSIR4V47szCTJt3vYcEfdfCKsSjQjwqxNOZhdPfF5xoZ/q8mImzCN6wCvGoEI8K8dy5diZiej971OZd5+Y4Lvx0VIhHhXg6v1NRYfX80sq70K45y65+i1iFeFSIR4V4qvsLu/baV/qayKGudS6ZZ/abTZ+OCvGoEM/UdyoiKu8YK/dWzmPL/H0Vx4XyjQrxqBDPjnNnKnTtf1/N1659/Ru+V2wV4lEhHhXieWIWrubc9HcHM1TmGotYhXhUiEeFeDqzsGtJ6sSZNZUcndhf77hQvlEhHhXi2b3XPqLyjYjomjMT71cjhs4djbAK8agQjwrxPHF/oSxhFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhnn/+wiZlJ+LAFwAAAABJRU5ErkJggg==',
           uid:'',
         },
         users:{},
         accountInfoRules: {
-//          account: [{ validator: checkAccount, trigger: 'blur' }],
-//          phone: [{ validator: checkPhone, trigger: 'blur' }],
-//          realName: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }],
-//          branch: [],
-//          password: [{ validator: checkPassword, trigger: 'blur' }],
-//          power: [{ type: 'array', required: true, message: '请至少选择一个权限', trigger: 'change' }],
+          wechatName:[{ required: true, message: '请输入公众号名称', trigger: 'blur' }],
+          company:[{ required: true, message: '请输入认证主体', trigger: 'blur' }],
+          originId:[{ required: true, message: '请输入原始ID', trigger: 'blur' }],
+          appSecret:[{ required: true, message: '请输入appSecret', trigger: 'blur' }],
+          appId:[{ required: true, message: '请输入appId', trigger: 'blur' }],
+          wechatType:[{ required: true, message: '请选择公众号类型', trigger: 'blur' }],
+          qrcode:[{ required: true, message: '请上传二维码', trigger: 'blur' }],
+          uid:[{ required: true, message: '请选择用户', trigger: 'blur' }],
         },
         isSave: false,
 
@@ -196,15 +210,17 @@
         })
 
       },
-      submitWechat(formName){
+      submitWechat(){
+
         var params = {
           uid:this.wechatForm.uid,
           appid: this.wechatForm.appId,
           name:this.wechatForm.wechatName,
           type:this.wechatForm.wechatType,
           originId:this.wechatForm.originId,
-          appsecret: 1,
-          qrcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAIAAACzY+a1AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADZ0lEQVR4nO2dS27kMAwF48Hc/8o9yzgNMKBMUnZNVy0DWzK6wDzI+vh4vV5fQubP3Q8gVVSIR4V4VIhHhXhUiEeFeFSIR4V4VIhHhXhUiEeFeFSIR4V4VIjn74V7juNof47zzPO5/WhGOnqG1etXn62rzdW+fsEqxKNCPCrEcyULz1RWT2XybDXzIipZm7l+4ndIYhXiUSEeFeKpZuGZzP/0rgyL+q2M4TLtZJj4HX7BKsSjQjwqxNOZhdNU8iPK1K78uxGrEI8K8agQz9OzMMqqrrHg6vUPzEurEI8K8agQT2cWTuREJv+iv2fer0Z9nVnN1M15aRXiUSEeFeKpZuHEWsqJebtKpq72tRmrEI8K8agQz5UsfMJ7wkrOrbYf8YTf4csq/A9QIR4V4uncX7i6F6Lr3WaGTG6t9js9fk1iFeJRIR4V4plaO7O6bnPnfF7lGSbW7BTHl1YhHhXiUSGeqf2F0Tgvuv5M5frMHsTo79N7E4fmFK1CPCrEo0I8x4VBycTYLmq/QlcGR/dWzsdp3NdoFeJRIR4V4rmShaX+mjJjNXen++1ad+p84SeiQjwqxLNjT8XqGZ5dc4ereTaxBnViHdAbViEeFeJRIZ7qOtKJ9ZOV+b8zE2efZtYEVdq/gFWIR4V4VIhnxxlslTUvGSrzfJlrunJu6OxTqxCPCvGoEM/u+cIffQ/vPejKv8rZNBNn3LxhFeJRIR4V4pl6R/qEc2Em7t3ZZhKrEI8K8agQT3VPxSoTuTixFyLT18S9riP9RFSIR4V47szCTJt3vYcEfdfCKsSjQjwqxNOZhdPfF5xoZ/q8mImzCN6wCvGoEI8K8dy5diZiej971OZd5+Y4Lvx0VIhHhXg6v1NRYfX80sq70K45y65+i1iFeFSIR4V4qvsLu/baV/qayKGudS6ZZ/abTZ+OCvGoEM/UdyoiKu8YK/dWzmPL/H0Vx4XyjQrxqBDPjnNnKnTtf1/N1659/Ru+V2wV4lEhHhXieWIWrubc9HcHM1TmGotYhXhUiEeFeDqzsGtJ6sSZNZUcndhf77hQvlEhHhXi2b3XPqLyjYjomjMT71cjhs4djbAK8agQjwrxPHF/oSxhFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhHhXiUSEeFeJRIR4V4lEhnn/+wiZlJ+LAFwAAAABJRU5ErkJggg==',
+          appsecret:this.wechatForm.appSecret,
+          //belongto:this.wechatForm.company,
+          qrcode: this.wechatForm.qrcode,
         }
         var _this = this
         _this.tableData = []
@@ -226,12 +242,11 @@
         this.checkAll = checkedCount === this.cities.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
       },
-
       submitForm(formName) {
         this.isSave = true
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.saveInfo();
+            this.submitWechat();
           } else {
             console.log('error submit!!');
             this.isSave = false

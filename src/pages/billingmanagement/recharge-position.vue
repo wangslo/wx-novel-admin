@@ -10,11 +10,11 @@
         <el-row>
             <div style="margin-left: 50px;font-weight:bold;background-color: #fcf8e3;padding: 20px;"><i class="el-icon-thumb"></i>点击图片，可切换充值档位，即时生效</div>
         </el-row>
-        <el-row :gutter="1">
-            <el-col :span="6">
-                <template v-for="(item, index) in ulList">
+        <el-row :gutter="10">
+            <template v-for="(item, index) in ulList">
+                <el-col :span="6">
                     <div class="grid-content bg-purple menu-pic" @click="changeType(1)" style="background-image: url('//ywopen-1252317822.file.myqcloud.com/openwx/recommendimg/20190117/5c40386892ccd.png')">
-                        <div  class="menu-check" :style="{'display' : wechatType == 1 ? 'block' : 'none'}"><i class="fa fa-check-circle"></i></div>
+                        <div  class="menu-check" :style="{'display' : index == 0 ? 'block' : 'none'}"><i class="fa fa-check-circle"></i></div>
                         <div style="border: 0;width: 100%;margin-top: 200px;">
                             <ul style="margin:10px 5px 0 5px;list-style: none;">
                                 <template v-for="(liItem,index2) in item.grades">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div style="width: 300px;
-                            margin: 30px 1px 30px 160px;
+                            margin: 3px 1px 30px 50px;
                             height: 330px;
                             float: left;
                             cursor: pointer;
@@ -41,12 +41,14 @@
                         ">
                         自定义档位配置{{item.id}}
                         <br />
-                        编辑配置
+                        <br />
+                        <a @click="clickButton(item.id)">编辑配置</a>
                     </div>
-                </template>
+                </el-col>
+            </template>
 
 
-            </el-col>
+
 
         </el-row>
 
@@ -82,6 +84,14 @@
       this.getOptionList()
     },
     methods: {
+      clickButton(index){
+        this.$router.push({
+          name:'rechargePositionSetup',
+          query:{
+            id:index,
+          },
+        })
+      },
       getOptionList(){
         var params = {}
         var _this = this
@@ -273,7 +283,7 @@
         height: 50px;
         /*margin: 50% auto;*/
         top:250px;
-        left:160px;
+        left:150px;
         font-size: 90px;
         color: #00AA00;
         text-align: center;
@@ -283,7 +293,7 @@
     }
     .menu-pic {
         width: 350px;
-        margin: 30px 1px 30px 160px;
+        margin: 3px 1px 30px 50px;
         height: 660px;
         float: left;
         cursor: pointer;

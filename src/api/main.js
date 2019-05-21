@@ -77,6 +77,9 @@ export const orgModuleApi = {
   optionList:(params) =>{
     return orgAxios.post('/novelcms/pay/optionslist.html',qs.stringify(params)).then(res=>res.data);
   },
+  customgrade:(params) =>{
+    return orgAxios.post('/novelcms/pay/customgrade.html',qs.stringify(params)).then(res=>res.data);
+  },
 }
 export const uploadModuleApi = {
   uploadImg: (params) =>{
