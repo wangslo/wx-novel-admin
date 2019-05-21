@@ -38,26 +38,63 @@
   </div>
 </template>
 <script>
+  import {msgModuleApi} from '../../api/main'
   export default {
     name: 'replyMsg',
     data() {
       return {
-        tableData: [
-          {
-            msgtype: '212',
-            keywords: '1212',
-            onlinetime: '1212',
-            offlinetime: '2121',
-            status: '2112',
-          }
-        ],
-        pageNo: 0,
+        tableData: [],
+        pageNo: 1,
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
       }
     },
+    created() {
+      this.getMsgList()
+    },
     methods: {
+      getMsgList() {
+        var _this = this
+        var params = {
+          appid: 'wx45a447d8dc271447',
+          page: _this.pageNo,
+          size: _this.pageSize,
+        }
+        msgModuleApi.getMsgtem(params).then((res)=>{
+          console.log(res)
+          if(res.success) {
+            res.data.content.map((item,index)=>{
+              var status = ''
+              if(item.status == 0){
+                status = '待上线'
+              }
+              if(item.status == 1){
+                status = '上线'
+              }
+              if(item.status == 2){
+                status = '下线'
+              }
+              _this.tableData.push({
+                msgtype: item.type == 1 ? '关注回复' : '关键字回复',
+                keywords: item.type == 1 ? '-': item.kwd,
+                onlinetime: _this.common.getDate(item.startDate),
+                offlinetime: _this.common.getDate(item.endDate),
+                status: status,
+              })
+            })
+            _this.totalSize = parseInt(res.data.totalElements)
+          }
+        })
+      },
+      handleSizeChange(val) {
+        this.pageSize = val
+        this.getMsgList()
+      },
+      handleCurrentChange(val) {
+        this.pageNo = val
+        this.getMsgList()
+      },
       createMsg() {
         this.$router.push({
           name: 'create-msg'

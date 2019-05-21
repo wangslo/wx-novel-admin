@@ -75,6 +75,16 @@
         }
         orgModuleApi.getAccountInfo(params).then(res=>{
           console.log(res)
+          if(res.success){
+            _this.username = res.data.username
+            _this.name = res.data.name
+            _this.dept = res.data.dept
+            res.data.privileges.map((item,idx)=>{
+              if(res.data.rid.indexOf(item.id) > -1) {
+                _this.authList.push(item.name)
+              }
+            })
+          }
         })
       },
     }

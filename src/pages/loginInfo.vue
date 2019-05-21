@@ -8,16 +8,12 @@
     </div>
     <div class="loginInfo-body">
       <div class="loginInfo-item-row">
-        <span class="loginInfo-item-col">账号</span><label>：</label>
+        <span class="loginInfo-item-col">邮箱</span><label>：</label>
         <span class="loginInfo-item-col1">{{user.account}}</span>
       </div>
       <div class="loginInfo-item-row">
         <span class="loginInfo-item-col">真实姓名</span><label>：</label>
         <span class="loginInfo-item-col1">{{user.nickname}}</span>
-      </div>
-      <div class="loginInfo-item-row">
-        <span class="loginInfo-item-col">手机号</span><label>：</label>
-        <span class="loginInfo-item-col1">{{user.account}}</span>
       </div>
       <div class="loginInfo-item-row">
         <span class="loginInfo-item-col">部门</span><label>：</label>
@@ -57,7 +53,6 @@
 </template>
 <script>
   import {orgModuleApi} from '../api/main'
-  import {mapActions} from 'vuex'
   export default {
     name: 'loginInfo',
     data() {
@@ -99,8 +94,8 @@
         }
       };
       return {
+        id: '',
         user: '',
-        role: '',
         branch: [],
         resetPwd:{
           oldpwd: '',
@@ -124,10 +119,8 @@
     },
     created() {
       this.getLoginInfo()
-      this.getAuthLists()
     },
     methods: {
-      ...mapActions(['getLoginUser']),
       showPwd() {
         this.pswStatus = true
       },
@@ -136,9 +129,8 @@
         this.$refs['resetPwd'].validate((valid) => {
           if (valid) {
             var params  = {
-              token : sessionStorage.getItem('token'),
-              old_password: this.resetPwd.oldpwd,
-              password: this.resetPwd.newpwd
+              originPwd: this.resetPwd.oldpwd,
+              newPwd: this.resetPwd.newpwd
             }
             orgModuleApi.updatePwd(params).then(res=>{
               if(res.code == 3){
@@ -160,24 +152,7 @@
         });
       },
       getLoginInfo() {
-        this.getLoginUser()
-        this.user = JSON.parse(sessionStorage.getItem('user'))
-        this.role = JSON.parse(sessionStorage.getItem('role'))
       },
-      getAuthLists(){
-        var _this = this
-        orgModuleApi.getAuthList().then(res=>{
-          if(res.code == 0){
-            for(var item in res.data){
-              if(_this.role.indexOf(item) > -1){
-                _this.branch.push(res.data[item])
-              }
-            }
-          }else {
-            this.$message.success('获取权限错误')
-          }
-        })
-      }
     }
   }
 </script>

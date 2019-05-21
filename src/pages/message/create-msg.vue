@@ -12,8 +12,8 @@
       <el-form ref="createMsgForm" :model="createMsgForm" label-width="100px" size="small" class="create-msg-form" label-position="left">
         <el-form-item label="消息类型">
           <el-select v-model="createMsgForm.msgtype">
-            <el-option label="关注回复" value="0"></el-option>
-            <el-option label="关键字回复" value="1"></el-option>
+            <el-option label="关注回复" value="1"></el-option>
+            <el-option label="关键字回复" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="关键词">
@@ -39,10 +39,7 @@
             </div>
             <div class="img-reply" v-if="createMsgForm.reply_radio==2">
               <el-form-item label="标题" label-width="80px">
-                <el-select v-model="createMsgForm.reply_title">
-                  <el-option label="saadsafdsa" value="0"></el-option>
-                  <el-option label="的发生的发生发生" value="大大沙发"></el-option>
-                </el-select>
+                <el-input v-model="createMsgForm.reply_title" style="width: 300px;"></el-input>
               </el-form-item>
               <el-form-item label="图片" label-width="80px">
                 <el-upload
@@ -81,7 +78,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-dialog title="请选择书籍" :visible.sync="bookDialog">
+    <el-dialog title="请选择书籍" :visible.sync="bookDialog" width="782px">
       <el-form ref="booksForm" :model="booksForm" label-width="80px" inline size="small" class="books-form">
         <el-form-item label="作品CBID">
           <el-input v-model="booksForm.cbid"></el-input>
@@ -90,21 +87,19 @@
           <el-input v-model="booksForm.bookname"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="mini">查询</el-button>
+          <el-button type="primary" size="mini" @click="query">查询</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" style="width:100%;" stripe border>
         <el-table-column label="选择" width="80" align="center">
           <template slot-scope="scope">
-            <el-radio v-model="choose" :label="scope.row.id" @click="choose=scope.row.id"></el-radio>
+            <el-radio v-model="choose" :label="scope.row.bookid" @click="selectBooks(scope.$index,scope.row)"></el-radio>
           </template>
         </el-table-column>
-        <el-table-column prop="id" label="作品ID" width="180" align="center"></el-table-column>
-        <el-table-column prop="keywords" label="作品名词" width="180" align="center"></el-table-column>
-        <el-table-column prop="pj" label="评级" width="80" align="center"></el-table-column>
-        <el-table-column prop="yjfl" label="一级分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="ejfl" label="二级分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="sjfl" label="三级分类" width="100" align="center"></el-table-column>
+        <el-table-column prop="bookid" label="作品ID" width="180" align="center"></el-table-column>
+        <el-table-column prop="bookname" label="作品名词" width="180" align="center"></el-table-column>
+        <el-table-column prop="channel" label="一级分类" width="100" align="center"></el-table-column>
+        <el-table-column prop="sort" label="二级分类" width="100" align="center"></el-table-column>
         <el-table-column prop="status" label="连载状态" width="100" align="center"></el-table-column>
       </el-table>
       <el-pagination
@@ -125,17 +120,17 @@
   </div>
 </template>
 <script>
-  import {orgModuleApi} from '../../api/main'
+  import {msgModuleApi} from '../../api/main'
   export default {
     name: 'create-msg',
     data() {
       return {
         createMsgForm: {
-          msgtype: '0',
+          msgtype: '1',
           keywords: '',
           reply_radio: '1',
           replycontent: '',
-          reply_title: '0',
+          reply_title: '',
           msg_desc: '',
           msg_url: '',
           onlinetime: '',
@@ -163,45 +158,69 @@
         },
         isSave: false,
         bookDialog: false,
-        tableData: [
-          {
-            id: '212',
-            keywords: '1212',
-            pj: '1212',
-            yjfl: '2121',
-            ejfl: '2121',
-            sjfl: '2121',
-            status: '2112',
-          },
-          {
-            id: '213',
-            keywords: '1212',
-            pj: '1212',
-            yjfl: '2121',
-            ejfl: '2121',
-            sjfl: '2121',
-            status: '2112',
-          },
-          {
-            id: '214',
-            keywords: '1212',
-            pj: '1212',
-            yjfl: '2121',
-            ejfl: '2121',
-            sjfl: '2121',
-            status: '2112',
-          },
-        ],
+        tableData: [],
         choose: '',
-        pageNo: 0,
+        pageNo: 1,
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
       }
     },
     methods: {
+      query() {
+        var _this = this
+        if(_this.booksForm.cbid == '' && _this.booksForm.bookname == ''){
+          return false
+        }else if(_this.booksForm.cbid == '' && _this.booksForm.bookname != ''){
+          this.searchNovels()
+        }else{
+          this.queryNovelsById()
+        }
+      },
+      searchNovels() {
+        var _this = this
+        var params = {
+
+        }
+      },
+      selectBooks(idx, row) {
+        this.choose = row.bookid
+      },
       chooseBooks() {
         this.bookDialog = true
+        this.initBooks()
+      },
+      initBooks() {
+        var _this = this
+        var params = {
+          page: _this.pageNo,
+          size: _this.pageSize,
+        }
+        _this.tableData = []
+        msgModuleApi.getNovelLists(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            var data = res.data.list
+            data.map((item,idx) => {
+              _this.tableData.push({
+                bookid: item.bookid,
+                bookname: item.name,
+                channel: item.channel == 0 ? '男生' : '女生',
+                sort: item.tp1st,
+                status: item.bookstatus == 1 ? '完结' : '连载中',
+              })
+            })
+            _this.totalSize = res.data.total
+          }
+        })
+      },
+      handleSizeChange(val) {
+        this.pageSize = val
+        this.initBooks()
+      },
+      handleCurrentChange(val) {
+        this.pageNo = val
+        this.initBooks()
       },
       submitForm(formName) {
         this.isSave = true
@@ -222,7 +241,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .create-msg-page{
     .create-msg-header{
       height: 50px;
@@ -245,5 +264,8 @@
       flex-direction: row;
       flex-wrap: wrap;
     }*/
+    .el-radio__label{
+      display: none;
+    }
   }
 </style>

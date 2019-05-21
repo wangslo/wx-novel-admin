@@ -44,10 +44,10 @@ export const orgModuleApi = {
     return orgAxios.post('/novelcms/user/list.html',qs.stringify(params)).then(res=>res.data);
   },
   getAccountInfo:(params) =>{
-    return orgAxios.get('/d_daccount/info',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/getuinfo.html',qs.stringify(params)).then(res=>res.data);
   },
   editAccountInfo:(params) =>{
-    return orgAxios.get('/d_daccount/edit',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/updauth.html',qs.stringify(params)).then(res=>res.data);
   },
   addAccountInfo:(params) =>{
     return orgAxios.post('/novelcms/user/create.html',qs.stringify(params)).then(res=>res.data);
@@ -56,7 +56,7 @@ export const orgModuleApi = {
     return orgAxios.get('/d_daccount/status',{params:params}).then(res=>res.data);
   },
   updatePwd:(params) =>{
-    return orgAxios.get('/d_myaccount/edit',{params:params}).then(res=>res.data);
+    return orgAxios.post('/novelcms/user/updatepwd.html',qs.stringify(params)).then(res=>res.data);
   },
 
   //公众号
@@ -78,5 +78,46 @@ export const uploadModuleApi = {
       }
     }
     return axios.post('http://test-dev.admin.dftoutiao.com/banner/upload',params,config).then(res=>res.data);
+  },
+}
+
+// 消息服务接口
+const msgAxios = axios.create({
+  baseURL: 'http://test.dpqct.com',
+  timeout: 5000,
+  withCredentials: true,
+});
+export const msgModuleApi = {
+  // 1、获取小说接口
+  getNovels:(params) =>{
+    return msgAxios.post('/novelcms/gzh/novel/load',qs.stringify(params)).then(res=>res.data);
+  },
+  // 2、小说列表接口
+  getNovelLists:(params) =>{
+    return msgAxios.post('/novelcms/gzh/novel/list',qs.stringify(params)).then(res=>res.data);
+  },
+  // 3、小说搜索接口
+  searchNovel:(params) =>{
+    return msgAxios.post('/novelcms/gzh/novel/search',qs.stringify(params)).then(res=>res.data);
+  },
+  // 4、获取单个消息模板接口
+  getSingleMsg:(params) =>{
+    return msgAxios.post('/novelcms/gzh/kwd/loadsingletem',qs.stringify(params)).then(res=>res.data);
+  },
+  // 5、消息模板列表接口
+  getMsgtem:(params) =>{
+    return msgAxios.post('/novelcms/gzh/kwd/loadmsgtem',qs.stringify(params)).then(res=>res.data);
+  },
+  // 6、下架消息模板
+  delMsgtem:(params) =>{
+    return msgAxios.post('/novelcms/gzh/kwd/delmsgtem',qs.stringify(params)).then(res=>res.data);
+  },
+  // 7、添加消息模板
+  addMsgtem:(params) =>{
+    return msgAxios.post('/novelcms/gzh/kwd/addmsgtem',qs.stringify(params)).then(res=>res.data);
+  },
+  // 8、修改消息模板
+  updateMsgtem:(params) =>{
+    return msgAxios.post('/novelcms/gzh/kwd/updmsgtem',qs.stringify(params)).then(res=>res.data);
   },
 }

@@ -306,7 +306,6 @@
         var _this = this
         _this.tableData = []
         orgModuleApi.getAccountList(params).then((res)=>{
-          console.log(res)
           if(res.success){
             res.data.data.map((item,index)=>{
               _this.tableData.push({

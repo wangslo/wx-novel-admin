@@ -64,9 +64,7 @@
             this.isLogin = false
           }
         }).catch((error)=>{
-          if(error.response.status == 404){
-            this.$message.error('服务器出错')
-          }
+          this.$message.error('服务器出错')
           this.isLogin = false
         })
       }
