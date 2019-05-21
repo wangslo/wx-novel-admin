@@ -17,6 +17,14 @@ const menus = [
     ]
   },
   {
+    id: 'billingManagement',
+    icon: 'fa fa-telegram',
+    label: '计费管理',
+    submenu: [
+      {id: 'recharge-position', name: 'rechargePosition', label: '充值档位设置'},
+    ]
+  },
+  {
     id: 'wechatPublic',
     icon: 'fa fa-telegram',
     label: '公众号管理',
