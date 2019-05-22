@@ -131,4 +131,13 @@ export const msgModuleApi = {
   updateMsgtem:(params) =>{
     return msgAxios.post('/novelcms/gzh/kwd/updmsgtem',qs.stringify(params)).then(res=>res.data);
   },
+  // 9、上传图片
+  uploadFile:(params) =>{
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+    return msgAxios.post('/novelcms/file/upload/msgpic',params, config).then(res=>res.data);
+  },
 }

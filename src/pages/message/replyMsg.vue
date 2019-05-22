@@ -3,7 +3,7 @@
     <div class="replyMsg-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>消息服务</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/replyMsg'}">消息服务</el-breadcrumb-item>
         <el-breadcrumb-item>消息回复</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -35,6 +35,15 @@
         :total="totalSize">
       </el-pagination>
     </div>
+    <div class="dialog-box">
+      <el-dialog title="" :visible.sync="delDialog" width="300px" center>
+        <span>确认删除此消息类型吗？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="delMsg(msgid)">确 认</el-button>
+          <el-button @click="delDialog = false">取 消</el-button>
+        </span>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
@@ -48,12 +57,40 @@
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
+        msgid: '',
+        delDialog: false,
       }
     },
     created() {
       this.getMsgList()
     },
     methods: {
+      delMsg(id) {
+        var _this = this
+        var params = {
+          appid: 'wx45a447d8dc271447',
+          msgId: id
+        }
+        msgModuleApi.delMsgtem(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.delDialog = false
+            _this.getMsgList()
+          }
+        })
+      },
+      handleEdit(idx, row) {
+        this.$router.push({
+          path: 'create-msg',
+          query: {
+            id: row.id
+          }
+        })
+      },
+      handleDel(idx, row) {
+        this.msgid = row.id
+        this.delDialog = true
+      },
       getMsgList() {
         var _this = this
         var params = {
@@ -61,21 +98,24 @@
           page: _this.pageNo,
           size: _this.pageSize,
         }
+        _this.tableData = []
         msgModuleApi.getMsgtem(params).then((res)=>{
           console.log(res)
           if(res.success) {
             res.data.content.map((item,index)=>{
               var status = ''
-              if(item.status == 0){
+              var now = new Date().getTime()
+              if(item.startDate > now){
                 status = '待上线'
               }
-              if(item.status == 1){
+              if(item.startDate < now && item.endDate > now){
                 status = '上线'
               }
-              if(item.status == 2){
+              if(item.endDate < now){
                 status = '下线'
               }
               _this.tableData.push({
+                id: item.id,
                 msgtype: item.type == 1 ? '关注回复' : '关键字回复',
                 keywords: item.type == 1 ? '-': item.kwd,
                 onlinetime: _this.common.getDate(item.startDate),
