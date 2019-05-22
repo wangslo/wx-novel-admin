@@ -23,7 +23,7 @@
                 </div>
                 <div class="authorization-item">
                     <span class="item-name">授权状态：</span>
-                    <span class="item-value">{{info.authorizationStatus}}</span>
+                    <span class="item-value" style="color:green;">{{info.authorizationStatus}}</span>
                 </div>
                 <div class="authorization-item">
                     <span class="item-name">认证主体：</span>
@@ -41,13 +41,24 @@
                     <span class="item-name">原始ID：</span>
                     <span class="item-value">{{info.originId}}</span>
                 </div>
-                <div class="authorization-item">
-                    <span class="item-name">APPID：</span>
-                    <span class="item-value">{{info.appId}}</span>
-                </div>
+                <!--<div class="authorization-item">-->
+                    <!--<span class="item-name">APPID：</span>-->
+                    <!--<span class="item-value">{{info.appId}}</span>-->
+                <!--</div>-->
                 <div class="authorization-item">
                     <span class="item-name">授权权限：</span>
-                    <span class="item-value">{{info.authorizationAuthority}}</span>
+                    <span class="item-value">
+                        <div style="margin-left:70px;color:green;">
+                            <div style="padding:5px">消息管理权限</div>
+                            <div style="padding:5px">自定义菜单权限</div>
+                            <div style="padding:5px">网页服务权限</div>
+                            <div style="padding:5px">群发与通知权限</div>
+                            <div style="padding:5px">用户管理权限</div>
+                            <div style="padding:5px">帐号服务权限</div>
+                            <div style="padding:5px">素材管理权限</div>
+                            <div style="padding:5px">开放平台帐号管理权限</div>
+                        </div>
+                    </span>
                 </div>
                 <div class="authorization-item">
                     <span class="item-name head-img-title">二维码：</span>
@@ -73,6 +84,11 @@
 <script>
   export default {
     name: 'blacklistInfo',
+    provide(){
+      return {
+        reload:this.getStorage
+      }
+    },
     data() {
       return {
         useDialog: false,
@@ -86,14 +102,52 @@
           createTime:'2019-05-13 11:47',
           originId:'12345',
           appId:'456789',
-          authorizationAuthority:"首页、用户管理、推荐管理",
+          authorizationAuthority:"消息管理权限\n" +
+          "\n" +
+          "自定义菜单权限\n" +
+          "\n" +
+          "网页服务权限\n" +
+          "\n" +
+          "群发与通知权限\n" +
+          "\n" +
+          "用户管理权限\n" +
+          "\n" +
+          "帐号服务权限\n" +
+          "\n" +
+          "素材管理权限\n" +
+          "\n" +
+          "开放平台帐号管理权限",
           qrcode:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'
 
 
-        }
+        },
+
       }
     },
+    watch:{
+      '$route':'getStorage'
+    },
+    created(){
+    },
+    mounted:function(){
+//      this.$nextTick(function () {
+//        this.getStorage();
+//      })
+    },
     methods: {
+      getStorage(){
+        let res = JSON.parse(localStorage.getItem("wechatItem"));
+        this.info.wechatType = res.wechatType?res.wechatType:this.info.wechatType
+        this.info.wechatName = res.wechatName?res.wechatName:this.info.wechatName
+        this.info.wechatId = res.wechatId?res.wechatId:this.info.wechatId
+        this.info.originId = res.originId?res.originId:this.info.originId
+        this.info.company = res.company?res.company:this.info.company
+        this.info.createTime = res.createTime?res.createTime:this.info.createTime
+        this.info.qrcode = res.qrcode?res.qrcode:this.info.qrcode
+        console.log(res)
+        console.log(res.wechatId)
+        console.log(res.wechatName)
+      },
       openDialog() {
         this.useDialog = true
       }

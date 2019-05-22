@@ -11,7 +11,7 @@
             <el-form ref="wechatForm" :model="wechatForm" :rules="accountInfoRules" label-width="100px" size="small" class="account-info-form" label-position="left">
                 <el-form-item label="公众号名称" required prop="wechatName">
                     <el-input v-model="wechatForm.wechatName" maxlength="20"></el-input>
-                    <span>（20个英文字符以内）</span>
+                    <span>（20个字符以内）</span>
                 </el-form-item>
                 <el-form-item label="公众号类型" required prop="wechatType">
                     <template>
@@ -45,7 +45,7 @@
                 <el-form-item label="二维码：" required prop="qrcode" class="banner-wx-setup-img">
                     <div class="img-box">
                         <img v-if="wechatForm.qrcode" :src="wechatForm.qrcode" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
                     </div>
                     <el-upload
                             class="banner-wx-img-upload"
@@ -69,9 +69,22 @@
 
 
                 <el-form-item label="用户选择*" required prop="uid">
-                    <template v-for="(name,key,index) in users">
-                        <el-radio v-model="wechatForm.uid" :label="key">{{name}}</el-radio>
-                    </template>
+                    <el-select v-model="wechatForm.uid" placeholder="请选择用户" @change="inputDept">
+                        <template v-for="(name,key,index) in users">
+                            <el-option :label="name" :value="key"></el-option>
+                        </template>
+                        <!--<el-option label="全部" value=""></el-option>-->
+                        <!--<el-option label="运营" value="运营"></el-option>-->
+                        <!--<el-option label="产品" value="产品"></el-option>-->
+                        <!--<el-option label="测试" value="测试"></el-option>-->
+                        <!--<el-option label="商务" value="商务"></el-option>-->
+                        <!--<el-option label="开发" value="开发"></el-option>-->
+                        <!--<el-option label="其它" value="5"></el-option>-->
+                    </el-select>
+                    <span>（请选择用户）</span>
+                    <!--<template v-for="(name,key,index) in users">-->
+                        <!--<el-radio v-model="wechatForm.uid" :label="key">{{name}}</el-radio>-->
+                    <!--</template>-->
                 </el-form-item>
                 <!--<el-form-item label-width="0px" prop="power">-->
 
