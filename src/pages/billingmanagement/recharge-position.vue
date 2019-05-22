@@ -22,6 +22,7 @@
                                         <div class="page-c-recharge-box">
                                             <h4 class="page-c-recharge-title"><span>得</span>{{liItem.option.times*liItem.option.amount}}</h4>
                                             <h5 class="page-c-recharge-mtitle" v-if="liItem.option.addition">{{liItem.option.addition}}</h5>
+                                            <h5 class="page-c-recharge-mtitle" v-else>&nbsp;</h5>
                                             <span class="page-c-recharge-num">¥{{liItem.option.amount}}</span>
                                         </div>
                                     </li>

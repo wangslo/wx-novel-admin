@@ -141,7 +141,7 @@
                     background
                     :page-size="20"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="400">
+                    :total="totalSize">
             </el-pagination>
             <div class="dialog-div">
                 <el-dialog title="加入黑名单" :visible.sync="defriendDialog" width="500px" center>
@@ -260,11 +260,13 @@
         pageNo: 0,
         pageSize: 10,
         currentPage: 1,
+        totalSize: 0,
         defriendDialog:false,
       }
     },
     created() {
-      this.getWechatLists()
+      this.getWechatLists();
+      localStorage.removeItem("wechatItem");
     },
     methods: {
       watchSize() {
@@ -318,6 +320,12 @@
 //              },
                 wechatId: item.appid,
                 wechatName: item.name,
+                appSecret:item.appsecret,
+                authStatus:item.authStatus,
+                certStatus:item.certStatus,
+                originId:item.originId,
+                qrcode:item.qrcode,
+                uid:item.uid,
                 company: item.belongto,
                 wechatType: item.type,
                 createTime: _this.common.getDate(item.registDate),
@@ -330,8 +338,12 @@
 
       },
       handleSearch(idx,row) {
+        localStorage.setItem("wechatItem", JSON.stringify(row));
         this.$router.push({
-          name:'authorizationManager'
+          name:'authorizationManager',
+          query:{
+            wechatId:row.wechatId,
+          }
         })
       },
       clearData() {
