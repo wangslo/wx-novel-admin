@@ -143,7 +143,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .replyMsg-page{
     .replyMsg-header{
       height: 50px;
@@ -159,6 +159,9 @@
       .create-btn{
         margin-bottom: 30px;
       }
+    }
+    .el-dialog__body{
+      text-align: center;
     }
   }
 </style>

@@ -6,29 +6,28 @@
             </el-breadcrumb>
         </div>
         <div class="accountInfo-body">
-            <el-row :gutter="80">
-                <el-col :span="4"><div class="grid-content bg-purple">
-                    <span style="color: red">{{today_income_total}}</span><br />
-                    <span>今日总收入（元）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
-                    <span style="color: red">{{today_general_rechare}}</span><br />
-                    <span>今日普通充值（元）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
-                    <span style="color: red">{{today_year_rechare}}</span><br />
-                    <span>今日包年充值（元）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
-                    <span style="color: red">{{today_new_user}}</span><br />
-                    <span>今日新增用户（人）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
-                    <span style="color: red">{{today_new_concern}}</span><br />
-                    <span>今日新增关注（人）</span>
-                </div></el-col>
-            </el-row>
-            <br />
+          <div class="grid-part">
+            <div class="grid-content bg-purple">
+              <span style="color: red">{{today_income_total}}</span><br />
+              <span>今日总收入（元）</span>
+            </div>
+            <div class="grid-content bg-purple">
+              <span style="color: red">{{today_general_rechare}}</span><br />
+              <span>今日普通充值（元）</span>
+            </div>
+            <div class="grid-content bg-purple">
+              <span style="color: red">{{today_year_rechare}}</span><br />
+              <span>今日包年充值（元）</span>
+            </div>
+            <div class="grid-content bg-purple">
+              <span style="color: red">{{today_new_user}}</span><br />
+              <span>今日新增用户（人）</span>
+            </div>
+            <div class="grid-content bg-purple">
+              <span style="color: red">{{today_new_concern}}</span><br />
+              <span>今日新增关注（人）</span>
+            </div>
+          </div>
             <el-row style="width: 95%;margin: 0 auto;">
                 展示时间：
                 <el-button-group >
@@ -38,7 +37,7 @@
                 </el-button-group>
             </el-row><br />
             <el-row>
-                <div id="dataMap" style="width: 1400px;height: 500px;">
+                <div id="dataMap" style="width: 100%;height: 500px;">
                 </div>
             </el-row>
         </div>
@@ -160,8 +159,9 @@
         background: #99a9bf;
     }
     .bg-purple {
-        /*background: #d3dce6;*/
-        background: white;
+      background: white;
+      box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.1);
+      margin-right: 2px;
     }
     .bg-purple-light {
         background: #e5e9f2;
@@ -188,8 +188,12 @@
             }
         }
         .accountInfo-body{
-            margin-left: 15px;
-            margin-right: 15px;
+          margin-left: 15px;
+          margin-right: 15px;
+          .grid-part{
+            display: flex;
+            margin-bottom: 30px;
+          }
         }
         .el-input{
             width: 300px;

@@ -9,7 +9,7 @@
       </el-breadcrumb>
     </div>
     <div class="create-msg-body">
-      <el-form ref="createmsgform" :model="createMsgForm" label-width="100px" size="small" class="create-msg-form" label-position="left">
+      <el-form :model="createMsgForm" label-width="100px" size="small" class="create-msg-form" label-position="left">
         <el-form-item label="消息类型">
           <el-select v-model="createMsgForm.msgtype">
             <el-option label="关注回复" value="1"></el-option>
@@ -79,6 +79,7 @@
             :picker-options="pickerBeginDateBefore"
           ></el-date-picker>
           <span v-show="createMsgRules.onlinetime" style="color: #F56C6C;">上线时间不能为空</span>
+          <span v-show="createMsgRules.onlinetime1" style="color: #F56C6C;">上线时间不能大于下线时间</span>
         </el-form-item>
         <el-form-item label="下线时间">
           <el-date-picker
@@ -90,6 +91,7 @@
             :picker-options="pickerBeginDateAfter"
           ></el-date-picker>
           <span v-show="createMsgRules.offlinetime" style="color: #F56C6C;">下线时间不能为空</span>
+          <span v-show="createMsgRules.offlinetime1" style="color: #F56C6C;">下线时间不能小于上线时间</span>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm" :loading="isSave">保存</el-button>
@@ -152,7 +154,9 @@
           msg_url: false,
           replyImg: false,
           onlinetime: false,
+          onlinetime1: false,
           offlinetime: false,
+          offlinetime1: false,
         },
         createMsgForm: {
           msgtype: '1',
@@ -172,17 +176,21 @@
         },
         pickerBeginDateBefore:{
           disabledDate: (time) => {
-            let beginDateVal = this.createMsgForm.offlinetime;
+            let beginDateVal = new Date(this.createMsgForm.offlinetime).getTime();
             if (beginDateVal) {
               return time.getTime() > beginDateVal;
+            }else {
+              return time.getTime() < Date.now() - 8.64e7;
             }
           }
         },
         pickerBeginDateAfter:{
           disabledDate: (time) => {
-            let beginDateVal = this.createMsgForm.onlinetime;
+            let beginDateVal = new Date(this.createMsgForm.onlinetime).getTime();
             if (beginDateVal) {
               return time.getTime() < beginDateVal
+            }else {
+              return time.getTime() < Date.now() - 8.64e7;
             }
           }
         },
@@ -316,7 +324,7 @@
             _this.tableData.push({
               bookid: res.data.bookid,
               bookname: res.data.name,
-              author: item.author,
+              author: res.data.author,
               channel: res.data.channel == 0 ? '男生' : '女生',
               sort: res.data.tp1st,
               status: res.data.bookstatus == 1 ? '完结' : '连载中',
@@ -450,17 +458,30 @@
         if(this.createMsgForm.onlinetime == ''){
           this.createMsgRules.onlinetime = true
           return false
-        }else {
+        }else if(this.createMsgForm.onlinetime != ''){
           this.createMsgRules.onlinetime = false
+          if(this.createMsgForm.offlinetime != ''){
+            if(new Date(this.createMsgForm.onlinetime).getTime() > new Date(this.createMsgForm.offlinetime).getTime()){
+              this.createMsgRules.onlinetime1 = true
+              return false
+            }
+          }
         }
+
         return true
       },
       checkOfflineTime() {
         if(this.createMsgForm.offlinetime == ''){
           this.createMsgRules.offlinetime = true
           return false
-        }else {
+        }else if(this.createMsgForm.offlinetime != ''){
           this.createMsgRules.offlinetime = false
+          if(this.createMsgForm.onlinetime != ''){
+            if(new Date(this.createMsgForm.onlinetime).getTime() > new Date(this.createMsgForm.offlinetime).getTime()){
+              this.createMsgRules.offlinetime1 = true
+              return false
+            }
+          }
         }
         return true
       },

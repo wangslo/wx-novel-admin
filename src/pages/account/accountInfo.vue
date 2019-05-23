@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="accountInfo-btn">
+      <div class="accountInfo-btn" v-show="false">
         <el-button type="success" size="mini" >编辑</el-button>
         <el-button v-if="status" type="warning" size="mini" >禁用</el-button>
         <el-button v-else type="warning" size="mini" >启用</el-button>

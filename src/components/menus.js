@@ -18,7 +18,7 @@ const menus = [
   },
   {
     id: 'billingManagement',
-    icon: 'fa fa-telegram',
+    icon: 'fa fa-calculator',
     label: '计费管理',
     submenu: [
       {id: 'recharge-position', name: 'rechargePosition', label: '充值档位设置'},

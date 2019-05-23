@@ -9,14 +9,14 @@
     </div>
     <div class="accountInfo-body">
       <el-form ref="accountInfoForm" :model="accountInfoForm" :rules="accountInfoRules" label-width="100px" size="small" class="account-info-form" label-position="left">
-        <el-form-item label="邮箱" required prop="account">
+        <el-form-item label="邮箱" prop="account">
           <el-input v-model="accountInfoForm.account"></el-input>
           <span>（请输入邮箱）</span>
         </el-form-item>
-        <el-form-item label="真实姓名" required prop="realName">
+        <el-form-item label="真实姓名" prop="realName">
           <el-input v-model="accountInfoForm.realName"></el-input>
         </el-form-item>
-        <el-form-item label="部门" prop="branch" required>
+        <el-form-item label="部门" prop="branch">
           <el-select v-model="accountInfoForm.branch" placeholder="请选择部门" @change="inputDept">
             <el-option label="请选择部门" value=""></el-option>
             <el-option label="运营" value="运营"></el-option>
@@ -31,7 +31,7 @@
             <el-input v-model="accountInfoForm.otherBranch" placeholder="请输入部门"></el-input>
           </el-form-item>
         </el-form-item>
-        <el-form-item label="密码" required prop="password">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="accountInfoForm.password" show-password></el-input>
           <span>（数字或字母，6—12个字符）</span>
         </el-form-item>
@@ -78,14 +78,27 @@
           callback()
         }
       }
+      var checkRealname = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('真实姓名不能为空'));
+        }else {
+          callback()
+        }
+      }
       var checkBranch = (rule, value, callback) => {
-        console.log(this.otherDept)
         if(this.otherDept){
           if (!value) {
             return callback(new Error('部门不能为空'));
           }else {
             callback()
           }
+        }else {
+          callback()
+        }
+      }
+      var checkDept = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('部门不能为空'));
         }else {
           callback()
         }
@@ -101,8 +114,8 @@
         },
         accountInfoRules: {
           account: [{ validator: checkAccount, trigger: 'blur' }],
-          realName: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }],
-          branch: [{ required: true, message: '请选择部门', trigger: 'blur' }],
+          realName: [{ validator: checkRealname, trigger: 'blur' }],
+          branch: [{ validator: checkDept, trigger: 'blur' }],
           otherBranch: [{ validator: checkBranch, trigger: 'blur' }],
           password: [{ validator: checkPassword, trigger: 'blur' }],
           power: [{ type: 'array', required: true, message: '请至少选择一个权限', trigger: 'change' }],

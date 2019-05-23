@@ -31,14 +31,14 @@ const actions = {
     // 模拟请求用户信息
     return new Promise((resolve, reject) => {
       var params = {
-        token: sessionStorage.getItem('token')
+        uid: ''
       }
-      orgModuleApi.loginInfo(params).then((res)=>{
-        if(res.code === '0'){
+      orgModuleApi.getAccountInfo(params).then((res)=>{
+        if(res.success){
           let data = res.data
-          sessionStorage.setItem('user', JSON.stringify(data.info))
-          commit('SET_LOGIN_USER', JSON.stringify(data.info))
-          commit('SET_LOGIN_ROLE', JSON.stringify(data.role))
+          sessionStorage.setItem('user', JSON.stringify(data))
+          commit('SET_LOGIN_USER', JSON.stringify(data))
+          commit('SET_LOGIN_ROLE', JSON.stringify(data))
           setTimeout(() => {
             resolve(res)
           }, 1000)
@@ -59,19 +59,6 @@ const actions = {
         commit('SET_LOGIN_USER', null)
         resolve()
       }, 100)
-      /*orgModuleApi.loginout(params).then((res)=>{
-        if(res.code == 0){
-          setTimeout(() => {
-            sessionStorage.removeItem('user')
-            sessionStorage.removeItem('token')
-            sessionStorage.removeItem('role')
-            commit('SET_LOGIN_USER', null)
-            resolve(res)
-          }, 100)
-        }else {
-          resolve(res)
-        }
-      })*/
     })
   }
 }

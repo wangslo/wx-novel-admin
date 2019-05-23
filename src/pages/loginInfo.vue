@@ -58,14 +58,9 @@
     data() {
       var validateOldPass = (rule, value, callback) => {
         this.oldpwd_err = false
-        const pswReg = /^[a-zA-Z0-9]{6,12}$/
         if (!value) {
           return callback(new Error('密码不能为空'));
-        }else if (value.toString().length < 6 || value.toString().length > 12) {
-          callback(new Error('密码长度为6 - 12个字符'))
-        }else if(!pswReg.test(value)){
-          callback(new Error('请输入正确的密码格式'))
-        } else {
+        }else {
           callback()
         }
       };
@@ -133,16 +128,14 @@
               newPwd: this.resetPwd.newpwd
             }
             orgModuleApi.updatePwd(params).then(res=>{
-              if(res.code == 3){
-                _this.oldpwd_err = true
-                _this.oldpwd_tip = '密码错误，请重新输入'
-              }else if(res.code == 2){
-                _this.oldpwd_err = true
-                _this.oldpwd_tip = '密码长度或格式错误'
-              }else if(res.code == 0){
+              console.log(res)
+              if(res.success){
                 this.$message.success('密码修改成功')
                 _this.oldpwd_err = false
                 _this.$refs.resetPwd.resetFields()
+              }else {
+                _this.oldpwd_err = true
+                _this.oldpwd_tip = '密码错误，请重新输入'
               }
             })
           } else {
@@ -152,6 +145,25 @@
         });
       },
       getLoginInfo() {
+        var _this = this
+        var params = {
+          uid: ''
+        }
+        orgModuleApi.getAccountInfo(params).then(res=>{
+          console.log(res)
+          if(res.success){
+            res.data.privileges.map((item,idx)=>{
+              if(res.data.rid.indexOf(item.id) > -1) {
+                _this.branch.push(item.name)
+              }
+            })
+            _this.user = {
+              account: res.data.username,
+              nickname: res.data.name,
+              department: res.data.dept,
+            }
+          }
+        })
       },
     }
   }
@@ -191,6 +203,8 @@
             display: inline-block;
             margin-right: 50px;
             margin-bottom: 20px;
+            color: #303133;
+            font-size: 14px;
           }
         }
       }

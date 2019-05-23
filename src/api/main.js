@@ -31,12 +31,6 @@ export const orgModuleApi = {
   login:(params) =>{
     return orgAxios.post('/novelcms/pub/dologin.html',qs.stringify(params)).then(res=>res.data);
   },
-  loginout:(params) =>{
-    return orgAxios.get('/d_login/logout',{params:params}).then(res=>res.data);
-  },
-  loginInfo:(params) =>{
-    return orgAxios.get('/d_myaccount/index',{params:params}).then(res=>res.data);
-  },
   getAuthList:(params) =>{
     return orgAxios.post('/novelcms/user/privileges.html',qs.stringify(params)).then(res=>res.data);
   },
@@ -51,9 +45,6 @@ export const orgModuleApi = {
   },
   addAccountInfo:(params) =>{
     return orgAxios.post('/novelcms/user/create.html',qs.stringify(params)).then(res=>res.data);
-  },
-  operatAccount:(params) =>{
-    return orgAxios.get('/d_daccount/status',{params:params}).then(res=>res.data);
   },
   updatePwd:(params) =>{
     return orgAxios.post('/novelcms/user/updatepwd.html',qs.stringify(params)).then(res=>res.data);
@@ -82,7 +73,6 @@ export const orgModuleApi = {
   },
 }
 
-// 消息服务接口
 export const msgModuleApi = {
   // 1、获取小说接口
   getNovels:(params) =>{
@@ -124,5 +114,9 @@ export const msgModuleApi = {
       }
     }
     return orgAxios.post('/novelcms/file/upload/msgpic',params, config).then(res=>res.data);
+  },
+  // 10、根据分类获取小说接口
+  getNovelsBySort:(params) =>{
+    return orgAxios.post('/novelcms/gzh/novel/filter',qs.stringify(params)).then(res=>res.data);
   },
 }

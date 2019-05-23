@@ -5,9 +5,9 @@
     </el-col>
     <el-col :span="20">
       <div class="v-user" style="float: right;">
-        <el-dropdown @command="handleCommand">
+        <el-dropdown @command="handleCommand" v-if="user">
           <span class="el-dropdown-link user">
-            admin <i class="el-icon-arrow-down el-icon--right"></i>
+            {{user.username}} <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="loginInfo">账号信息</el-dropdown-item>
@@ -26,7 +26,7 @@
       return {
         mini: false,
       }
-    },/*
+    },
     computed: {
       ...mapState({
         user: ({user}) => JSON.parse(user.user)
@@ -34,7 +34,7 @@
     },
     created() {
       this.getLoginUser()
-    },*/
+    },
     methods: {
       ...mapActions(['getLoginUser','logout']),
       handleSwitchSide () {

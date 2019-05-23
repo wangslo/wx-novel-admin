@@ -62,7 +62,7 @@
         <el-form-item style="float: right;">
           <el-button type="primary" @click="clearData">清空</el-button>
           <el-button type="primary" @click="getAccountLists">查找</el-button>
-          <el-button type="primary">开设账号</el-button>
+          <el-button type="primary" @click="openAccountPage">开设账号</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" style="width:100%;" stripe border>
@@ -76,12 +76,12 @@
         <el-table-column prop="branch" label="部门" width="180" align="center"></el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180" align="center"></el-table-column>
         <el-table-column prop="status" label="账号状态" width="180" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="300" align="center">
+        <el-table-column label="操作" min-width="80" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button v-if="scope.row.status=='正常'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">禁用</el-button>
-            <el-button v-if="scope.row.status=='禁用'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">启用</el-button>
-            <el-button size="mini" type="danger" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+            <el-button v-show="false" size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button v-show="false" v-if="scope.row.status=='正常'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">禁用</el-button>
+            <el-button v-show="false" v-if="scope.row.status=='禁用'" size="mini" type="warning" @click="handleForbid(scope.$index, scope.row)">启用</el-button>
+            <el-button v-show="false" size="mini" type="danger" @click="handleDel(scope.$index, scope.row)">删除</el-button>
             <el-button size="mini" type="primary" @click="handleInfo(scope.$index, scope.row)">详情</el-button>
           </template>
         </el-table-column>
@@ -265,6 +265,11 @@
       this.getAccountLists()
     },
     methods: {
+      openAccountPage() {
+        this.$router.push({
+          name:'openAccount',
+        })
+      },
       delAccount(id) {
         this.delDialog = false
       },
