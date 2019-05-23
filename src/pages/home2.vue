@@ -13,7 +13,7 @@
                 </div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple">
                     <span style="color: red">{{today_income_times}}</span><br />
-                    <span>今日充值笔数</span>
+                    <span>今日充值数（笔）</span>
                 </div></el-col>
                 <el-col :span="4" v-if="false"><div class="grid-content bg-purple">
                     <span style="color: red">{{today_general_rechare}}</span><br />
@@ -140,25 +140,21 @@
             {
               name:'总收入',
               type:'line',
-              stack: '总量',
               data:allIncome
             },
             {
               name:'充值笔数',
               type:'line',
-              stack: '总量',
               data:incomeTimes
             },
             {
               name:'新增用户',
               type:'line',
-              stack: '总量',
               data:newUser
             },
             {
               name:'新增关注',
               type:'line',
-              stack: '总量',
               data:newConcern
             }
           ]
