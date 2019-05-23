@@ -2,7 +2,7 @@
   <div class="v-login">
     <div class="v-login-img">
       <img src="../assets/login-logo.png"/>
-      <span>魅狐文学管理后台</span>
+      <span>趣阅读管理后台</span>
     </div>
     <el-form ref="loginForm" :rules="rules" :model="form" class="login-form">
       <el-form-item prop="username">

@@ -3,7 +3,7 @@
     <el-aside class="v-side" :width="hideSide ? '0' : sideWidth + 'px'" :style="{background: theme.theme.backgroundColor}">
       <div class="v-header-logo-box" :style="{height: headerHeight + 'px', color: theme.theme.activeTextColor}" @click="toIndex">
         <img src="../assets/logo.png" alt="" class="header-logo">
-        <span class="header-logo-text" >魅狐文学管理后台</span>
+        <span class="header-logo-text" >趣阅读管理后台</span>
       </div>
       <Vaside :collapse="isCollapse" :theme="theme.theme"></Vaside>
     </el-aside>

@@ -84,11 +84,6 @@
 <script>
   export default {
     name: 'blacklistInfo',
-    provide(){
-      return {
-        reload:this.getStorage
-      }
-    },
     data() {
       return {
         useDialog: false,
@@ -131,7 +126,7 @@
     },
     mounted:function(){
 //      this.$nextTick(function () {
-//        this.getStorage();
+        this.getStorage();
 //      })
     },
     methods: {
