@@ -217,7 +217,7 @@
           size: _this.pageSize,
           sex: _this.novelForm.mansort,
           cateid: _this.novelForm.booksort,
-          bookstatus: _this.novelForm.bookstatus,
+          bookStatus: _this.novelForm.bookstatus,
         }
         _this.tableData = []
         msgModuleApi.getNovelsBySort(params).then(res=>{

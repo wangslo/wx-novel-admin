@@ -42,7 +42,7 @@
                 </el-button-group>
             </el-row><br />
             <el-row>
-                <div id="dataMap" style="width: 1400px;height: 500px;">
+                <div id="dataMap" style="width: 100%;height: 500px;">
                 </div>
             </el-row>
         </div>

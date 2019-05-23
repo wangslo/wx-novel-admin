@@ -265,7 +265,7 @@
       },
       insertBook() {
         this.bookDialog = false
-        var chooseText = "<a href='http://test-dev.dftoutiao.com/janfly_html/wx-novel/bookInfo.html?bookId='" + this.choose + "'>" + this.choose_name + "</a>"
+        var chooseText = "<a href='http://test-dev.dftoutiao.com/janfly_html/wx-novel/bookInfo.html?bookId=" + this.choose + "'>" + this.choose_name + "</a>"
         this.createMsgForm.replycontent = this.createMsgForm.replycontent + chooseText
       },
       query() {
