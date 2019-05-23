@@ -12,10 +12,14 @@
                     <span>今日总收入（元）</span>
                 </div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple">
+                    <span style="color: red">{{today_income_times}}</span><br />
+                    <span>今日充值笔数</span>
+                </div></el-col>
+                <el-col :span="4" v-if="false"><div class="grid-content bg-purple">
                     <span style="color: red">{{today_general_rechare}}</span><br />
                     <span>今日普通充值（元）</span>
                 </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
+                <el-col :span="4" v-if="false"><div class="grid-content bg-purple">
                     <span style="color: red">{{today_year_rechare}}</span><br />
                     <span>今日包年充值（元）</span>
                 </div></el-col>
@@ -33,7 +37,7 @@
                 展示时间：
                 <el-button-group >
                     <el-button :type="button_type == 1 ? 'primary':''" size="mini" style="width: 70px" @click="reds(1)">7天</el-button>
-                    <el-button :type="button_type == 2 ? 'primary':''" size="mini" style="width: 70px" @click="reds(2)">30天</el-button>
+                    <el-button :type="button_type == 2 ? 'primary':''" size="mini" style="width: 70px" @click="reds(2)">15天</el-button>
                     <el-button :type="button_type == 3 ? 'primary':''" size="mini" style="width: 70px" @click="reds(3)">30天</el-button>
                 </el-button-group>
             </el-row><br />
@@ -48,20 +52,18 @@
 
   import ElRow from 'element-ui/packages/row/src/row'
 
-  const cityOptions = ['上海', '北京', '广州', '深圳'];
-
-
   import {orgModuleApi} from '../api/main'
   export default {
     name: 'Home2',
     data() {
       return {
         button_type:1,
+        today_income_times:"xxxx",
         today_income_total:"xxxx.xxx",
-        today_general_rechare:"123.23",
-        today_year_rechare:"45,32",
-        today_new_user:"23",
-        today_new_concern:"34",
+        today_general_rechare:"xxxx.xxx",
+        today_year_rechare:"xxxx.xxx",
+        today_new_user:"xxxx",
+        today_new_concern:"xxx",
         x_data:['2019-04-22','2019-04-23','2019-04-24','2019-04-25','2019-04-26','2019-04-27','2019-04-28'],
         y_data:[
           {
@@ -100,9 +102,74 @@
       }
     },
     mounted() {
-      this.initECharts()
+      //this.initECharts()
+      this.getDataLists()
     },
     methods: {
+      getDataLists(day_num=7){
+      var params = {
+        //appid	: this.wechatlist_condition.wechatId,
+        appid:'wx45a447d8dc271447',
+        days:day_num,
+      }
+      var _this = this
+      _this.tableData = []
+      orgModuleApi.dataList(params).then((res)=>{
+        console.log(res)
+        if(res.success){
+
+          _this.today_income_times = res.data[0].tsize
+          _this.today_income_total = res.data[0].sumFee
+          _this.today_new_user = res.data[0].newAddCount
+          _this.today_new_concern = res.data[0].newSubCount
+
+          _this.x_data = []
+          //_this.y_data = []
+          let allIncome = [];
+          let incomeTimes = []
+          let newUser = []
+          let newConcern = []
+          res.data.map((item,index)=>{
+            _this.x_data.unshift(item.date)
+            allIncome.unshift(item.sumFee)
+            incomeTimes.unshift(item.tsize)
+            newUser.unshift(item.newAddCount)
+            newConcern.unshift(item.newSubCount)
+          })
+          _this.y_data = [
+            {
+              name:'总收入',
+              type:'line',
+              stack: '总量',
+              data:allIncome
+            },
+            {
+              name:'充值笔数',
+              type:'line',
+              stack: '总量',
+              data:incomeTimes
+            },
+            {
+              name:'新增用户',
+              type:'line',
+              stack: '总量',
+              data:newUser
+            },
+            {
+              name:'新增关注',
+              type:'line',
+              stack: '总量',
+              data:newConcern
+            }
+          ]
+        }
+        console.log('x_data')
+        console.log(_this.x_data)
+        _this.initECharts()
+      })
+
+
+    },
       initECharts() {
         let myChart = echarts.init(document.getElementById('dataMap'))
         // 绘制图表
@@ -111,7 +178,8 @@
             trigger: 'axis'
           },
           legend: {
-            data:['总收入','普通充值','包年充值','新增用户','新增关注']
+//            data:['总收入','普通充值','包年充值','新增用户','新增关注']
+            data:['总收入','充值笔数','新增用户','新增关注']
           },
           toolbox: {
             show : false,
@@ -141,6 +209,13 @@
       },
       reds:function(index){
         this.button_type = index;
+        if(index == 2){
+          this.getDataLists(15)
+        }else if(index == 3){
+          this.getDataLists(30)
+        }else{
+          this.getDataLists()
+        }
       }
     }
   }
