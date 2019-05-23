@@ -51,7 +51,7 @@
         </el-form-item>
         <el-form-item label="部门" prop="branch" label-width="60px">
           <el-select v-model="account_condition.branch" placeholder="请选择部门">
-            <el-option label="全部" value=""></el-option>
+            <el-option label="请选择部门" value=""></el-option>
             <el-option label="运营" value="0"></el-option>
             <el-option label="产品" value="1"></el-option>
             <el-option label="测试" value="2"></el-option>
@@ -142,7 +142,7 @@
               <el-col :span="12">
                 <el-form-item label="部门" class="accountInfoForm-item">
                   <el-select v-model="accountInfoForm.branch" placeholder="请选择部门">
-                    <el-option label="全部" value=""></el-option>
+                    <el-option label="请选择部门" value=""></el-option>
                     <el-option label="运营" value="0"></el-option>
                     <el-option label="产品" value="1"></el-option>
                     <el-option label="测试" value="2"></el-option>

@@ -18,7 +18,7 @@
         </el-form-item>
         <el-form-item label="部门" prop="branch" required>
           <el-select v-model="accountInfoForm.branch" placeholder="请选择部门" @change="inputDept">
-            <el-option label="全部" value=""></el-option>
+            <el-option label="请选择部门" value=""></el-option>
             <el-option label="运营" value="运营"></el-option>
             <el-option label="产品" value="产品"></el-option>
             <el-option label="测试" value="测试"></el-option>
