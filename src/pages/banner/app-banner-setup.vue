@@ -80,7 +80,7 @@
   </div>
 </template>
 <script>
-  import {uploadModuleApi} from '../../api/main'
+  import {msgModuleApi} from '../../api/main'
   export default {
     name: 'appBannerSetup',
     data() {
@@ -116,13 +116,16 @@
     methods: {
       getImg(res, file, fileList) {
         this.$message.success('图片上传成功')
-        this.banner_app_setup_condition.bannerImg = file.url
+
       },
       uploadBanner(e){
+        var _this = this
         let uploadData = new FormData();
         uploadData.append('file', e.file);
-        uploadModuleApi.uploadImg(uploadData).then(res=>{
-          console.log(res)
+        msgModuleApi.uploadFile(uploadData).then(res=>{
+          if(res.success) {
+            _this.banner_app_setup_condition.bannerImg = res.data.url
+          }
         })
       },
       queryBannerUrl(params,cb) {

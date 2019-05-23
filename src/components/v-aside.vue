@@ -73,6 +73,42 @@
           }
           _this.menuList.push(arr)
         }*/
+        /*_this.menuList.push(
+          {
+            id: 1000,
+            icon: 'fa fa-home',
+            label: '首页',
+            submenu: [
+              {id: 1100, name: 'home2', label: '首页'},
+            ]
+          },
+          {
+            id: 2000,
+            icon: 'fa fa-file-powerpoint-o',
+            label: '权限管理',
+            submenu: [
+              {id: 2100, name: 'accountManger', label: '账号管理'},
+              {id: 'open-account', name: 'openAccount', label: '开设账号'},
+            ]
+          },
+          {
+            id: 'wechatPublic',
+            icon: 'fa fa-telegram',
+            label: '公众号管理',
+            submenu: [
+              {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
+              {id: 'create-wechat', name: 'createWechat', label: '开设公众号'},
+            ]
+          },
+          {
+            id: 'msg',
+            icon: 'fa  fa-commenting-o',
+            label: '消息服务',
+            submenu: [
+              {id: 'replyMsg', name: 'replyMsg', label: '消息回复'},
+            ]
+          },
+        )*/
         menus.map((item,index)=>{
           _this.menuList.push(item)
         })

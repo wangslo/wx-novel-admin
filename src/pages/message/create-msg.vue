@@ -98,10 +98,10 @@
     </div>
     <el-dialog title="请选择书籍" :visible.sync="bookDialog" width="782px">
       <el-form ref="booksForm" :model="booksForm" label-width="80px" inline size="small" class="books-form">
-        <el-form-item label="作品CBID">
+        <el-form-item label="书籍ID">
           <el-input v-model="booksForm.cbid"></el-input>
         </el-form-item>
-        <el-form-item label="作品名称">
+        <el-form-item label="书籍名称">
           <el-input v-model="booksForm.bookname"></el-input>
         </el-form-item>
         <el-form-item>
@@ -114,10 +114,11 @@
             <el-radio v-model="choose" :label="scope.row.bookid" @click.native.prevent="selectBooks(scope.$index,scope.row)"></el-radio>
           </template>
         </el-table-column>
-        <el-table-column prop="bookid" label="作品ID" width="180" align="center"></el-table-column>
-        <el-table-column prop="bookname" label="作品名词" width="180" align="center"></el-table-column>
-        <el-table-column prop="channel" label="一级分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="sort" label="二级分类" width="100" align="center"></el-table-column>
+        <el-table-column prop="bookid" label="书籍ID" width="180" align="center"></el-table-column>
+        <el-table-column prop="bookname" label="书籍名称" width="180" align="center"></el-table-column>
+        <el-table-column prop="author" label="作者" width="180" align="center"></el-table-column>
+        <el-table-column prop="channel" label="男女分类" width="100" align="center"></el-table-column>
+        <el-table-column prop="sort" label="书籍分类" width="100" align="center"></el-table-column>
         <el-table-column prop="status" label="连载状态" width="100" align="center"></el-table-column>
       </el-table>
       <el-pagination
@@ -181,7 +182,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.createMsgForm.onlinetime;
             if (beginDateVal) {
-              return time.getTime() < beginDateVal;
+              return time.getTime() < beginDateVal
             }
           }
         },
@@ -292,6 +293,7 @@
               _this.tableData.push({
                 bookid: item.bookid,
                 bookname: item.name,
+                author: item.author,
                 channel: item.channel == 0 ? '男生' : '女生',
                 sort: item.tp1st,
                 status: item.bookstatus == 1 ? '完结' : '连载中',
@@ -314,6 +316,7 @@
             _this.tableData.push({
               bookid: res.data.bookid,
               bookname: res.data.name,
+              author: item.author,
               channel: res.data.channel == 0 ? '男生' : '女生',
               sort: res.data.tp1st,
               status: res.data.bookstatus == 1 ? '完结' : '连载中',
@@ -345,6 +348,7 @@
               _this.tableData.push({
                 bookid: item.bookid,
                 bookname: item.name,
+                author: item.author,
                 channel: item.channel == 0 ? '男生' : '女生',
                 sort: item.tp1st,
                 status: item.bookstatus == 1 ? '完结' : '连载中',
