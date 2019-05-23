@@ -69,6 +69,10 @@ export const orgModuleApi = {
   wechatRelationToUser:(params) =>{
     return orgAxios.post('/novelcms/user/umap.html',qs.stringify(params)).then(res=>res.data);
   },
+  //首页数据
+  dataList:(params) =>{
+    return orgAxios.post('/novelcms/count/simreport.html',qs.stringify(params)).then(res=>res.data);
+  },
 
   //充值档位
   gradeList:(params) =>{
