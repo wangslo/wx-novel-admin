@@ -6,7 +6,7 @@
             </el-breadcrumb>
         </div>
         <div class="accountInfo-body">
-            <el-row :gutter="80">
+            <el-row :gutter="80" style="margin-left:3%">
                 <el-col :span="4"><div class="grid-content bg-purple">
                     <span style="color: red">{{today_income_total}}</span><br />
                     <span>今日总收入（元）</span>
@@ -42,7 +42,7 @@
                 </el-button-group>
             </el-row><br />
             <el-row>
-                <div id="dataMap" style="width: 100%;height: 500px;">
+                <div id="dataMap" style="width: 90%;height: 500px;">
                 </div>
             </el-row>
         </div>
@@ -102,7 +102,6 @@
       }
     },
     mounted() {
-      //this.initECharts()
       this.getDataLists()
     },
     methods: {

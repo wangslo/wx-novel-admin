@@ -14,7 +14,7 @@
                 展示时间：
                 <el-button-group >
                     <el-button :type="button_type == 1 ? 'primary':''" size="mini" style="width: 70px" @click="reds(1)">7天</el-button>
-                    <el-button :type="button_type == 2 ? 'primary':''" size="mini" style="width: 70px" @click="reds(2)">30天</el-button>
+                    <el-button :type="button_type == 2 ? 'primary':''" size="mini" style="width: 70px" @click="reds(2)">15天</el-button>
                     <el-button :type="button_type == 3 ? 'primary':''" size="mini" style="width: 70px" @click="reds(3)">30天</el-button>
                 </el-button-group>
             </el-row><br />
@@ -22,12 +22,12 @@
                 <div id="dataMap" style="width: 95%;height: 500px;">
                 </div>
             </el-row>
-            <el-row>
+            <el-row v-if="false">
                 <el-button-group style="float: right">
                     <el-button type="danger" size="mini" style="width: 70px" @click="reds(1)">导出</el-button>
                 </el-button-group>
             </el-row>
-            <el-table :data="tableData" style="width:100%;"
+            <el-table :data="tableData" style="width:90%;margin: auto"
                       :default-sort = "{prop: 'dateNum', order: 'descending'}"
                       stripe border
                       @sort-change='sortChange'>
@@ -48,13 +48,14 @@
                 <!--</template>-->
                 <!--</el-table-column>-->
 
-                <el-table-column prop="dateNum" sortable='custom' :sort-orders="['ascending', 'descending']" label="日期" min-width="120" align="center"></el-table-column>
-                <el-table-column prop="allIncome" sortable='custom' :sort-orders="['ascending', 'descending']" label="总收入" width="120" align="center"></el-table-column>
-                <el-table-column prop="generalRecharge" sortable='custom' :sort-orders="['ascending', 'descending']" label="PV" width="120" align="center"></el-table-column>
-                <el-table-column prop="yearRecharge" sortable='custom' :sort-orders="['ascending', 'descending']" label="UV" width="120" align="center"></el-table-column>
-                <el-table-column prop="newUser" sortable='custom' :sort-orders="['ascending', 'descending']" label="新增关注" width="120" align="center"></el-table-column>
-                <el-table-column prop="NumOfnewUserRecharge" sortable='custom' :sort-orders="['ascending', 'descending']" label="总流水" width="150" align="center"></el-table-column>
-                <el-table-column prop="NumOfRechargeOfnewUser" sortable='custom' :sort-orders="['ascending', 'descending']" label="充值笔数" width="150" align="center"></el-table-column>
+                <el-table-column prop="dateNum" sortable='custom' :sort-orders="['ascending', 'descending']" label="日期" min-width="80" align="center"></el-table-column>
+                <el-table-column prop="allIncome" sortable='custom' :sort-orders="['ascending', 'descending']" label="充值金额" width="250" align="center"></el-table-column>
+                <el-table-column prop="incomeTimes" sortable='custom' :sort-orders="['ascending', 'descending']" label="充值笔数" width="250" align="center"></el-table-column>
+                <el-table-column prop="newConcern" sortable='custom' :sort-orders="['ascending', 'descending']" label="新增关注" width="250" align="center"></el-table-column>
+                <el-table-column prop="pv" sortable='custom' :sort-orders="['ascending', 'descending']" label="PV" width="250" align="center"></el-table-column>
+                <el-table-column prop="uv" sortable='custom' :sort-orders="['ascending', 'descending']" label="UV" width="250" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="NumOfnewUserRecharge" sortable='custom' :sort-orders="['ascending', 'descending']" label="总流水" width="150" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="NumOfRechargeOfnewUser" sortable='custom' :sort-orders="['ascending', 'descending']" label="充值笔数" width="150" align="center"></el-table-column>
 
                 <!--<el-table-column prop="dateNum" sortable='custom' :sort-orders="['ascending', 'descending']" label="日期" min-width="120" align="center"></el-table-column>-->
                 <!--<el-table-column prop="allIncome" sortable='custom' :sort-orders="['ascending', 'descending']" label="总收入" width="120" align="center"></el-table-column>-->
@@ -68,7 +69,7 @@
                 <!--<el-table-column prop="newUserRecharge" sortable='custom' :sort-orders="['ascending', 'descending']" label="新用户充值金额" width="150" align="center"></el-table-column>-->
                 <!--<el-table-column prop="NumOfnewUserRecharge" sortable='custom' :sort-orders="['ascending', 'descending']" label="新用户充值人数" width="150" align="center"></el-table-column>-->
                 <!--<el-table-column prop="NumOfRechargeOfnewUser" sortable='custom' :sort-orders="['ascending', 'descending']" label="新用户充值笔数" width="150" align="center"></el-table-column>-->
-                <el-table-column  label="昵称"  v-if="false" width="150" align="center">
+                <el-table-column  v-if="false" label="昵称" width="150" align="center">
                     <template slot-scope="scope">
                         <span @click="userDetail(scope.$index, scope.row)" style="color: #19a05e">{{scope.row.nickName}}</span>
                     </template>
@@ -148,84 +149,103 @@
             NumOfnewUserRecharge:0,
             NumOfRechargeOfnewUser:0,
           },
-          {
-            dateNum:'2019-04-23',
-            allIncome:'54300',
-            generalRecharge:'2000',
-            yearRecharge:'0',
-            generalRechargeArpu:0,
-            consumeArpu:0,
-            readerNum:0,
-            newUser:2700,
-            newUserNextDayRetain:0,
-            newUserRecharge:0,
-            NumOfnewUserRecharge:0,
-            NumOfRechargeOfnewUser:0,
-          },
-          {
-            dateNum:'2019-04-24',
-            allIncome:'2300',
-            generalRecharge:'1600',
-            yearRecharge:'0',
-            generalRechargeArpu:0,
-            consumeArpu:0,
-            readerNum:0,
-            newUser:1500,
-            newUserNextDayRetain:0,
-            newUserRecharge:0,
-            NumOfnewUserRecharge:0,
-            NumOfRechargeOfnewUser:0,
-          },
-          {
-            dateNum:'2019-04-25',
-            allIncome:'2300',
-            generalRecharge:'1600',
-            yearRecharge:'0',
-            generalRechargeArpu:0,
-            consumeArpu:0,
-            readerNum:0,
-            newUser:1500,
-            newUserNextDayRetain:0,
-            newUserRecharge:0,
-            NumOfnewUserRecharge:0,
-            NumOfRechargeOfnewUser:0,
-          },
-          {
-            dateNum:'2019-04-26',
-            allIncome:'2300',
-            generalRecharge:'1600',
-            yearRecharge:'0',
-            generalRechargeArpu:0,
-            consumeArpu:0,
-            readerNum:0,
-            newUser:1500,
-            newUserNextDayRetain:0,
-            newUserRecharge:0,
-            NumOfnewUserRecharge:0,
-            NumOfRechargeOfnewUser:0,
-          },
-          {
-            dateNum:'2019-04-27',
-            allIncome:'2300',
-            generalRecharge:'1600',
-            yearRecharge:'0',
-            generalRechargeArpu:0,
-            consumeArpu:0,
-            readerNum:0,
-            newUser:1500,
-            newUserNextDayRetain:0,
-            newUserRecharge:0,
-            NumOfnewUserRecharge:0,
-            NumOfRechargeOfnewUser:0,
-          },
         ],
+        tmpQid:'',
 
       }
     },
     mounted() {
-      this.initECharts()
+      this.tmpQid = this.$route.query.qid
+      this.getDataLists()
     },
     methods: {
+      getDataLists(day_num=7){
+        var params = {
+          //appid	: this.wechatlist_condition.wechatId,
+          appid:'wx45a447d8dc271447',
+          days:day_num,
+          qid:this.tmpQid,
+        }
+        var _this = this
+        _this.tableData = []
+        orgModuleApi.dataPromotionDetail(params).then((res)=>{
+          console.log(res)
+          if(res.success){
+
+            _this.x_data = []
+            //_this.y_data = []
+            let allIncome = [];
+            let incomeTimes = []
+            let newUser = []
+            let newConcern = []
+            let pv = []
+            let uv = []
+            res.data.map((item,index)=>{
+
+              _this.tableData.push({
+                dateNum:item.date,
+                allIncome:item.payMoney,
+                incomeTimes:item.payTime,
+                newConcern:item.subNum,
+                pv:item.pv,
+                uv:item.uv,
+
+
+                newUser:0,
+                generalRecharge:'2000',
+                yearRecharge:'0',
+                generalRechargeArpu:0,
+                consumeArpu:0,
+                readerNum:0,
+                newUserNextDayRetain:0,
+                newUserRecharge:0,
+                NumOfnewUserRecharge:0,
+                NumOfRechargeOfnewUser:0,
+              })
+
+              _this.x_data.unshift(item.date)
+              allIncome.unshift(item.payMoney)
+              incomeTimes.unshift(item.payTime)
+              newUser.unshift(item.newAddCount)
+              newConcern.unshift(item.subNum)
+              pv.unshift(item.pv)
+              uv.unshift(item.uv)
+            })
+            _this.y_data = [
+              {
+                name:'充值金额',
+                type:'line',
+                data:allIncome
+              },
+              {
+                name:'充值笔数',
+                type:'line',
+                data:incomeTimes
+              },
+              {
+                name:'新增关注',
+                type:'line',
+                data:newConcern
+              },
+              {
+                name:'PV',
+                type:'line',
+                data:pv
+              },
+              {
+                name:'UV',
+                type:'line',
+                data:uv
+              }
+            ]
+          }
+          console.log('x_data')
+          console.log(_this.x_data)
+          _this.initECharts()
+        })
+
+
+      },
       initECharts() {
         let myChart = echarts.init(document.getElementById('dataMap'))
         // 绘制图表
@@ -264,6 +284,13 @@
       },
       reds:function(index){
         this.button_type = index;
+        if(index == 2){
+          this.getDataLists(15)
+        }else if(index == 3){
+          this.getDataLists(30)
+        }else{
+          this.getDataLists()
+        }
       }
     }
   }
