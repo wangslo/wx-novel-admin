@@ -391,15 +391,16 @@
         })
       },
       viewText(idx, row){
-       this.$router.push({
-         path:'/promotion',
-         query: {
-           id: row.id,
-           bookId: row.bookId,
-           channel: row.qid,
-           chapterNum: row.chapterNum,
-         }
-       })
+        const {href} = this.$router.resolve({
+          path:'/promotion',
+          query: {
+            id: row.id,
+            bookId: row.bookId,
+            channel: row.qid,
+            chapterNum: row.chapterNum,
+          }
+        })
+        window.open(href, '_blank')
       },
       reds:function(index){
         this.button_type = index;
