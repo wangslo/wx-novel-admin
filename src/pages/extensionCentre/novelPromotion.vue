@@ -76,7 +76,7 @@
         <el-table-column label="收费起始章节" width="120" align="center">
           <template slot-scope="scope">
             <span>{{scope.row.tollsection}}</span>
-            <i class="el-icon-edit" style="cursor: pointer" @click="editBuyChapter(scope.$index, scope.row)"></i>
+            <!--<i class="el-icon-edit" style="cursor: pointer" @click="editBuyChapter(scope.$index, scope.row)"></i>-->
           </template>
         </el-table-column>
         <el-table-column v-show="false" prop="status" label="推荐时间" width="100" align="center"></el-table-column>
@@ -249,7 +249,10 @@
       },
       createLinks(idx, row) {
         this.$router.push({
-          name: 'promotionDetail',
+          path: 'promotionDetail',
+          query: {
+            id: row.bookid
+          }
         })
       },
       clearData() {

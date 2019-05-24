@@ -123,4 +123,12 @@ export const msgModuleApi = {
   getNovelsBySort:(params) =>{
     return orgAxios.post('/novelcms/gzh/novel/filter',qs.stringify(params)).then(res=>res.data);
   },
+  // 11、获取书籍详情
+  getBookInfos:(params) =>{
+    return orgAxios.post('/novelcms/gzh/novel/chapterlist',qs.stringify(params)).then(res=>res.data);
+  },
+  // 12、生产推广链接
+  createUrl:(params) =>{
+    return orgAxios.post('/novelcms/gzh/referral/create',qs.stringify(params)).then(res=>res.data);
+  },
 }

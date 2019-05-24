@@ -9,30 +9,26 @@
       </el-breadcrumb>
     </div>
     <div class="promotionDetail-body">
-      <div class="novel-detail">
+      <div class="novel-detail" v-if="book">
         <div class="novel-top">
           <div class="novel-img">
-            <img src=""/>
+            <img :src="book.scover"/>
           </div>
           <div class="novel-top-right">
-            <span>书籍名称</span>
-            <span>作者：XXXXX</span>
-            <span>玄幻/男生/完结</span>
-            <span>书商：XXXX（标识XXXXXX）</span>
+            <span>{{book.name}}</span>
+            <span>作者：{{book.author}}</span>
+            <span>{{book.tp1st}}/{{book.channel==0?'男生':'女生'}}/{{book.bookstatus == 1 ? '完结' : '连载中'}}</span>
+            <span>书商：{{book.ufr}}（标识{{book.ufr}}）</span>
           </div>
         </div>
         <div class="novel-center">
-          <span>总字数：XXXXXX</span>
-          <span>总章节数：XXXXXX</span>
-          <span>最后更新时间：XXXXXX</span>
+          <span>总字数：{{book.words}}</span>
+          <span>总章节数：{{book.allChapterNum}}</span>
+          <span>最后更新时间：{{book.updDate}}</span>
         </div>
         <div class="novel-desc">
           <span>书籍介绍</span>
-          <p>
-            书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介
-            绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍
-            书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍书籍介绍...
-          </p>
+          <p>{{book.summary}}</p>
         </div>
       </div>
       <div class="novel-table">
@@ -74,7 +70,7 @@
           </div>
           <div class="url_param">
             <span>推广页面：</span>
-            <el-input v-model="promotion_page" style="width: 200px;" size="mini"></el-input>
+            <el-input v-model="promotion_page" style="width: 200px;" size="mini" disabled></el-input>
           </div>
           <div class="url_param">
             <span>强关设置：</span>
@@ -90,7 +86,7 @@
       </el-dialog>
       <el-dialog title="消息提示" :visible.sync="msgDialog" width="500px">
         <span>推广链接已生成，推广效果在推广统计中查看。</span>
-        <el-button type="primary" size="mini">复制链接</el-button>
+        <el-button type="primary" size="mini" class="tag-read" :data-clipboard-text='promotion_url' @click="copyUrl">复制链接</el-button>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="msgDialog = false">确 定</el-button>
         </span>
@@ -99,81 +95,103 @@
   </div>
 </template>
 <script>
+  import {msgModuleApi} from "../../api/main";
+  import Clipboard from 'clipboard';
+
   export default {
     name: 'promotionDetail',
     data() {
       return {
-        tableData: [
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-          {
-            chapter: '第1章  XXXXXXXX',
-            num: '5000',
-            status: '免费',
-          },
-        ],
+        book: {},
+        tableData: [],
         createDialog: false,
         msgDialog: false,
-        concern: 2,
+        concern: '2',
         channel_name: '',
         promotion_page: '',
+        bookid: '',
+        bookname: '',
+        chapterId: '',
+        chapterNum: '',
+        promotion_url: '',
       }
     },
+    created() {
+      this.bookid = this.$route.query.id
+      this.getBookInfo()
+    },
     methods: {
+      copyUrl() {
+        var clipboard = new Clipboard('.tag-read')
+        clipboard.on('success', e => {
+          this.$message.success('复制成功')
+          clipboard.destroy()
+        })
+        clipboard.on('error', e => {
+          this.$message.success('复制失败')
+          clipboard.destroy()
+        })
+      },
+      getBookInfo() {
+        var _this = this
+        var params = {
+          bookid: _this.bookid,
+          chapterNum: -1,
+        }
+        msgModuleApi.getBookInfos(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.book = res.data.book
+            _this.bookname = res.data.book.name
+            var chapter = res.data.chapter
+            chapter.map((item,idx) => {
+              _this.tableData.push({
+                chapterId: item.chapterId,
+                chapter: item.title,
+                num: item.words,
+                status: '免费',
+              })
+            })
+          }
+        })
+      },
       closeCreateBox() {
-        this.createDialog = false
-        this.msgDialog = true
+        var _this = this
+        var params = {
+          appid: 'wx45a447d8dc271447',
+          qname: _this.channel_name,
+          defaultHtml: _this.promotion_page,
+          subType: _this.concern,
+          title: '',
+          bookid: _this.bookid,
+          chapterId: _this.chapterId,
+          chapterNum: _this.chapterNum,
+          qrCodeUrl: 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/readPage.html?chapterId=' + _this.chapterId
+          + '&bookid=' + _this.bookid + '&booktitle=' + _this.bookname,
+        }
+        msgModuleApi.createUrl(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.createDialog = false
+            _this.msgDialog = true
+            _this.promotion_url = 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/promotion.html?channel=' + res.data.qid
+          }
+        })
       },
       openCreateBox(idx, row) {
         this.createDialog = true
+        this.chapterId = row.chapterId
+        this.chapterNum = idx + 1
+        this.promotion_page = "《" + this.bookname + "》" + row.chapter
       },
       openImgPage(idx, row) {
+        var _this = this
         const {href} = this.$router.resolve({
           path: '/imgPromotion',
-          query: {}
+          query: {
+            id: _this.bookid,
+            chapterNum: idx+1,
+          }
         })
         window.open(href, '_blank')
       },
