@@ -154,6 +154,7 @@
       },
       editTitle() {
         this.ifEdit = !this.ifEdit
+        this.title = ''
       },
       closeCreateBox() {
         this.createDialog = !this.createDialog
