@@ -267,9 +267,9 @@
       getDataPromotionList(type){
         let index = this.button_type
         if(index == 2){
-          type = 1
-        }else if(index == 3){
           type = 2
+        }else if(index == 3){
+          type = 1
         }
         var params = {
           page: this.pageNo,
