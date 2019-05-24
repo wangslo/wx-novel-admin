@@ -68,6 +68,18 @@ export const orgModuleApi = {
   orderList:(params) =>{
     return orgAxios.post('/novelcms/order/list.html',qs.stringify(params)).then(res=>res.data);
   },
+  //推广统计列表
+  dataPromotionList:(params) =>{
+    return orgAxios.post('/novelcms/gzh/referral/load',qs.stringify(params)).then(res=>res.data);
+  },
+  //推广统计数据明细
+  dataPromotionDetail:(params) =>{
+    return orgAxios.post('/novelcms/gzh/referral/counter',qs.stringify(params)).then(res=>res.data);
+  },
+  //推广统计链接删除
+  deletePromotionUrl:(params) =>{
+    return orgAxios.post('/novelcms/gzh/referral/del',qs.stringify(params)).then(res=>res.data);
+  },
 
   //充值档位
   gradeList:(params) =>{
