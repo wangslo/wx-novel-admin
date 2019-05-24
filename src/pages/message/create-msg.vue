@@ -265,7 +265,7 @@
       },
       insertBook() {
         this.bookDialog = false
-        var chooseText = "<br/><a href='"+this.common.h5_url+"bookInfo.html?bookId=" + this.choose + "'>" + this.choose_name + "</a><br/>"
+        var chooseText = "<br/><a href='"+this.common.h5_url+"bookInfo.html?bookId=" + this.choose + "'>" + this.choose_name + "</a>"
         this.createMsgForm.replycontent = this.createMsgForm.replycontent + chooseText
       },
       query() {

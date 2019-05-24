@@ -300,7 +300,7 @@
                 pv:item.pv,
                 uv:item.uv,
                 newConcern:item.subNum,
-                promotionBook:item.defaultHtml,
+                promotionBook: item.defaultHtml,
                 recharge:item.payMoney,
                 NumOfRecharge:item.payTime,
                 turnSet:item.subType>1?(item.subType>2?'不设置关注':'主动关注'):'强制关注',

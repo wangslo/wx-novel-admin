@@ -170,7 +170,7 @@
         var params = {
           appid: _this.common.appid,
           qname: _this.channel_name,
-          defaultHtml: '',
+          defaultHtml: _this.bookname,
           type: 1,
           subType: _this.concern,
           title: _this.title,
