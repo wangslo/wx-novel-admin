@@ -102,7 +102,6 @@
       }
     },
     mounted() {
-      //this.initECharts()
       this.getDataLists()
     },
     methods: {
