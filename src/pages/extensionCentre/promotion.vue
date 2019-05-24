@@ -66,7 +66,7 @@
         }
         msgModuleApi.jumpPage(params).then(res=>{
           if(res.success) {
-            _this.promotion_url = res.data.qrCodeUrl
+            _this.promotion_url = _this.common.h5_url + 'promotion.html?channel=' + res.data.qid
             _this.title = res.data.qname
 
             var qr_target= document.getElementById('promotion-qrcode')
