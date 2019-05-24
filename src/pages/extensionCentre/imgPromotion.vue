@@ -2,12 +2,12 @@
   <div class="imgPromotion-page">
     <div class="novel-body" id="novel-text">
       <div class="title">
-        <h3 v-show="!ifEdit" @click="editTitle">{{title}}</h3>
+        <h3 v-show="!ifEdit" @click="editTitle(1)">{{title}}</h3>
         <div class="edit-title" v-show="ifEdit">
           <el-input type="textarea" :rows="2" v-model="title" resize="none" autofocus="true"></el-input>
           <div class="title-btn">
-            <el-button type="primary" size="mini" @click="editTitle">确认</el-button>
-            <el-button size="mini" @click="editTitle">取消</el-button>
+            <el-button type="primary" size="mini" @click="editTitle(2)">确认</el-button>
+            <el-button size="mini" @click="editTitle(3)">取消</el-button>
           </div>
         </div>
       </div>
@@ -152,9 +152,15 @@
           }
         })
       },
-      editTitle() {
+      editTitle(idx) {
         this.ifEdit = !this.ifEdit
-        this.title = ''
+        if(idx == 1){
+          this.title = ''
+        }
+        if(idx == 3){
+          this.title = '请输入标题'
+        }
+
       },
       closeCreateBox() {
         this.createDialog = !this.createDialog
