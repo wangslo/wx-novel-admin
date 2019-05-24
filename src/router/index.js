@@ -69,7 +69,7 @@ export default new VueRouter({
         {path: '/re-recharge-rate', name: 'reRechargeRate', component: page('datastatistics/re-recharge-rate')},
 
         //计费管理
-        {path: '/recharge-position', name: 'rechargePosition', component: page('billingmanagement/recharge-position')},
+        {path: '/recharge-position', name: 'rechargePosition', component: page('billingmanagement/recharge-position2')},
         {path: '/recharge-position-setup', name: 'rechargePositionSetup', component: page('billingmanagement/recharge-position-setup')},
 
 

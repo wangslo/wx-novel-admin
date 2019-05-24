@@ -327,7 +327,7 @@
         })
       },
       handleSizeChange(val) {
-        this.pageSize = val
+
         this.getAccountLists()
       },
       handleCurrentChange(val) {

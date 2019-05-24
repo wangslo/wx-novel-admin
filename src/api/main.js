@@ -64,6 +64,10 @@ export const orgModuleApi = {
   dataList:(params) =>{
     return orgAxios.post('/novelcms/count/simreport.html',qs.stringify(params)).then(res=>res.data);
   },
+  //充值列表
+  orderList:(params) =>{
+    return orgAxios.post('/novelcms/order/list.html',qs.stringify(params)).then(res=>res.data);
+  },
 
   //充值档位
   gradeList:(params) =>{
