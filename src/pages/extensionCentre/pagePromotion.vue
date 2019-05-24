@@ -34,7 +34,7 @@
           </div>
           <div class="url_param">
             <span>推广入口页面：</span>
-            <el-input v-model="promotion_page" style="width: 200px;" size="mini"></el-input>
+            <el-input v-model="promotion_page" style="width: 200px;" size="mini" disabled></el-input>
           </div>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -60,24 +60,47 @@
         tableData: [
           {
             pagename: '书城首页',
+            pageurl: 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/index.html',
           },
           {
-            pagename: '书城首页1',
+            pagename: '排行榜页',
+            pageurl: '',
           },
           {
-            pagename: '书城首页2',
+            pagename: '充值页',
+            pageurl: '',
           },
         ],
         createDialog: false,
         msgDialog: false,
         channel_name: '',
         promotion_page: '',
+        promotion_url: '',
+        page_url: '',
       }
     },
     methods: {
       closeCreateBox() {
-        this.createDialog = false
-        this.msgDialog = true
+        var _this = this
+        var params = {
+          appid: 'wx45a447d8dc271447',
+          qname: _this.channel_name,
+          defaultHtml: _this.promotion_page,
+          subType: '',
+          title: '',
+          bookid: '',
+          chapterId: '',
+          chapterNum: '',
+          qrCodeUrl: _this.page_url,
+        }
+        msgModuleApi.createUrl(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.createDialog = false
+            _this.msgDialog = true
+            _this.promotion_url = 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/promotion.html?channel=' + res.data.qid
+          }
+        })
       },
       openCreateBox(idx, row) {
         this.createDialog = true
