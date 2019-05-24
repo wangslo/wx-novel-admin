@@ -12,19 +12,19 @@
                 <el-form-item label="账号(OPENID)" prop="openId" label-width="130px">
                     <el-input v-model="form_condition.openId"></el-input>
                 </el-form-item>
-                <el-form-item label="昵称" prop="nickName" label-width="60px" >
+                <el-form-item v-if="false" label="昵称" prop="nickName" label-width="60px" >
                     <el-input v-model="form_condition.nickName"></el-input>
                 </el-form-item>
-                <el-form-item label="订单号" prop="ordeNum">
+                <el-form-item label="订单号" prop="orderNum" label-width="60px">
                     <el-input v-model="form_condition.orderNum"></el-input>
                 </el-form-item>
                 <el-form-item label="充值时间">
                     <el-col :span="10" class="startTime">
                         <el-form-item  prop="create_start_time">
                             <el-date-picker
-                                    type="date"
-                                    format="yyyy-MM-dd"
+                                    type="datetime"
                                     placeholder="起始时间"
+                                    value-format="yyyy-MM-dd HH:mm:ss"
                                     v-model="form_condition.create_start_time"
                                     :picker-options="pickerBeginDateBefore"
                                     style="width: 100%;"
@@ -35,8 +35,9 @@
                     <el-col :span="10" class="endTime">
                         <el-form-item prop="create_end_time">
                             <el-date-picker
-                                    type="date"
-                                    format="yyyy-MM-dd"
+                                    type="datetime"
+                                    format="yyyy-MM-dd HH:mm:ss"
+                                    value-format="yyyy-MM-dd HH:mm:ss"
                                     placeholder="结束时间"
                                     v-model="form_condition.create_end_time"
                                     :picker-options="pickerBeginDateAfter"
@@ -47,19 +48,19 @@
                 </el-form-item>
                 <el-form-item label="支付状态" prop="status">
                     <el-select v-model="form_condition.status" placeholder="请选择">
-                        <el-option label="全部" value="999"></el-option>
-                        <el-option label="正常" value="0"></el-option>
-                        <el-option label="禁用" value="1"></el-option>
+                        <el-option label="待支付" value="0"></el-option>
+                        <el-option label="支付成功未发货" value="1"></el-option>
+                        <el-option label="支付成功已发货" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item style="float: right;">
-                    <el-button type="primary" @click="clearData">清空</el-button>
+                    <el-button @click="clearData">清空</el-button>
                     <el-button type="primary" @click="onsubmit">查找</el-button>
                 </el-form-item>
             </el-form>
 
             <br/>
-            <el-row style="width: 98%;margin: 0 auto;font-size: 16px;">
+            <el-row style="width: 98%;margin: 0 auto;font-size: 16px;color:green">
                 <span>当前页面数据：共{{dataNum}}条；待支付{{toPaidNum}}条，共计{{toPaid}}元；支付成功{{paidNum}}条，共计{{paid}}元</span>
             </el-row><br />
             <el-table :data="tableData" style="width:100%;"
@@ -68,7 +69,7 @@
                       @sort-change='sortChange'>
                 <el-table-column label="序号" width="50" align="center">
                     <template slot-scope="scope">
-                        <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
+                        <span>{{scope.$index+(pageNo) * pageSize + 1}} </span>
                     </template>
                 </el-table-column>
                 <!--<el-table-column label="头像" width="180" align="center">-->
@@ -82,14 +83,15 @@
                 <!--</el-popover>-->
                 <!--</template>-->
                 <!--</el-table-column>-->
-                <el-table-column prop="openId" label="账号(OPENID)" width="180" align="center"></el-table-column>
-                <el-table-column  label="昵称" width="150" align="center">
+                <el-table-column prop="openId" label="账号(OPENID)" width="280" align="center"></el-table-column>
+                <el-table-column  v-if="false"  label="昵称" width="150" align="center">
                     <template slot-scope="scope">
                         <span @click="userDetail(scope.$index, scope.row)" style="color: #19a05e">{{scope.row.nickName}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="channel" label="渠道" width="180" align="center"></el-table-column>
-                <el-table-column prop="bookName" label="充值书籍" width="180" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="channel" label="渠道" width="180" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="bookName" label="充值书籍" width="180" align="center"></el-table-column>
+                <el-table-column prop="orderType" label="充值类型" width="180" align="center"></el-table-column>
                 <el-table-column prop="orderNum" label="订单号" min-width="300" align="center"></el-table-column>
                 <el-table-column prop="rechargeAmount" label="充值金额" width="80" align="center"></el-table-column>
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
@@ -106,11 +108,11 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
-                    :page-sizes="[20, 50, 100, 150]"
+                    :page-sizes="[10,20, 50, 100, 150]"
                     background
-                    :page-size="20"
+                    :page-size="10"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="400">
+                    :total="totalSize">
             </el-pagination>
             <div class="dialog-div">
                 <el-dialog title="加入黑名单" :visible.sync="defriendDialog" width="500px" center>
@@ -136,6 +138,7 @@
     </div>
 </template>
 <script>
+  import {orgModuleApi} from '../../api/main'
   export default {
     name: 'recharge-list',
     data() {
@@ -148,18 +151,15 @@
           orderNum: '',
           create_start_time: '',
           create_end_time: '',
-          status: '999',
+          status: '',
         },
         userRules: {
-          accid: '',
-          phone: '',
+          openId: '',
           nickName: '',
-          loginType: '999',
+          orderNum: '',
           create_start_time: '',
           create_end_time: '',
-          login_start_time: '',
-          login_end_time: '',
-          status: '999',
+          status: '',
         },
         pickerBeginDateBefore:{
           disabledDate: (time) => {
@@ -194,15 +194,28 @@
           }
         },
         tableData: [
-          {openId:'openid-123',nickName:'nick34',channel:'channel23',bookName:'鬼吹灯1',orderNum:'adfadfad22312sdfdfasd',rechargeAmount:30,createTime:'2019-5-14 11:50:23',status:'支付成功'},
-          {openId:'openid-678',nickName:'nick678',channel:'channe678',bookName:'鬼吹灯2',orderNum:'adfadfad22312sdffdasdfasd',rechargeAmount:50,createTime:'2019-5-14 11:50:23',status:'待支付'},
-          {openId:'openid-678',nickName:'nick678',channel:'channe678',bookName:'鬼吹灯2',orderNum:'adfadfad22312sdffdasdfasd',rechargeAmount:100,createTime:'2019-5-14 11:50:23',status:'支付成功'},
+          {
+            openId:'openid-123',
+            nickName:'nick34',
+            channel:'channel23',
+            bookName:'鬼吹灯1',
+            orderNum:'adfadfad22312sdfdfasd',
+            rechargeAmount:30,
+            createTime:'2019-5-14 11:50:23',
+            status:'支付成功'
+          },
         ],
-        pageNo: 1,
+        pageNo: 0,
         pageSize: 10,
         currentPage: 1,
+        totalSize: 0,
         defriendDialog:false,
       }
+    },
+    created(){
+    },
+    mounted() {
+      this.getOrderList()
     },
     computed:{
       dataNum:function(){
@@ -247,6 +260,57 @@
 
     },
     methods: {
+      getOrderList(){
+        let endDate = new Date(+new Date()+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+
+        let create_start_time = this.form_condition.create_start_time
+        let create_end_time = this.form_condition.create_end_time
+
+        if(create_end_time == ''){
+          create_end_time = endDate
+        }
+        if(create_start_time == ''){
+          create_start_time = '2019-3-23 17:56:00'
+        }
+        var params = {
+          page: this.pageNo,
+          size: this.pageSize,
+          appid:'wx45a447d8dc271447',
+          openid:this.form_condition.openId,
+          orderno:this.form_condition.orderNum,
+          createDate_s: create_start_time,
+          createDate_e: create_end_time,
+          status:this.form_condition.status,
+        }
+        console.log(this.form_condition.createDate_s)
+        console.log(this.form_condition.createDate_e)
+        var _this = this
+        _this.tableData = []
+        orgModuleApi.orderList(params).then((res)=>{
+          console.log(res)
+          if(res.success){
+            res.data.data.map((item,index)=>{
+              _this.tableData.push({
+                id: item.id,
+                openId:item.openid,
+                orderNum:item.orderno,
+                orderType:item.type>0?(item.type > 1?'包半年':'包一年'):'普通充值',
+                nickName:'nick678',
+                channel:'channe678',
+                bookName:'鬼吹灯2',
+                rechargeAmount:item.amount,
+                createTime:_this.common.getDate(item.createDate),
+                status:item.status > 0 ?'支付成功':'待支付',
+              })
+            })
+            _this.totalSize = parseInt(res.data.total)
+          }
+
+
+        })
+
+
+      },
       watchSize() {
         if(this.reason.length == 100){
           this.textSize = 100
@@ -256,10 +320,12 @@
         }
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.pageSize = val
+        this.getOrderList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.pageNo = val -1
+        this.getOrderList()
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
@@ -280,36 +346,14 @@
         })
       },
       clearData() {
+        console.log('clearData')
         this.$refs.userForm.resetFields()
       },
       sortChange: function(column, prop, order) {
         console.log(column.prop + '-' + column.order)
       },
       onsubmit() {
-        this.tableData = [
-          {
-            headerImg: 'http://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png',
-            phone: '1233',
-            nickName: 'asa',
-            loginType: 'QQ',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          },
-          {
-            headerImg: '',
-            phone: '111',
-            nickName: '',
-            loginType: '',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          }
-        ]
+        this.getOrderList()
       },
     }
   }
