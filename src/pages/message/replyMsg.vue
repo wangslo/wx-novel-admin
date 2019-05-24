@@ -68,7 +68,7 @@
       delMsg(id) {
         var _this = this
         var params = {
-          appid: 'wx45a447d8dc271447',
+          appid: this.common.appid,
           msgId: id
         }
         msgModuleApi.delMsgtem(params).then(res=>{
@@ -94,7 +94,7 @@
       getMsgList() {
         var _this = this
         var params = {
-          appid: 'wx45a447d8dc271447',
+          appid: this.common.appid,
           page: _this.pageNo,
           size: _this.pageSize,
         }

@@ -229,7 +229,7 @@
       initMsgData() {
       var _this = this
       var params = {
-        appid: 'wx45a447d8dc271447',
+        appid: this.common.appid,
         msgId: _this.id,
       }
       msgModuleApi.getSingleMsg(params).then(res=>{
@@ -265,7 +265,7 @@
       },
       insertBook() {
         this.bookDialog = false
-        var chooseText = "<a href='http://test-dev.dftoutiao.com/janfly_html/wx-novel/bookInfo.html?bookId=" + this.choose + "'>" + this.choose_name + "</a>"
+        var chooseText = "<a href='"+this.common.h5_url+"bookInfo.html?bookId=" + this.choose + "'>" + this.choose_name + "</a>"
         this.createMsgForm.replycontent = this.createMsgForm.replycontent + chooseText
       },
       query() {
@@ -488,7 +488,7 @@
       saveInfo() {
         var _this = this
         var params = {
-          appid: 'wx45a447d8dc271447',
+          appid: this.common.appid,
           kwd: _this.createMsgForm.keywords,
           type: _this.createMsgForm.msgtype,
           msgType	: _this.createMsgForm.reply_radio,
@@ -522,7 +522,7 @@
       updateInfo() {
         var _this = this
         var params = {
-          appid: 'wx45a447d8dc271447',
+          appid: this.common.appid,
           msgId: _this.id,
           kwd: _this.createMsgForm.keywords,
           type: _this.createMsgForm.msgtype,

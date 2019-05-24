@@ -588,7 +588,7 @@
         var _this = this
         params = {
           id:1,
-          appid: '1234567',
+          appid: this.common.appid,
           grades:{"1":true,"2":true,"3":true,"4":true},
         }
         orgModuleApi.customgrade(params).then((res)=>{
@@ -613,7 +613,7 @@
         var params = {}
         var _this = this
         params = {
-          appid: '1234567',
+          appid:this.common.appid,
         }
         orgModuleApi.gradeList(params).then((res)=>{
           console.log(res)
@@ -637,7 +637,7 @@
         var params = {}
         var _this = this
         params = {
-          appid: '1234567',
+          appid: this.common.appid,
         }
         orgModuleApi.gradeList(params).then((res)=>{
           console.log(res)

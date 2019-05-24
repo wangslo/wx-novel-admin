@@ -96,7 +96,7 @@
           createAdmin:'Tom',
           createTime:'2019-05-13 11:47',
           originId:'12345',
-          appId:'456789',
+          appId: this.common.appid,
           authorizationAuthority:"消息管理权限\n" +
           "\n" +
           "自定义菜单权限\n" +

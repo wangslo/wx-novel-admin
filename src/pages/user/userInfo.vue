@@ -279,7 +279,7 @@
           createAdmin:'Tom',
           createTime:'2019-05-13 11:47',
           originId:'12345',
-          appId:'456789',
+          appId:this.common.appid,
           authorizationAuthority:"首页、用户管理、推荐管理",
           qrcode:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'
 

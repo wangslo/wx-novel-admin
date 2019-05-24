@@ -60,7 +60,7 @@
         tableData: [
           {
             pagename: '书城首页',
-            pageurl: 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/index.html',
+            pageurl: this.common.h5_url + 'index.html',
           },
           {
             pagename: '排行榜页',
@@ -83,7 +83,7 @@
       closeCreateBox() {
         var _this = this
         var params = {
-          appid: 'wx45a447d8dc271447',
+          appid: this.common.appid,
           qname: _this.channel_name,
           defaultHtml: _this.promotion_page,
           subType: '',
@@ -98,7 +98,7 @@
           if(res.success) {
             _this.createDialog = false
             _this.msgDialog = true
-            _this.promotion_url = 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/promotion.html?channel=' + res.data.qid
+            _this.promotion_url = this.common.h5_url + 'promotion.html?channel=' + res.data.qid
           }
         })
       },
