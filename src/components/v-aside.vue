@@ -124,6 +124,14 @@
               {id: 'recharge-list', name: 'rechargeList', label: '充值列表'},
             ]
           },
+          {
+            id: 'dataStatistics',
+            icon: 'fa fa-database',
+            label: '数据统计',
+            submenu: [
+              {id: 'promotion-statistics', name: 'promotionStatistics', label: '推广统计'},
+            ]
+          },
         )*/
         menus.map((item,index)=>{
           _this.menuList.push(item)

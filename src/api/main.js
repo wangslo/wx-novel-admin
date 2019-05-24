@@ -143,8 +143,12 @@ export const msgModuleApi = {
   getBookInfos:(params) =>{
     return orgAxios.post('/novelcms/gzh/novel/chapterlist',qs.stringify(params)).then(res=>res.data);
   },
-  // 12、生产推广链接
+  // 12、生成推广链接
   createUrl:(params) =>{
     return orgAxios.post('/novelcms/gzh/referral/create',qs.stringify(params)).then(res=>res.data);
+  },
+  // 13、获取推广链接
+  jumpPage: (params) => {
+    return orgAxios.post('/novelcms/gzh/referral/findbyid', qs.stringify(params)).then(res => res.data);
   },
 }

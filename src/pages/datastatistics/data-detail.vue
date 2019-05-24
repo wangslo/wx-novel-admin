@@ -162,7 +162,7 @@
       getDataLists(day_num=7){
         var params = {
           //appid	: this.wechatlist_condition.wechatId,
-          appid:'wx45a447d8dc271447',
+          appid:this.common.appid,
           days:day_num,
           qid:this.tmpQid,
         }

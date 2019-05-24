@@ -82,10 +82,10 @@
                             </span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="createTime" label="创建时间" min-width="60" align="center"></el-table-column>
+                    <el-table-column prop="createTime" label="创建时间" min-width="100" align="center"></el-table-column>
                     <el-table-column prop="promotionPage" v-if="button_type == 1 ? true:false" label="推广页面" min-width="120" align="center"></el-table-column>
                     <el-table-column prop="promotionBook" v-if="button_type > 1 ? true:false" label="推广书籍" min-width="120" align="center"></el-table-column>
-                    <el-table-column prop="turnSet" v-if="button_type > 1 ? true:false" label="强关设置" min-width="60" align="center"></el-table-column>
+                    <el-table-column prop="turnSet" v-if="button_type > 1 ? true:false" label="强关设置" min-width="100" align="center"></el-table-column>
                     <el-table-column v-if="false" prop="turnChapter" label="强关章节" width="80" align="center"></el-table-column>
                     <el-table-column prop="qrcode" v-if="button_type > 1 ? true:false" label="底部二维码" width="100" align="center"></el-table-column>
                     <el-table-column prop="pv" v-if="button_type > 1 ? true:false" label="PV" width="80" align="center"></el-table-column>
@@ -106,13 +106,13 @@
                     <!--<el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>-->
                     <!--</template>-->
                     <!--</el-table-column>-->
-                    <el-table-column label="操作" min-width="60" align="center">
+                    <el-table-column label="操作" width="360" align="center">
                         <template slot-scope="scope">
                             <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">数据明细</el-button>
                             <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">删除</el-button>
                             <!--<el-button size="mini" v-if="scope.row.status != '正常'? true:false" type="primary" @click="handleOnLine(scope.$index, scope.row)">启用</el-button>-->
                             <el-button size="mini" id="tag_url" :data-clipboard-text='scope.row.qrCodeUrl' v-if="button_type < 3 ? true:false" type="success" @click="copyUrl(scope.$index, scope.row)">复制链接</el-button>
-                            <el-button size="mini" v-if="false" type="success" @click="viewText(scope.$index, scope.row)">查看图文</el-button>
+                            <el-button size="mini" v-if="button_type == 3" type="success" @click="viewText(scope.$index, scope.row)">查看图文</el-button>
                             <el-button size="mini" type="success" @click="handelQrcode(scope.$index, scope.row)">二维码</el-button>
                         </template>
                     </el-table-column>
@@ -245,22 +245,7 @@
         },
         button_type:2,
         changeRed:0,
-        tableData: [
-          {
-            'channelName':'渠道2',
-            'createTime':'2019-05-16 15:56',
-            'promotionPage':'首页',
-            'promotionBook':'鬼吹灯',
-            'turnSet':'x',
-            'turnChapter':'',
-            'qrcode':'',
-            'pv':'',
-            'uv':'',
-            'newConcern':'5',
-            'recharge':'15.23',
-            'NumOfRecharge':'',
-          },
-        ],
+        tableData: [],
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
@@ -289,7 +274,7 @@
         var params = {
           page: this.pageNo,
           size: this.pageSize,
-          appid:'wx45a447d8dc271447',
+          appid:this.common.appid,
           type:type,
 //          openid:this.form_condition.openId,
 //          orderno:this.form_condition.orderNum,
@@ -308,6 +293,7 @@
                 openId:item.appid,
                 bookId:item.bookid,
                 qid:item.qid,
+                chapterNum:item.chapterNum,
                 channelName:item.qname,
                 qrCodeUrl:item.qrCodeUrl,
                 qrcode:'开启',
@@ -323,11 +309,7 @@
             })
             _this.totalSize = parseInt(res.data.total)
           }
-
-
         })
-
-
       },
       changeChanelName(index,row){
         this.editChanelDialog = true;
@@ -341,7 +323,7 @@
       deleteConfirm(){
         this.offlineDialog = false;
         var params = {
-          appid:'wx45a447d8dc271447',
+          appid:this.common.appid,
           id:this.tmpId,
         }
         var _this = this
@@ -351,8 +333,6 @@
             this.$message.success('删除成功')
             this.getDataPromotionList()
           }
-
-
         })
       },
       handleOffLine(index, row){
@@ -383,7 +363,7 @@
         var params = {
           page: this.pageNo,
           size: this.pageSize,
-          appid:'wx45a447d8dc271447',
+          appid:this.common.appid,
           type:1,
 //          openid:this.form_condition.openId,
 //          orderno:this.form_condition.orderNum,
@@ -398,11 +378,6 @@
             console.log(error)
           })
         })
-
-
-
-
-
       },
       copyUrl(index,row){
         var clipboard = new Clipboard('#tag_url')
@@ -415,10 +390,16 @@
           clipboard.destroy()
         })
       },
-      viewText(){
-//        this.$router.push({
-//          path:'/book-seller-detail'
-//        })
+      viewText(idx, row){
+       this.$router.push({
+         path:'/promotion',
+         query: {
+           id: row.id,
+           bookId: row.bookId,
+           channel: row.qid,
+           chapterNum: row.chapterNum,
+         }
+       })
       },
       reds:function(index){
         this.button_type = index;

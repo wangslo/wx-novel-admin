@@ -75,8 +75,8 @@
           <div class="url_param">
             <span>强关设置：</span>
             <el-radio v-model="concern" label="1">强制关注</el-radio>
-            <el-radio v-model="concern" label="2">主动关注</el-radio>
-            <el-radio v-model="concern" label="3">不设置强关</el-radio>
+            <el-radio v-model="concern" label="2" v-show="false">主动关注</el-radio>
+            <el-radio v-model="concern" label="3" v-show="false">不设置强关</el-radio>
           </div>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -106,7 +106,7 @@
         tableData: [],
         createDialog: false,
         msgDialog: false,
-        concern: '2',
+        concern: '1',
         channel_name: '',
         promotion_page: '',
         bookid: '',

@@ -77,5 +77,6 @@ export default new VueRouter({
     },
     {path: '/login', name: 'login', component: page('login')},
     {path: '/imgPromotion', name: 'imgPromotion', component: page('extensionCentre/imgPromotion')},
+    {path: '/promotion', name: 'promotion', component: page('extensionCentre/promotion')},
   ]
 })

@@ -274,24 +274,7 @@
         this.delDialog = false
       },
       operatAccount(status,id) {
-        var _this = this
-        var params = {
-          token: sessionStorage.getItem('token'),
-          ids: [id],
-          act: status,
-        }
-        orgModuleApi.operatAccount(params).then(res=>{
-          if(res.code == 0){
-            if(status == 'jinyong'){
-              _this.forbidDialog = false
-            }else if(status == 'qiyong'){
-              _this.useDialog = false
-            }
-            _this.getAccountLists()
-          }else {
-            this.$message.success('服务出错，请重试')
-          }
-        })
+
       },
       setPswInput() {
         this.psw_status = false
@@ -327,7 +310,7 @@
         })
       },
       handleSizeChange(val) {
-
+        this.pageSize = val
         this.getAccountLists()
       },
       handleCurrentChange(val) {
