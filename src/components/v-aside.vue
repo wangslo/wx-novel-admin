@@ -108,6 +108,22 @@
               {id: 'replyMsg', name: 'replyMsg', label: '消息回复'},
             ]
           },
+          {
+            id: 'extension',
+            icon: 'fa fa-expand',
+            label: '推广中心',
+            submenu: [
+              {id: 'novelPromotion', name: 'novelPromotion', label: '小说推广'},
+            ]
+          },
+          {
+            id: 'bookcoins',
+            icon: 'fa fa-money',
+            label: '书币管理',
+            submenu: [
+              {id: 'recharge-list', name: 'rechargeList', label: '充值列表'},
+            ]
+          },
         )*/
         menus.map((item,index)=>{
           _this.menuList.push(item)

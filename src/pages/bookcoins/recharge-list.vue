@@ -275,7 +275,7 @@
         var params = {
           page: this.pageNo,
           size: this.pageSize,
-          appid:'wx45a447d8dc271447',
+          appid: this.common.appid,
           openid:this.form_condition.openId,
           orderno:this.form_condition.orderNum,
           createDate_s: create_start_time,

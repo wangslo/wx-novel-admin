@@ -1,4 +1,6 @@
 export default {
+  appid: 'wx45a447d8dc271447',
+  h5_url: 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/',
   getDate: function(value){
     var s = '';
     var date = new Date();

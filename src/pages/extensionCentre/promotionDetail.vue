@@ -158,15 +158,16 @@
       closeCreateBox() {
         var _this = this
         var params = {
-          appid: 'wx45a447d8dc271447',
+          appid: _this.common.appid,
           qname: _this.channel_name,
           defaultHtml: _this.promotion_page,
+          type: 2,
           subType: _this.concern,
           title: '',
           bookid: _this.bookid,
           chapterId: _this.chapterId,
           chapterNum: _this.chapterNum,
-          qrCodeUrl: 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/readPage.html?chapterId=' + _this.chapterId
+          qrCodeUrl: _this.common.h5_url + 'readPage.html?chapterId=' + _this.chapterId
           + '&bookid=' + _this.bookid + '&booktitle=' + _this.bookname,
         }
         msgModuleApi.createUrl(params).then(res=>{
@@ -174,7 +175,7 @@
           if(res.success) {
             _this.createDialog = false
             _this.msgDialog = true
-            _this.promotion_url = 'http://test-dev.dftoutiao.com/janfly_html/wx-novel/promotion.html?channel=' + res.data.qid
+            _this.promotion_url = _this.common.h5_url + 'promotion.html?channel=' + res.data.qid
           }
         })
       },
