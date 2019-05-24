@@ -127,7 +127,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[10,20, 50, 100, 150]"
+        :page-sizes="[10,20, 50, 100]"
         background
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
@@ -308,6 +308,7 @@
               })
             })
             _this.totalSize = res.data.total
+            _this.booksForm.bookname = ''
           }
         })
       },
@@ -330,6 +331,7 @@
               status: res.data.bookstatus == 1 ? '完结' : '连载中',
             })
             _this.totalSize = 1
+            _this.booksForm.cbid = ''
           }
         })
       },

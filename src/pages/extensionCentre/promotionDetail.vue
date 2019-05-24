@@ -4,7 +4,7 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/novelPromotion'}">推广中心</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/promotionDetail'}">小说推广</el-breadcrumb-item>
+        <el-breadcrumb-item>小说推广</el-breadcrumb-item>
         <el-breadcrumb-item>小说推广{{bookname}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -216,13 +216,12 @@
         width: 500px;
         height: 100%;
         padding-right: 30px;
-        margin-right: 30px;
         float: left;
         .novel-top{
           display: flex;
           .novel-img{
             img{
-              width: 180px;
+              width: 147px;
               height: 200px;
             }
           }

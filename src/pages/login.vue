@@ -60,7 +60,7 @@
             this.$router.push({path: '/'})
             this.isLogin = false
           }else {
-            this.$message.error(res.msg)
+            this.$message.error('登录失败')
             this.isLogin = false
           }
         }).catch((error)=>{

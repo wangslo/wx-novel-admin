@@ -45,18 +45,18 @@
         <el-form-item label="账号状态" prop="status">
           <el-select v-model="account_condition.status" placeholder="请选择账号状态">
             <el-option label="全部" value=""></el-option>
-            <el-option label="正常" value="0"></el-option>
-            <el-option label="禁用" value="1"></el-option>
+            <el-option label="正常" value="false"></el-option>
+            <el-option label="禁用" value="true"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="部门" prop="branch" label-width="60px">
           <el-select v-model="account_condition.branch" placeholder="请选择部门">
             <el-option label="请选择部门" value=""></el-option>
-            <el-option label="运营" value="0"></el-option>
-            <el-option label="产品" value="1"></el-option>
-            <el-option label="测试" value="2"></el-option>
-            <el-option label="开发" value="3"></el-option>
-            <el-option label="商务" value="4"></el-option>
+            <el-option label="运营" value="运营"></el-option>
+            <el-option label="产品" value="产品"></el-option>
+            <el-option label="测试" value="测试"></el-option>
+            <el-option label="开发" value="开发"></el-option>
+            <el-option label="商务" value="商务"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item style="float: right;">
@@ -90,7 +90,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[10,20, 50, 100, 150]"
+        :page-sizes="[10,20, 50, 100]"
         background
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
@@ -143,11 +143,11 @@
                 <el-form-item label="部门" class="accountInfoForm-item">
                   <el-select v-model="accountInfoForm.branch" placeholder="请选择部门">
                     <el-option label="请选择部门" value=""></el-option>
-                    <el-option label="运营" value="0"></el-option>
-                    <el-option label="产品" value="1"></el-option>
-                    <el-option label="测试" value="2"></el-option>
-                    <el-option label="开发" value="3"></el-option>
-                    <el-option label="商务" value="4"></el-option>
+                    <el-option label="运营" value="运营"></el-option>
+                    <el-option label="产品" value="产品"></el-option>
+                    <el-option label="测试" value="测试"></el-option>
+                    <el-option label="开发" value="开发"></el-option>
+                    <el-option label="商务" value="商务"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -319,10 +319,10 @@
                 realName: item.name,
                 branch: item.dept,
                 createTime: _this.common.getDate(item.registDate),
-                status: item.lock?'正常':'禁用',
+                status: item.lock?'禁用':'正常',
               })
             })
-            _this.totalSize = parseInt(res.data.totalElements)
+            _this.totalSize = parseInt(res.data.total)
           }
         })
       },

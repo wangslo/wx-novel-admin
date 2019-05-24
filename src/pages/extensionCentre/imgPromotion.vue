@@ -12,21 +12,7 @@
         </div>
       </div>
       <div class="header-img">
-        <el-upload
-          class="avatar-uploader"
-          :http-request="uploadHeadImg"
-          action=""
-          list-type="picture"
-          :show-file-list="false"
-          drag>
-          <img v-if="headPicUrl != ''" :src="headPicUrl" class="avatar">
-          <div class="el-upload__text" v-else>
-            <span style="margin-bottom: 20px;">请将图片拖至此</span>
-            <span>（上传图片尺寸为XXX*XXX）</span>
-            <span>可上传本地图片，支持jpg、jpeg、png格式，大小不超过2M，</span>
-            <span>请勿上传含版权争议的图片</span>
-          </div>
-        </el-upload>
+        <img src="https://ywopen-1252317822.file.myqcloud.com/wxcp/banner/wx_msg_pic_32.png" class="avatar">
       </div>
       <section class="content" v-if="chapterContent" v-for="(item,idx) in chapterContent" :key="idx">
         <h3>{{item.title}}</h3>
@@ -35,21 +21,7 @@
         </section>
       </section>
       <div class="footer-img">
-        <el-upload
-          class="avatar-uploader"
-          :http-request="uploadFootImg"
-          action=""
-          list-type="picture"
-          :show-file-list="false"
-          drag>
-          <img v-if="footPicUrl != ''" :src="footPicUrl" class="avatar">
-          <div class="el-upload__text" v-else>
-            <span style="margin-bottom: 20px;">请将图片拖至此</span>
-            <span>（上传图片尺寸为XXX*XXX）</span>
-            <span>可上传本地图片，支持jpg、jpeg、png格式，大小不超过2M，</span>
-            <span>请勿上传含版权争议的图片</span>
-          </div>
-        </el-upload>
+        <img src="https://ywopen-1252317822.file.myqcloud.com/wxcp/promotionguide/5a5f0c3fc5674.jpg" class="avatar">
         <canvas id="promotion-qrcode"></canvas>
       </div>
       <div class="footer">
@@ -108,8 +80,6 @@
         ifEdit: false,
         title: '请输入标题',
         createDialog: false,
-        headPicUrl: '',
-        footPicUrl: '',
         channel_name: '',
         concern: '2',
         bookid: '',
@@ -160,26 +130,6 @@
           clipboard.destroy()
         })
       },
-      uploadHeadImg(e) {
-        var _this = this
-        let uploadData = new FormData();
-        uploadData.append('file', e.file);
-        msgModuleApi.uploadFile(uploadData).then(res=>{
-          if(res.success) {
-            _this.headPicUrl = res.data.url
-          }
-        })
-      },
-      uploadFootImg(e){
-        var _this = this
-        let uploadData = new FormData();
-        uploadData.append('file', e.file);
-        msgModuleApi.uploadFile(uploadData).then(res=>{
-          if(res.success) {
-            _this.footPicUrl = res.data.url
-          }
-        })
-      },
       getBookInfo() {
         var _this = this
         var params = {
@@ -224,15 +174,16 @@
           + '&bookid=' + _this.bookid + '&booktitle=' + _this.bookname,
         }
         msgModuleApi.createUrl(params).then(res=>{
-          console.log(res)
           if(res.success) {
             _this.createDialog = false
             _this.copybox = true
             _this.promotion_url = _this.common.h5_url + 'promotion.html?channel=' + res.data.qid
-            var msg= document.getElementById('promotion-qrcode')
-            QRCode.toCanvas(msg, _this.promotion_url, function (error) {
+            var qr_target= document.getElementById('promotion-qrcode')
+            QRCode.toCanvas(qr_target, _this.promotion_url, function (error) {
               console.log(error)
             })
+            qr_target.style.width='229px'
+            qr_target.style.height='229px'
           }
         })
       },
@@ -256,21 +207,9 @@
       }
       .header-img{
         text-align: center;
-        .avatar-uploader{
-          .el-upload-dragger{
-            width: 700px;
-            height: 300px;
-            .el-upload__text{
-              margin-top: 50px;
-            }
-            span{
-              display: block;
-            }
-            .avatar {
-              width: 100%;
-              height: 100%;
-            }
-          }
+        img{
+          width: 100%;
+          height: 100%;
         }
       }
       .content{
@@ -286,28 +225,15 @@
       }
       .footer-img{
         text-align: center;
-        display: flex;
-        justify-content: space-between;
-        .avatar-uploader{
-          .el-upload-dragger{
-            width: 480px;
-            height: 200px;
-            .el-upload__text{
-              margin-top: 20px;
-            }
-            span{
-              display: block;
-            }
-            .avatar {
-              width: 100%;
-              height: 100%;
-            }
-          }
+        position: relative;
+        img{
+          width: 100%;
+          height: 100%;
         }
         #promotion-qrcode{
-          width:200px;
-          height:200px;
-          border: 1px solid;
+          position: absolute;
+          right: 12px;
+          top: 9px;
         }
       }
       .footer{
