@@ -82,10 +82,10 @@
                             </span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="createTime" label="创建时间" width="160" align="center"></el-table-column>
+                    <el-table-column prop="createTime" label="创建时间" min-width="60" align="center"></el-table-column>
                     <el-table-column prop="promotionPage" v-if="button_type == 1 ? true:false" label="推广页面" min-width="120" align="center"></el-table-column>
                     <el-table-column prop="promotionBook" v-if="button_type > 1 ? true:false" label="推广书籍" min-width="120" align="center"></el-table-column>
-                    <el-table-column prop="turnSet" v-if="button_type > 1 ? true:false" label="强关设置" width="80" align="center"></el-table-column>
+                    <el-table-column prop="turnSet" v-if="button_type > 1 ? true:false" label="强关设置" min-width="60" align="center"></el-table-column>
                     <el-table-column v-if="false" prop="turnChapter" label="强关章节" width="80" align="center"></el-table-column>
                     <el-table-column prop="qrcode" v-if="button_type > 1 ? true:false" label="底部二维码" width="100" align="center"></el-table-column>
                     <el-table-column prop="pv" v-if="button_type > 1 ? true:false" label="PV" width="80" align="center"></el-table-column>
@@ -280,6 +280,12 @@
     },
     methods: {
       getDataPromotionList(type){
+        let index = this.button_type
+        if(index == 2){
+          type = 1
+        }else if(index == 3){
+          type = 2
+        }
         var params = {
           page: this.pageNo,
           size: this.pageSize,
@@ -343,14 +349,7 @@
         orgModuleApi.deletePromotionUrl(params).then((res)=>{
           if(res.success){
             this.$message.success('删除成功')
-           let index = this.button_type
-            if(index == 2){
-              this.getDataPromotionList(1)
-            }else if(index == 3){
-              this.getDataPromotionList(2)
-            }else{
-              this.getDataPromotionList()
-            }
+            this.getDataPromotionList()
           }
 
 
