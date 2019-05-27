@@ -2,7 +2,7 @@
   <el-container class="v-container" :class="{'mini-side': isCollapse,'hide-side': hideSide}">
     <el-aside class="v-side" :width="hideSide ? '0' : sideWidth + 'px'" :style="{background: theme.theme.backgroundColor}">
       <div class="v-header-logo-box" :style="{height: headerHeight + 'px', color: theme.theme.activeTextColor}" @click="toIndex">
-        <img src="../assets/logo.png" alt="" class="header-logo">
+        <!--<img src="../assets/logo.png" alt="" class="header-logo">-->
         <span class="header-logo-text" >趣阅读管理后台</span>
       </div>
       <Vaside :collapse="isCollapse" :theme="theme.theme"></Vaside>
@@ -57,7 +57,7 @@
   }
   .v-header{
     padding: 0;
-    background: #FC3D64;
+    background: #409EFF;
     overflow: visible;
     z-index: 100;
   }
@@ -71,12 +71,15 @@
     padding: 0px;
   }
   .v-header-logo-box{
-    padding: 15px;
+    padding-top: 13px;
+    padding-left: 20px;
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+    border-bottom: 1px solid #e0e0e0;
+    color: #409eff;
   }
   .v-header-logo-box .header-logo{
     height: 42px;
@@ -85,7 +88,7 @@
     vertical-align: middle;
   }
   .v-header-logo-box .header-logo-text{
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     opacity: 1;
   }

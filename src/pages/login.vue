@@ -1,7 +1,7 @@
 <template>
   <div class="v-login">
     <div class="v-login-img">
-      <img src="../assets/login-logo.png"/>
+      <!--<img src="../assets/login-logo.png"/>-->
       <span>趣阅读管理后台</span>
     </div>
     <el-form ref="loginForm" :rules="rules" :model="form" class="login-form">
@@ -73,30 +73,31 @@
 </script>
 <style lang="scss" scoped>
   .v-login{
-    margin: 0 auto;
     position: absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 50px;
+    background: #ecf0f5;
   }
   .login-form{
-    width: 220px;
+    width: 250px;
+    margin: 0 auto;
   }
   .login-btn{
-    width: 220px;
+    width: 250px;
     height: 40px;
   }
   .v-login-img{
-    width: 220px;
-    text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     img{
       width: 150px;
       height: 150px;
     }
     span{
       display: block;
-      font-size: 24px;
+      font-size: 30px;
+      color: #409eff;
     }
   }
 </style>

@@ -5,7 +5,7 @@
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/novelPromotion'}">推广中心</el-breadcrumb-item>
         <el-breadcrumb-item>小说推广</el-breadcrumb-item>
-        <el-breadcrumb-item>小说推广{{bookname}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{bookname}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="promotionDetail-body">
@@ -27,7 +27,7 @@
           <span>最后更新时间：{{book.updDate}}</span>
         </div>
         <div class="novel-desc">
-          <span>书籍介绍</span>
+          <span>书籍介绍：</span>
           <p>{{book.summary}}</p>
         </div>
       </div>
