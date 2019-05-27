@@ -73,66 +73,7 @@
           }
           _this.menuList.push(arr)
         }
-        /*_this.menuList.push(
-          {
-            id: 1000,
-            icon: 'fa fa-home',
-            label: '首页',
-            submenu: [
-              {id: 1100, name: 'home2', label: '首页'},
-            ]
-          },
-          {
-            id: 2000,
-            icon: 'fa fa-file-powerpoint-o',
-            label: '权限管理',
-            submenu: [
-              {id: 2100, name: 'accountManger', label: '账号管理'},
-              {id: 'open-account', name: 'openAccount', label: '开设账号'},
-            ]
-          },
-          {
-            id: 'wechatPublic',
-            icon: 'fa fa-telegram',
-            label: '公众号管理',
-            submenu: [
-              {id: 'wechat-list', name: 'wechatList', label: '公众号列表'},
-              {id: 'create-wechat', name: 'createWechat', label: '开设公众号'},
-            ]
-          },
-          {
-            id: 'msg',
-            icon: 'fa  fa-commenting-o',
-            label: '消息服务',
-            submenu: [
-              {id: 'replyMsg', name: 'replyMsg', label: '消息回复'},
-            ]
-          },
-          {
-            id: 'extension',
-            icon: 'fa fa-expand',
-            label: '推广中心',
-            submenu: [
-              {id: 'novelPromotion', name: 'novelPromotion', label: '小说推广'},
-            ]
-          },
-          {
-            id: 'bookcoins',
-            icon: 'fa fa-money',
-            label: '书币管理',
-            submenu: [
-              {id: 'recharge-list', name: 'rechargeList', label: '充值列表'},
-            ]
-          },
-          {
-            id: 'dataStatistics',
-            icon: 'fa fa-database',
-            label: '数据统计',
-            submenu: [
-              {id: 'promotion-statistics', name: 'promotionStatistics', label: '推广统计'},
-            ]
-          },
-        )*/
+
         /*menus.map((item,index)=>{
           _this.menuList.push(item)
         })*/
