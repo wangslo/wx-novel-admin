@@ -56,7 +56,7 @@
 
   import {orgModuleApi} from '../../api/main'
   export default {
-    name: 'Home2',
+    name: 'recharge-rate-first',
     data() {
       return {
         button_type:1,

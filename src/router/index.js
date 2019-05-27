@@ -12,8 +12,8 @@ export default new VueRouter({
       component: Main,
       children: [
         // {path: '/',name: 'home',component: Home},
-        {path: '/',name: 'home',component: page('home2')},
-        {path: '/home',name: 'home2',component: page('home2')},
+        {path: '/',name: 'home',component: page('home')},
+        {path: '/home',name: 'home2',component: page('home')},
 
         {path: '/account-manger', name: 'accountManger', component: page('account/account-manger')},
         {path: '/open-account', name: 'openAccount', component: page('account/open-account')},
