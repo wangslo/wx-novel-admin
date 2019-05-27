@@ -6,33 +6,31 @@
             </el-breadcrumb>
         </div>
         <div class="accountInfo-body">
-            <el-row :gutter="80" style="margin-left:3%">
-                <el-col :span="4"><div class="grid-content bg-purple">
+            <div class="grid-box">
+                <div class="grid-content bg-purple">
                     <span style="color: red">{{today_income_total}}</span><br />
                     <span>今日总收入（元）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
+                </div><div class="grid-content bg-purple">
                     <span style="color: red">{{today_income_times}}</span><br />
                     <span>今日充值数（笔）</span>
-                </div></el-col>
-                <el-col :span="4" v-if="false"><div class="grid-content bg-purple">
+                </div>
+              <div class="grid-content bg-purple" v-if="false">
                     <span style="color: red">{{today_general_rechare}}</span><br />
                     <span>今日普通充值（元）</span>
-                </div></el-col>
-                <el-col :span="4" v-if="false"><div class="grid-content bg-purple">
+                </div>
+              <div class="grid-content bg-purple" v-if="false">
                     <span style="color: red">{{today_year_rechare}}</span><br />
                     <span>今日包年充值（元）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
+                </div>
+              <div class="grid-content bg-purple">
                     <span style="color: red">{{today_new_user}}</span><br />
                     <span>今日新增用户（人）</span>
-                </div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">
+                </div>
+              <div class="grid-content bg-purple">
                     <span style="color: red">{{today_new_concern}}</span><br />
                     <span>今日新增关注（人）</span>
-                </div></el-col>
-            </el-row>
-            <br />
+                </div>
+            </div>
             <el-row style="width: 95%;margin: 0 auto;">
                 展示时间：
                 <el-button-group >
@@ -237,10 +235,11 @@
         background: #e5e9f2;
     }
     .grid-content {
-        border-radius: 4px;
-        padding: 10px 5px;
-        text-align: center;
-        min-height: 36px;
+      border-radius: 4px;
+      padding: 10px 5px;
+      text-align: center;
+      min-height: 36px;
+      margin-right: 10px;
     }
     .row-bg {
         padding: 10px 0;
@@ -260,6 +259,11 @@
         .accountInfo-body{
             margin-left: 15px;
             margin-right: 15px;
+          .grid-box{
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: left;
+          }
         }
         .el-input{
             width: 300px;
