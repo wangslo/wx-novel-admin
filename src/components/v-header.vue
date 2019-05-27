@@ -13,7 +13,7 @@
             <el-dropdown-item command="loginInfo">账号信息</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button type="primary" class="logout" plain @click="onLogout">退出登录</el-button>
+        <el-button type="primary" class="logout" @click="onLogout">退出登录</el-button>
       </div>
     </el-col>
   </el-row>
