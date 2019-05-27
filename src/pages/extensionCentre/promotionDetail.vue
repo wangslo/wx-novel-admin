@@ -278,4 +278,17 @@
       }
     }
   }
+  @media screen and (max-width: 1300px) {
+    .novel-detail{
+      float: none !important;
+      padding-left: 20px;
+    }
+    .novel-table{
+      border: 0 !important;
+      float: none !important;
+      padding-left: 0 !important;
+      padding-top: 30px;
+      padding-bottom: 50px;
+    }
+  }
 </style>
