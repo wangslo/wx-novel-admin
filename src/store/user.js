@@ -14,7 +14,7 @@ const actions = {
         if(res.success){
           let data = res.data.data
           sessionStorage.setItem('role', JSON.stringify(data))
-          commit('SET_LOGIN_TOKEN', 'ddddd')
+          commit('SET_LOGIN_TOKEN', 'aKjdvnarmmv-fnw')
           commit('SET_DOING_LOGIN', false)
           setTimeout(() => {
             resolve(res)
@@ -50,15 +50,21 @@ const actions = {
       })
     })
   },
-  async logout ({commit},params) {
+  async logout ({commit}) {
     // 模拟退出
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        sessionStorage.removeItem('token')
-        sessionStorage.removeItem('role')
-        commit('SET_LOGIN_USER', null)
-        resolve()
-      }, 100)
+      orgModuleApi.logout().then(res=>{
+        if(res.success){
+          setTimeout(() => {
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('role')
+            commit('SET_LOGIN_USER', null)
+            resolve(res)
+          }, 100)
+        }else {
+          resolve(res)
+        }
+      })
     })
   }
 }

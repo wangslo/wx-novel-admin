@@ -19,21 +19,18 @@
   </el-row>
 </template>
 <script type="text/javascript">
-  import {mapActions, mapState} from 'vuex'
+  import {mapActions} from 'vuex'
   export default {
     name: 'Vheader',
     data () {
       return {
         mini: false,
+        user: {},
       }
-    },
-    computed: {
-      ...mapState({
-        user: ({user}) => JSON.parse(user.user)
-      })
     },
     created() {
       this.getLoginUser()
+      this.user = JSON.parse(sessionStorage.getItem('user'))
     },
     methods: {
       ...mapActions(['getLoginUser','logout']),
@@ -42,11 +39,10 @@
         this.$emit('switch', this.mini)
       },
       onLogout() {
-        var params = {
-          token: sessionStorage.getItem('token')
-        }
-        this.logout(params).then((res)=>{
-          this.$router.push({name: 'login'})
+        this.logout().then((res)=>{
+          if(res.success){
+            this.$router.push({name: 'login'})
+          }
         })
       },
       handleCommand(command) {

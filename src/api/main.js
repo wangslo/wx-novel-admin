@@ -22,7 +22,7 @@ orgAxios.interceptors.response.use(
   },
   error => {
     if (!error.response || error.response.status == 404 || error.response.status == 401 || error.response.status == 500) {
-
+      Vue.$message.error('服务器报错')
     }
     return Promise.reject(error)  // 返回接口返回的错误信息
   });
@@ -30,6 +30,9 @@ orgAxios.interceptors.response.use(
 export const orgModuleApi = {
   login:(params) =>{
     return orgAxios.post('/novelcms/pub/dologin.html',qs.stringify(params)).then(res=>res.data);
+  },
+  logout:(params) =>{
+    return orgAxios.post('/novelcms/pub/logout.html',qs.stringify(params)).then(res=>res.data);
   },
   getAuthList:(params) =>{
     return orgAxios.post('/novelcms/user/privileges.html',qs.stringify(params)).then(res=>res.data);
