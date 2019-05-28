@@ -66,15 +66,15 @@
                           :default-sort = "{prop: 'updateTime', order: 'descending'}"
                           stripe border
                           @sort-change='sortChange'>
-                    <el-table-column v-if="false" type="selection" width="40">
+                    <el-table-column v-if="false" type="selection" min-width="30">
                     </el-table-column>
-                    <el-table-column v-if="false" label="序号" width="40" align="center">
+                    <el-table-column v-if="false" label="序号" min-width="30" align="center">
                         <template slot-scope="scope">
                             <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="channelName" label="渠道名称" min-width="100" align="center"></el-table-column>
-                    <el-table-column v-if="false" label="渠道名称" width="180" align="center">
+                    <el-table-column prop="channelName" label="渠道名称" min-width="50" align="center"></el-table-column>
+                    <el-table-column v-if="false" label="渠道名称" min-width="30" align="center">
                         <template slot-scope="scope">
                             <span style="padding: 10px 50px" @click="changeChanelName(scope.$index, scope.row)">
                               <i class="el-icon-edit"></i>
@@ -84,15 +84,15 @@
                     </el-table-column>
                     <el-table-column prop="createTime" label="创建时间" min-width="100" align="center"></el-table-column>
                     <el-table-column prop="promotionPage" v-if="button_type == 1 ? true:false" label="推广页面" min-width="120" align="center"></el-table-column>
-                    <el-table-column prop="promotionBook" v-if="button_type > 1 ? true:false" label="推广书籍" min-width="120" align="center"></el-table-column>
+                    <el-table-column prop="promotionBook" v-if="button_type > 1 ? true:false" label="推广书籍" min-width="80" align="center"></el-table-column>
                     <el-table-column prop="turnSet" v-if="button_type > 1 ? true:false" label="强关设置" min-width="100" align="center"></el-table-column>
-                    <el-table-column v-if="false" prop="turnChapter" label="强关章节" width="80" align="center"></el-table-column>
-                    <el-table-column prop="qrcode" v-if="button_type > 1 ? true:false" label="底部二维码" width="100" align="center"></el-table-column>
-                    <el-table-column prop="pv" v-if="button_type > 1 ? true:false" label="PV" width="80" align="center"></el-table-column>
-                    <el-table-column prop="uv" v-if="button_type > 1 ? true:false" label="UV" width="80" align="center"></el-table-column>
-                    <el-table-column prop="newConcern" label="新增关注" width="80" align="center"></el-table-column>
-                    <el-table-column prop="recharge" label="充值金额" width="80" align="center"></el-table-column>
-                    <el-table-column prop="NumOfRecharge" label="充值笔数" width="80" align="center"></el-table-column>
+                    <el-table-column v-if="false" prop="turnChapter" label="强关章节" min-width="30" align="center"></el-table-column>
+                    <el-table-column prop="qrcode" v-if="button_type > 1 ? true:false" label="底部二维码" min-width="60" align="center"></el-table-column>
+                    <el-table-column prop="pv" v-if="button_type > 1 ? true:false" label="PV" min-width="30" align="center"></el-table-column>
+                    <el-table-column prop="uv" v-if="button_type > 1 ? true:false" label="UV" min-width="30" align="center"></el-table-column>
+                    <el-table-column prop="newConcern" label="新增关注" min-width="40" align="center"></el-table-column>
+                    <el-table-column prop="recharge" label="充值金额" min-width="40" align="center"></el-table-column>
+                    <el-table-column prop="NumOfRecharge" label="充值笔数" min-width="40" align="center"></el-table-column>
 
 
                     <!--<el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"-->
@@ -106,7 +106,7 @@
                     <!--<el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>-->
                     <!--</template>-->
                     <!--</el-table-column>-->
-                    <el-table-column label="操作" width="360" align="center">
+                    <el-table-column label="操作" min-width="360" align="center">
                         <template slot-scope="scope">
                             <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">数据明细</el-button>
                             <el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">删除</el-button>

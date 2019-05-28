@@ -66,16 +66,16 @@
         </el-form-item>
       </el-form>
       <el-table :data="tableData" style="width:100%;" stripe border>
-        <el-table-column label="序号" width="80" align="center">
+        <el-table-column label="序号" min-width="30" align="center">
           <template slot-scope="scope">
             <span>{{scope.$index+pageNo * pageSize + 1}} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="account" label="邮箱" width="180" align="center"></el-table-column>
-        <el-table-column prop="realName" label="真实姓名" width="180" align="center"></el-table-column>
-        <el-table-column prop="branch" label="部门" width="180" align="center"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" align="center"></el-table-column>
-        <el-table-column prop="status" label="账号状态" width="180" align="center"></el-table-column>
+        <el-table-column prop="account" label="邮箱" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="realName" label="真实姓名" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="branch" label="部门" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="status" label="账号状态" min-width="30" align="center"></el-table-column>
         <el-table-column label="操作" min-width="80" align="center">
           <template slot-scope="scope">
             <el-button v-show="false" size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>

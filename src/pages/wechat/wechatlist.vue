@@ -96,7 +96,7 @@
                       :default-sort = "{prop: 'create_time', order: 'descending'}"
                       stripe border
                       @sort-change='sortChange'>
-                <el-table-column label="序号" width="50" align="center">
+                <el-table-column label="序号" min-width="30" align="center">
                     <template slot-scope="scope">
                         <span>{{scope.$index+(pageNo) * pageSize + 1}} </span>
                     </template>
@@ -112,21 +112,21 @@
                         <!--</el-popover>-->
                     <!--</template>-->
                 <!--</el-table-column>-->
-                <el-table-column prop="wechatId" label="公众号ID" width="180" align="center"></el-table-column>
-                <el-table-column prop="wechatName" label="公众号名称" width="180" align="center"></el-table-column>
-                <el-table-column prop="wechatType" label="公众号类型" width="180" align="center"></el-table-column>
-                <el-table-column prop="company" label="认证主体" width="180" align="center"></el-table-column>
-                <el-table-column v-if="false" prop="dailyRecharge" label="日充值" width="50" align="center"></el-table-column>
-                <el-table-column v-if="false" prop="dailyConcernS" label="日引流/日关注" width="50" align="center"></el-table-column>
-                <el-table-column v-if="false" prop="dailyChargeS" label="日付费(人)/总付费(人)" width="50" align="center"></el-table-column>
-                <el-table-column v-if="false" prop="allConcernS" label="总引流/总关注" width="50" align="center"></el-table-column>
-                <el-table-column v-if="false" prop="accumulatedCost" label="累计成本/累计充值" width="50" align="center"></el-table-column>
+                <el-table-column prop="wechatId" label="公众号ID" min-width="30" align="center"></el-table-column>
+                <el-table-column prop="wechatName" label="公众号名称" min-width="30" align="center"></el-table-column>
+                <el-table-column prop="wechatType" label="公众号类型" min-width="30" align="center"></el-table-column>
+                <el-table-column prop="company" label="认证主体" min-width="30" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="dailyRecharge" label="日充值" min-width="30" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="dailyConcernS" label="日引流/日关注" min-width="30" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="dailyChargeS" label="日付费(人)/总付费(人)" min-width="30" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="allConcernS" label="总引流/总关注" min-width="30" align="center"></el-table-column>
+                <el-table-column v-if="false" prop="accumulatedCost" label="累计成本/累计充值" min-width="30" align="center"></el-table-column>
                 <el-table-column v-if="false" sortable='custom' :sort-orders="['ascending', 'descending']"
-                                 prop="login_time" label="最近登录时间" width="50" align="center"></el-table-column>
+                                 prop="login_time" label="最近登录时间" min-width="30" align="center"></el-table-column>
                 <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
                                  prop="createTime" label="创建时间" min-width="80" align="center"></el-table-column>
-                <el-table-column prop="createAdmin" label="创建人" min-width="80" align="center"></el-table-column>
-                <el-table-column label="操作" min-width="250" align="center">
+                <el-table-column prop="createAdmin" label="创建人" min-width="50" align="center"></el-table-column>
+                <el-table-column label="操作" min-width="80" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
                         <!--<el-button size="mini" type="warning" @click="handleDefriend(scope.$index, scope.row)">编辑</el-button>-->

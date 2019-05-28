@@ -12,12 +12,12 @@
         <el-button type="primary" size="mini" @click="createMsg">新建消息</el-button>
       </div>
       <el-table :data="tableData" style="width:100%;" stripe border>
-        <el-table-column prop="msgtype" label="消息类型" width="180" align="center"></el-table-column>
-        <el-table-column prop="keywords" label="关键字" width="180" align="center"></el-table-column>
-        <el-table-column prop="onlinetime" label="上线时间" width="180" align="center"></el-table-column>
-        <el-table-column prop="offlinetime" label="下线时间" width="180" align="center"></el-table-column>
-        <el-table-column prop="status" label="状态" width="180" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="200" align="center">
+        <el-table-column prop="msgtype" label="消息类型" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="keywords" label="关键字" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="onlinetime" label="上线时间" min-width="80" align="center"></el-table-column>
+        <el-table-column prop="offlinetime" label="下线时间" min-width="80" align="center"></el-table-column>
+        <el-table-column prop="status" label="状态" min-width="30" align="center"></el-table-column>
+        <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDel(scope.$index, scope.row)">删除</el-button>

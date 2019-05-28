@@ -58,29 +58,29 @@
         </el-form-item>
       </el-form>
       <el-table :data="tableData" style="width:100%;" stripe border>
-        <el-table-column label="序号" width="80" align="center">
+        <el-table-column label="序号" min-width="30" align="center">
           <template slot-scope="scope">
             <span>{{scope.$index+(pageNo-1) * pageSize +1}} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="bookname" label="书籍名称" width="100" align="center"></el-table-column>
-        <el-table-column prop="author" label="作者" width="100" align="center"></el-table-column>
-        <el-table-column prop="booksort" label="书籍分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="channel" label="男女分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="ufr" label="书商" width="100" align="center"></el-table-column>
-        <el-table-column prop="status" label="书籍状态" width="100" align="center"></el-table-column>
-        <el-table-column prop="words" label="字数" width="100" align="center"></el-table-column>
-        <el-table-column prop="chapterNum" label="章数" width="100" align="center"></el-table-column>
-        <el-table-column prop="updDate" label="最后更新时间" width="120" align="center"></el-table-column>
-        <el-table-column prop="booktype" label="类型" width="100" align="center"></el-table-column>
-        <el-table-column label="收费起始章节" width="120" align="center">
+        <el-table-column prop="bookname" label="书籍名称" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="author" label="作者" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="booksort" label="书籍分类" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="channel" label="男女分类" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="ufr" label="书商" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="status" label="书籍状态" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="words" label="字数" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="chapterNum" label="章数" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="updDate" label="最后更新时间" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="booktype" label="类型" min-width="30" align="center"></el-table-column>
+        <el-table-column label="收费起始章节" min-width="30" align="center">
           <template slot-scope="scope">
             <span>{{scope.row.tollsection}}</span>
             <!--<i class="el-icon-edit" style="cursor: pointer" @click="editBuyChapter(scope.$index, scope.row)"></i>-->
           </template>
         </el-table-column>
-        <el-table-column v-show="false" prop="status" label="推荐时间" width="100" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="140" align="center">
+        <el-table-column v-show="false" prop="status" min-width="30" label="推荐时间" align="center"></el-table-column>
+        <el-table-column label="操作" min-width="100" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="success" @click="createLinks(scope.$index, scope.row)">生成推广链接</el-button>
           </template>

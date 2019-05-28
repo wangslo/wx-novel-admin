@@ -111,17 +111,17 @@
         </el-form-item>
       </el-form>
       <el-table :data="tableData" style="width:100%;" stripe border>
-        <el-table-column label="选择" width="80" align="center">
+        <el-table-column label="选择" min-width="30" align="center">
           <template slot-scope="scope">
             <el-radio v-model="choose" :label="scope.row.bookid" @click.native.prevent="selectBooks(scope.$index,scope.row)"></el-radio>
           </template>
         </el-table-column>
-        <el-table-column prop="bookid" label="书籍ID" width="180" align="center"></el-table-column>
-        <el-table-column prop="bookname" label="书籍名称" width="180" align="center"></el-table-column>
-        <el-table-column prop="author" label="作者" width="180" align="center"></el-table-column>
-        <el-table-column prop="channel" label="男女分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="sort" label="书籍分类" width="100" align="center"></el-table-column>
-        <el-table-column prop="status" label="连载状态" width="100" align="center"></el-table-column>
+        <el-table-column prop="bookid" label="书籍ID" min-width="80" align="center"></el-table-column>
+        <el-table-column prop="bookname" label="书籍名称" min-width="100" align="center"></el-table-column>
+        <el-table-column prop="author" label="作者" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="channel" label="男女分类" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="sort" label="书籍分类" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="status" label="连载状态" min-width="30" align="center"></el-table-column>
       </el-table>
       <el-pagination
         @size-change="handleSizeChange"
