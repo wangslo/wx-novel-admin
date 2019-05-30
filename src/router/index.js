@@ -36,10 +36,6 @@ export default new VueRouter({
 
         {path: '/adver-data', name: 'adver-data', component: page('adver')},
 
-        {path: '/app-banner-list', name: 'appBannerList', component: page('banner/app-banner-list')},
-        {path: '/app-banner-sort-edit', name: 'appBannerSortEdit', component: page('banner/app-banner-sort-edit')},
-        {path: '/app-banner-setup', name: 'appBannerSetup', component: page('banner/app-banner-setup')},
-        {path: '/banner-detail', name: 'bannerDetail', component: page('banner/banner-detail')},
         {path: '/wx-banner-setup', name: 'wxBannerSetup', component: page('banner/wx-banner-setup')},
         {path: '/wx-banner-list', name: 'wxBannerList', component: page('banner/wx-banner-list')},
         {path: '/wx-banner-sort-edit', name: 'wxBannerSortEdit', component: page('banner/wx-banner-sort-edit')},

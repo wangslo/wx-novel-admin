@@ -74,9 +74,9 @@
           _this.menuList.push(arr)
         }
 
-        /*menus.map((item,index)=>{
+        menus.map((item,index)=>{
           _this.menuList.push(item)
-        })*/
+        })
       }
     }
   }
