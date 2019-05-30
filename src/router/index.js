@@ -1,5 +1,4 @@
 import Main from '@/components/main'
-import Home from '@/pages/home'
 
 const page = name => () => import('@/pages/' + name)
 
@@ -11,7 +10,6 @@ export default new VueRouter({
       name: 'Main',
       component: Main,
       children: [
-        // {path: '/',name: 'home',component: Home},
         {path: '/',name: 'home',component: page('home')},
         {path: '/home',name: 'home2',component: page('home')},
 

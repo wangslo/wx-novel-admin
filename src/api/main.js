@@ -18,6 +18,9 @@ orgAxios.interceptors.request.use(
 // http response 拦截器
 orgAxios.interceptors.response.use(
   response => {
+    if(response.data.code == '301000'){
+      window.location.href = 'http://' + window.location.host + '/#/login'
+    }
     return response;
   },
   error => {

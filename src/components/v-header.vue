@@ -29,8 +29,10 @@
       }
     },
     created() {
-      this.getLoginUser()
-      this.user = JSON.parse(sessionStorage.getItem('user'))
+      var _this = this
+      this.getLoginUser().then(()=>{
+        _this.user = JSON.parse(sessionStorage.getItem('user'))
+      })
     },
     methods: {
       ...mapActions(['getLoginUser','logout']),

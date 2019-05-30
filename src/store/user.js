@@ -56,6 +56,7 @@ const actions = {
       orgModuleApi.logout().then(res=>{
         if(res.success){
           setTimeout(() => {
+            sessionStorage.removeItem('user')
             sessionStorage.removeItem('token')
             sessionStorage.removeItem('role')
             commit('SET_LOGIN_USER', null)
