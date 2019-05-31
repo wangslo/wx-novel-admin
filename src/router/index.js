@@ -24,6 +24,7 @@ export default new VueRouter({
         //书库管理
         {path: '/stack-room', name: 'stackRoom', component: page('books/stack-room')},
         {path: '/stack-room-detail', name: 'stackRoomDetail', component: page('books/stack-room-detail')},
+        {path: '/subscription-details', name: 'subscription-details', component: page('books/subscription-details')},
         {path: '/be-audited-list', name: 'beAuditedList', component: page('books/be-audited-list')},
         {path: '/book-detail', name: 'bookDetail', component: page('books/book-detail')},
 
