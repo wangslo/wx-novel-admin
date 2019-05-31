@@ -44,27 +44,13 @@
           <el-form-item label="展示时间：">
             <el-col :span="11" class="startTime">
               <el-form-item>
-                <el-date-picker
-                  type="datetime"
-                  format="yyyy-MM-dd hh:mm:ss"
-                  placeholder="起始时间"
-                  v-model="banner_wx_setup_condition.show_start_time"
-                  :picker-options="showPickerBeginDateBefore"
-                  style="width: 100%;"
-                ></el-date-picker>
+                <el-input type="text" id="startTime" v-model="banner_wx_setup_condition.show_start_time" class="form-control" readonly placeholder="开始时间"></el-input>
               </el-form-item>
             </el-col>
             <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
             <el-col :span="11" class="endTime">
               <el-form-item>
-                <el-date-picker
-                  type="datetime"
-                  format="yyyy-MM-dd hh:mm:ss"
-                  placeholder="结束时间"
-                  v-model="banner_wx_setup_condition.show_end_time"
-                  :picker-options="showPickerBeginDateAfter"
-                  style="width: 100%;"
-                ></el-date-picker>
+                <el-input type="text" id="endTime" v-model="banner_wx_setup_condition.show_end_time" class="form-control" readonly placeholder="结束时间"></el-input>
               </el-form-item>
             </el-col>
           </el-form-item>
@@ -93,25 +79,37 @@
           show_start_time: '',
           show_end_time: '',
         },
-        showPickerBeginDateBefore: {
-          disabledDate: (time) => {
-            let beginDateVal = this.banner_wx_setup_condition.show_end_time;
-            if (beginDateVal) {
-              return time.getTime() > beginDateVal || time.getTime() < Date.now() - 8.64e7
-            }
-            return time.getTime() < Date.now() - 8.64e7;
-          }
-        },
-        showPickerBeginDateAfter: {
-          disabledDate: (time) => {
-            let beginDateVal = this.banner_wx_setup_condition.show_start_time;
-            if (beginDateVal) {
-              return time.getTime() < beginDateVal || time.getTime() < Date.now() - 8.64e7
-            }
-            return time.getTime() < Date.now() - 8.64e7;
-          }
-        },
       }
+    },
+    mounted() {
+      var start = laydate.render({
+        elem: '#startTime',
+        type: 'datetime',
+        min: this.common.getDateTime(),
+        ready: function () {
+          $(".laydate-btns-now").hide();
+        },
+        done: function (value, date, endDate) {
+          if(value != ''){
+            date.month = date.month - 1
+            end.config.min = date
+          }
+        }
+      });
+      var end = laydate.render({
+        elem: '#endTime',
+        type: 'datetime',
+        min: this.common.getDateTime(),
+        ready: function () {
+          $(".laydate-btns-now").hide();
+        },
+        done: function (value, date, endDate) {
+          if(value != ''){
+            date.month = date.month - 1
+            start.config.max = date
+          }
+        }
+      });
     },
     methods: {
       getImg(res, file, fileList) {

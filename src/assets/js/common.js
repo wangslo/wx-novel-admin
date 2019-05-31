@@ -26,6 +26,29 @@ export default {
     second = second < 10 ? ('0' + second) : second;
     s = y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
     return s;
+  },
+  getDateTime(){
+    var s = '';
+    var date = new Date();
+    var len = date.getTime();
+    var offset = date.getTimezoneOffset() * 60000;
+    var utcTime = len + offset;
+    date = new Date(utcTime + 3600000 * 8) // 按照东八区获得时间
+
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    minute = minute + 5
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    s = y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    return s;
   }
 }
 
