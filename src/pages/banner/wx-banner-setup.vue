@@ -97,16 +97,18 @@
           disabledDate: (time) => {
             let beginDateVal = this.banner_wx_setup_condition.show_end_time;
             if (beginDateVal) {
-              return time.getTime() > beginDateVal;
+              return time.getTime() > beginDateVal || time.getTime() < Date.now() - 8.64e7
             }
+            return time.getTime() < Date.now() - 8.64e7;
           }
         },
         showPickerBeginDateAfter: {
           disabledDate: (time) => {
             let beginDateVal = this.banner_wx_setup_condition.show_start_time;
             if (beginDateVal) {
-              return time.getTime() < beginDateVal;
+              return time.getTime() < beginDateVal || time.getTime() < Date.now() - 8.64e7
             }
+            return time.getTime() < Date.now() - 8.64e7;
           }
         },
       }

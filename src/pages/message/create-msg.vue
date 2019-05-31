@@ -178,7 +178,7 @@
           disabledDate: (time) => {
             let beginDateVal = new Date(this.createMsgForm.offlinetime).getTime();
             if (beginDateVal) {
-              return time.getTime() > beginDateVal;
+              return time.getTime() > beginDateVal || time.getTime() < Date.now() - 8.64e7
             }else {
               return time.getTime() < Date.now() - 8.64e7;
             }
@@ -188,7 +188,7 @@
           disabledDate: (time) => {
             let beginDateVal = new Date(this.createMsgForm.onlinetime).getTime();
             if (beginDateVal) {
-              return time.getTime() < beginDateVal
+              return time.getTime() < beginDateVal || time.getTime() < Date.now() - 8.64e7
             }else {
               return time.getTime() < Date.now() - 8.64e7;
             }
