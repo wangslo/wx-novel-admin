@@ -5,7 +5,7 @@
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/stack-room'}">书库管理</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/stack-room'}">书库列表</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/subscription-detail'}">xxx详情</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/stack-room-detail'}">xxx详情</el-breadcrumb-item>
         <el-breadcrumb-item>xxx订阅详情</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
