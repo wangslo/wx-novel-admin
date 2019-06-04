@@ -11,22 +11,22 @@
       <el-form ref="bannerWxForm" :model="banner_wx_condition" class="banner-wx-form" label-width="80px" size="small">
         <el-form-item label="状态" label-width="50px">
           <el-select v-model="banner_wx_condition.status" placeholder="请选择状态">
-            <el-option label="全部" value="999"></el-option>
-            <el-option label="在线" value="0"></el-option>
-            <el-option label="已下线" value="1"></el-option>
-            <el-option label="未上线" value="2"></el-option>
+            <el-option label="全部" value=""></el-option>
+            <el-option label="在线" value="1"></el-option>
+            <el-option label="待上线" value="0"></el-option>
+            <el-option label="已下线" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="位置" label-width="60px">
           <el-select v-model="banner_wx_condition.position" placeholder="请选择位置">
-            <el-option label="全部" value="999"></el-option>
-            <el-option label="男频" value="1"></el-option>
-            <el-option label="女频" value="2"></el-option>
+            <el-option label="全部" value=""></el-option>
+            <el-option label="男频" value="0"></el-option>
+            <el-option label="女频" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="发布时间">
           <el-col :span="11" class="startTime">
-            <el-form-item prop="create_start_time">
+            <el-form-item>
               <el-date-picker
                 type="date"
                 format="yyyy-MM-dd"
@@ -39,7 +39,7 @@
           </el-col>
           <el-col class="line" style="width:20px;text-align:center">至</el-col>
           <el-col :span="11" class="endTime">
-            <el-form-item prop="create_end_time">
+            <el-form-item>
               <el-date-picker
                 type="date"
                 format="yyyy-MM-dd"
@@ -53,7 +53,7 @@
         </el-form-item>
         <el-form-item label="展示时间">
           <el-col :span="11" class="startTime">
-            <el-form-item prop="show_start_time">
+            <el-form-item>
               <el-date-picker
                 type="date"
                 format="yyyy-MM-dd"
@@ -66,7 +66,7 @@
           </el-col>
           <el-col class="line" style="width:20px;text-align:center">至</el-col>
           <el-col :span="11" class="endTime">
-            <el-form-item prop="show_end_time">
+            <el-form-item>
               <el-date-picker type="date"
                               format="yyyy-MM-dd"
                               placeholder="结束时间"
@@ -158,8 +158,8 @@
     data() {
       return {
         banner_wx_condition: {
-          status: '999',
-          position: '999',
+          status: '',
+          position: '',
           create_start_time: '',
           create_end_time: '',
           show_start_time: '',
@@ -249,7 +249,22 @@
         }
       },
       getBannerWxLists() {
-
+        var _this = this
+        var params = {
+          bannerGroup: _this.banner_wx_condition.position,
+          bookname: _this.banner_wx_condition.bookName,
+          startDate: _this.banner_wx_condition.show_start_time,
+          endDate: _this.banner_wx_condition.show_end_time,
+          createDate_s: _this.banner_wx_condition.create_start_time,
+          createDate_e: _this.banner_wx_condition.create_end_time,
+          status: _this.banner_wx_condition.status,
+          operator: _this.banner_wx_condition.createAdmin,
+          size: _this.pageSize,
+          page: _this.pageNo,
+        }
+        orgModuleApi.getBannerList(params).then(res=>{
+          console.log(res)
+        })
       },
       handleSizeChange(val) {
         this.pageSize = val
@@ -260,15 +275,16 @@
         this.getBannerWxLists()
       },
       clearData() {
-        this.$refs.bannerWxForm.resetFields()
-        this.banner_wx_condition.status = '999'
-        this.banner_wx_condition.bookName = ''
-        this.banner_wx_condition.position = '999'
-      },
-      sortChange: function (column, prop, order) {
-        this.sort_prop = column.prop
-        this.sort_order = column.order.replace('ending', '')
-        this.getBannerWxLists()
+        this.banner_wx_condition = {
+          status: '',
+          position: '',
+          create_start_time: '',
+          create_end_time: '',
+          show_start_time: '',
+          show_end_time: '',
+          bookName: '',
+          createAdmin: "",
+        }
       },
     }
   }

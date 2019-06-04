@@ -97,6 +97,10 @@ export const orgModuleApi = {
   customgrade:(params) =>{
     return orgAxios.post('/novelcms/pay/customgrade.html',qs.stringify(params)).then(res=>res.data);
   },
+  // banner管理
+  getBannerList:(params) =>{
+    return orgAxios.post('/novelcms/banner/list.html',qs.stringify(params)).then(res=>res.data);
+  },
 }
 
 export const msgModuleApi = {

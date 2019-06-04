@@ -10,9 +10,10 @@
     <div class="recommend-body">
       <el-form ref="recommendForm" :model="recommend_condition" class="recommend-form" :rules="recommendRules"
                label-width="80px" size="small" style="border-bottom: 1px solid #e0e0e0;">
-        <el-form-item label="推荐位置" label-width="80px" prop="options">
+        <el-form-item label="推荐位置" label-width="80px" prop="option">
           <el-cascader expand-trigger="hover"
-                       :options="recommend_condition.options"
+                       v-model="recommend_condition.option"
+                       :options="options"
                        change-on-select="false"
           ></el-cascader>
         </el-form-item>
@@ -101,112 +102,113 @@
     name: 'recommend',
     data() {
       return {
+        options: [
+          {
+            value: '火爆热书',
+            label: '火爆热书',
+            children: [
+              {
+                value: '热门书单',
+                label: '热门书单',
+              },
+            ],
+          },
+          {
+            value: '热门书单（排行榜）',
+            label: '热门书单（排行榜）',
+            children: [{
+              value: '女频榜',
+              label: '女频榜',
+            }, {
+              value: '男频榜',
+              label: '男频榜',
+            }, {
+              value: '总榜',
+              label: '总榜',
+            },]
+          },
+          {
+            value: '男频',
+            label: '男频',
+            children: [{
+              value: '精品推荐',
+              label: '精品推荐',
+            }, {
+              value: '热门书单',
+              label: '热门书单',
+            }, {
+              value: '新书推荐',
+              label: '新书推荐',
+            }, {
+              value: '排行榜',
+              label: '排行榜',
+            },]
+          },
+          {
+            value: '女频',
+            label: '女频',
+            children: [{
+              value: '精品推荐',
+              label: '精品推荐',
+            }, {
+              value: '热门书单',
+              label: '热门书单',
+            }, {
+              value: '新书推荐',
+              label: '新书推荐',
+            }, {
+              value: '排行榜',
+              label: '排行榜',
+            },]
+          },
+          {
+            value: '分类',
+            label: '分类',
+            children: [{
+              value: '玄幻',
+              label: '玄幻',
+            }, {
+              value: '武侠',
+              label: '武侠',
+            }, {
+              value: '都市',
+              label: '都市',
+            }, {
+              value: '穿越',
+              label: '穿越',
+            },{
+              value: '旅游',
+              label: '旅游',
+            },{
+              value: '灵异',
+              label: '灵异',
+            },{
+              value: '古代',
+              label: '古代',
+            },]
+          },
+          {
+            value: '搜索',
+            label: '搜索',
+            children: [{
+              value: '精品推荐',
+              label: '精品推荐',
+            },]
+          },
+          {
+            value: '书籍尾页',
+            label: '书籍尾页',
+            children: [{
+              value: '为你推荐',
+              label: '为你推荐',
+            },]
+          },
+        ],
         recommend_condition: {
-          options: [
-            {
-              value: '火爆热书',
-              label: '火爆热书',
-              children: [
-                {
-                  value: '热门书单',
-                  label: '热门书单',
-                },
-              ],
-            },
-            {
-              value: '热门书单（排行榜）',
-              label: '热门书单（排行榜）',
-              children: [{
-                value: '女频榜',
-                label: '女频榜',
-              }, {
-                value: '男频榜',
-                label: '男频榜',
-              }, {
-                value: '总榜',
-                label: '总榜',
-              },]
-            },
-            {
-              value: '男频',
-              label: '男频',
-              children: [{
-                value: '精品推荐',
-                label: '精品推荐',
-              }, {
-                value: '热门书单',
-                label: '热门书单',
-              }, {
-                value: '新书推荐',
-                label: '新书推荐',
-              }, {
-                value: '排行榜',
-                label: '排行榜',
-              },]
-            },
-            {
-              value: '女频',
-              label: '女频',
-              children: [{
-                value: '精品推荐',
-                label: '精品推荐',
-              }, {
-                value: '热门书单',
-                label: '热门书单',
-              }, {
-                value: '新书推荐',
-                label: '新书推荐',
-              }, {
-                value: '排行榜',
-                label: '排行榜',
-              },]
-            },
-            {
-              value: '分类',
-              label: '分类',
-              children: [{
-                value: '玄幻',
-                label: '玄幻',
-              }, {
-                value: '武侠',
-                label: '武侠',
-              }, {
-                value: '都市',
-                label: '都市',
-              }, {
-                value: '穿越',
-                label: '穿越',
-              },{
-                value: '旅游',
-                label: '旅游',
-              },{
-                value: '灵异',
-                label: '灵异',
-              },{
-                value: '古代',
-                label: '古代',
-              },]
-            },
-            {
-              value: '搜索',
-              label: '搜索',
-              children: [{
-                value: '精品推荐',
-                label: '精品推荐',
-              },]
-            },
-            {
-              value: '书籍尾页',
-              label: '书籍尾页',
-              children: [{
-                value: '为你推荐',
-                label: '为你推荐',
-              },]
-            },
-          ],
+          option: ''
         },
         recommendRules: {
-          options: [],
+          option: [],
         },
         tableData1: [
           {"bookName": "张三三的20岁", "author": "张三", "source": "xxxx"},
@@ -277,7 +279,11 @@
         this.tmpIdx = 999
       },
       handleAdd(idx, row) {
-
+        if(this.tableData2.length < 10){
+          this.tableData2.push(row)
+        }else {
+          this.$message.error('添加失败，此位置仅能添加10本书籍')
+        }
       },
       clearData() {
         this.$refs.recommendForm.resetFields()
