@@ -3,7 +3,7 @@
     <div class="banner-wx-setup-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>banner管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/wx-banner-list'}">banner管理</el-breadcrumb-item>
         <el-breadcrumb-item>创建banner</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -188,7 +188,7 @@
         const isLt2M = file.size / 1024 / 1024 < 2;
         const isSize = new Promise(function(resolve, reject) {
           let width = 750;
-          let height = 385;
+          let height = 425;
           let _URL = window.URL || window.webkitURL;
           let img = new Image();
           img.onload = function() {
@@ -266,18 +266,14 @@
         _URL.revokeObjectURL(this.banner_wx_setup_condition.bannerImg)
 
         var _this = this
-        if(_this.uploadFile == ''){
-          _this.saveBannerNoFile()
-        }else {
-          _this.saveBanner()
-        }
-      },
-      saveBanner() {
-        var _this = this
         let uploadData = new FormData()
         uploadData.append('id',_this.id)
         uploadData.append('imgsrc',_this.imgsrc)
-        uploadData.append('imgfile',_this.uploadFile)
+
+        if(_this.uploadFile != ''){
+          uploadData.append('imgfile',_this.uploadFile)
+        }
+
         uploadData.append('bannerGroup',_this.banner_wx_setup_condition.position)
         uploadData.append('bookid',_this.chooseBook.label)
         uploadData.append('bookname',_this.chooseBook.name)
@@ -286,30 +282,7 @@
         uploadData.append('endDate',_this.banner_wx_setup_condition.show_end_time)
         uploadData.append('status', 0)
 
-        orgModuleApi.addBanner(uploadData).then(res=>{
-          console.log(res)
-          if(res.success){
-            this.$message.success('提交成功！')
-            _this.reload()
-          }
-        })
-      },
-      saveBannerNoFile() {
-        var _this = this
-        var params = {
-          id: _this.id,
-          imgsrc: _this.imgsrc,
-          imgfile: _this.uploadFile,
-          bannerGroup: _this.banner_wx_setup_condition.position,
-          bookid: _this.chooseBook.label,
-          bookname: _this.chooseBook.name,
-          idx: _this.idx,
-          startDate: _this.banner_wx_setup_condition.show_start_time,
-          endDate: _this.banner_wx_setup_condition.show_end_time,
-          status: 0,
-        }
-
-        orgModuleApi.editBanner(params).then(res=>{
+        orgModuleApi.editBanner(uploadData).then(res=>{
           console.log(res)
           if(res.success){
             this.$message.success('提交成功！')

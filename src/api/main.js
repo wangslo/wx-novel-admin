@@ -110,7 +110,7 @@ export const orgModuleApi = {
   getOnlineBanner:(params) =>{
     return orgAxios.post('/novelcms/banner/online.html',qs.stringify(params)).then(res=>res.data);
   },
-  addBanner:(params) =>{
+  editBanner:(params) =>{
     let config = {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -118,8 +118,8 @@ export const orgModuleApi = {
     }
     return orgAxios.post('/novelcms/banner/edit.html',params, config).then(res=>res.data);
   },
-  editBanner:(params) =>{
-    return orgAxios.post('/novelcms/banner/edit.html',qs.stringify(params)).then(res=>res.data);
+  offBanner:(params) =>{
+    return orgAxios.post('/novelcms/banner/off.html',qs.stringify(params)).then(res=>res.data);
   },
 }
 

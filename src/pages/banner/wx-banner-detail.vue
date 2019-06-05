@@ -104,7 +104,18 @@
         }
       },
       setOffline() {
-        this.offlineDialog = false
+        var _this = this
+        var params = {
+          bid: _this.$route.query.id,
+          remark: _this.reason,
+        }
+        orgModuleApi.offBanner(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.offlineDialog = false
+            _this.getBannerWxDetail()
+          }
+        })
       },
       handleOffLine() {
         this.reason = ''

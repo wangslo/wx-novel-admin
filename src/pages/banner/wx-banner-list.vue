@@ -229,7 +229,18 @@
     },
     methods: {
       setOffline() {
-        this.offlineDialog = false
+        var _this = this
+        var params = {
+          bid: _this.bannerid,
+          remark: _this.reason,
+        }
+        orgModuleApi.offBanner(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.offlineDialog = false
+            _this.getBannerWxLists()
+          }
+        })
       },
       handleOffLine(index, row) {
         this.reason = ''
@@ -284,7 +295,7 @@
                 id: item.id,
                 bannerImage: item.imgsrc,
                 position: item.bannerGroup == 1 ? '女频' : '男频',
-                bookName: item.bookid,
+                bookName: item.bookname,
                 showTime_s: _this.common.getDate2(item.startDate),
                 showTime_e: _this.common.getDate2(item.endDate),
                 createTime: _this.common.getDate(item.createDate),

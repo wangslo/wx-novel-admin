@@ -19,7 +19,8 @@
           <transition-group>
             <div v-for="item in banner_lists" :key="item.url" class="drag-item">
               <img :src="item.url"/>
-              <span>{{item.name}}</span>
+              <span v-if="item.name">{{item.name}}</span>
+              <span v-else>&nbsp;</span>
               <span>{{item.showTime}}</span>
             </div>
           </transition-group>
@@ -38,7 +39,6 @@
 
   export default {
     name: 'WxBannerSortEdit',
-    inject:['reload'],
     data() {
       return {
         position: "0",
@@ -70,7 +70,7 @@
           console.log(res)
           if(res.success){
             this.$message.success('保存成功！')
-            _this.reload()
+            _this.initBannerLists()
           }
         })
       },
@@ -87,7 +87,7 @@
               _this.banner_lists.push({
                 id: item.id,
                 url: item.imgsrc,
-                name: item.bookid,
+                name: item.bookname,
                 showTime: _this.common.getDate2(item.startDate) + '~' +_this.common.getDate2(item.endDate),
               })
             })
@@ -133,15 +133,15 @@
         height: auto;
         position: absolute;
         .drag-item {
-          width: 250px;
+          width: 280px;
           margin-top: 20px;
           float: left;
           margin-left: 20px;
           margin-right: 20px;
           box-shadow: -5px 5px 20px #888888;
           img {
-            width: 250px;
-            height: 150px;
+            width: 280px;
+            height: 170px;
           }
           span {
             display: block;
