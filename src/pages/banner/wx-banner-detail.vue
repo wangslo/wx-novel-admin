@@ -3,8 +3,8 @@
     <div class="banner-detail-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/app-banner-list'}">banner管理</el-breadcrumb-item>
-        <el-breadcrumb-item>***详情</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/wx-banner-list'}">banner管理</el-breadcrumb-item>
+        <el-breadcrumb-item>{{book_name}}详情</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="banner-detail-body">
@@ -30,18 +30,19 @@
           <span class="item-value">{{status}}</span>
         </div>
       </div>
-      <div class="banner-detail-item">
+      <div class="banner-detail-item" v-if="banner_img">
         <span class="item-name head-img-title">banner图：</span>
         <div class="head-img-url">
           <img :src="banner_img" style="width:300px;height:180px"/>
           <div class="banner-detail-btn-box">
-            <el-button type="warning" size="mini" class="banner-detail-btn">编辑</el-button>
-            <el-button type="danger" size="mini" class="banner-detail-btn">下线</el-button>
+            <el-button v-if="status == '待上线'" type="warning" size="mini" class="banner-detail-btn" @click="handleEdit">编辑</el-button>
+            <el-button v-if="status == '待上线'" type="danger" size="mini" class="banner-detail-btn" @click="handleEdit">上线</el-button>
+            <el-button v-if="status == '在线'" type="danger" size="mini" class="banner-detail-btn" @click="handleOffLine">下线</el-button>
           </div>
         </div>
       </div>
-      <div class="line"></div>
-      <div class="banner-detail-item operat-info">
+      <div class="line" v-if="reasons.length > 0"></div>
+      <div class="banner-detail-item operat-info" v-if="reasons.length > 0">
         <span class="item-name operat-title">操作详情：</span>
         <div class="operat-reason">
           <template v-for="reason in reasons">
@@ -49,6 +50,25 @@
           </template>
         </div>
       </div>
+    </div>
+    <div class="dialog-div">
+      <el-dialog title="" :visible.sync="offlineDialog" width="500px" center>
+        <span>你确认要将“{{book_name}}”下线吗？</span>
+        <span>下线后，将无法再次进行修改！</span>
+        <el-input type="textarea"
+                  :rows="3"
+                  resize="none"
+                  maxlength='50'
+                  placeholder="请输入下线原因（不得少于5个汉字）"
+                  @keyup.native="watchSize"
+                  v-model="reason">
+        </el-input>
+        <p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="offlineDialog = false">取 消</el-button>
+            <el-button type="primary" :disabled="reason.length == 0" @click="setOffline">确 认</el-button>
+          </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -59,30 +79,66 @@
     name: 'bannerWxDetail',
     data() {
       return {
-        status: '在线',
-        position: '男频',
-        show_time: "2019-04-04 12:00 至 2019-05-01 12:00",
-        create_time: '2019-04-06 12:00:00',
-        book_name: '书籍名称',
-        banner_img: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg",
-        reasons: [
-          "XXAXX与2019-04-10 12:00:00进行下线操作  原因：因点击量小无法满足运营需求",
-          "XXXX与2019-04-10 12:00:00进行下线操作  原因：因点击量小无法满足运营需求",
-          "XXXX与2019-04-10 12:00:00进行下线操作  原因：因点击量小无法满足运营需求",
-        ],
+        status: '',
+        position: '',
+        show_time: "",
+        create_time: '',
+        book_name: '',
+        banner_img: "",
+        reasons: [],
+        offlineDialog: false,
+        reason: '',
+        textSize: 0,
       }
     },
     created() {
       this.getBannerWxDetail()
     },
     methods: {
+      watchSize() {
+        if (this.reason.length == 50) {
+          this.textSize = 50
+          return false
+        } else {
+          this.textSize = this.reason.length
+        }
+      },
+      setOffline() {
+        this.offlineDialog = false
+      },
+      handleOffLine() {
+        this.reason = ''
+        this.offlineDialog = true
+      },
+      handleEdit() {
+        this.$router.push({
+          path: '/wx-banner-setup',
+          query: {
+            id: this.$route.query.id
+          }
+        })
+      },
       getBannerWxDetail() {
-
+        var _this = this
+        var params = {
+          bid: this.$route.query.id
+        }
+        orgModuleApi.getBannerInfo(params).then(res=>{
+          console.log(res)
+          if(res.success) {
+            _this.status = res.data.status == 1 ? '在线' : res.data.status == 0 ? '待上线' : '已下线'
+            _this.position = res.data.bannerGroup == 1 ? '女频' : '男频'
+            _this.show_time = _this.common.getDate2(res.data.startDate) + ' 至 ' +  _this.common.getDate2(res.data.endDate)
+            _this.create_time = _this.common.getDate(res.data.createDate)
+            _this.book_name = res.data.bookid
+            _this.banner_img = res.data.imgsrc
+          }
+        })
       },
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .banner-detail-page {
     .banner-detail-header {
       height: 50px;
@@ -136,7 +192,6 @@
       }
       .head-img-url {
         display: inline-block;
-        text-align: center;
         img {
           width: 100px;
           height: 100px;
@@ -148,6 +203,16 @@
             display: inline-block;
           }
         }
+      }
+    }
+    .el-dialog__header {
+      padding: 0 !important;
+    }
+    .el-dialog__body {
+      span {
+        display: block;
+        text-align: center;
+        margin-bottom: 10px;
       }
     }
   }

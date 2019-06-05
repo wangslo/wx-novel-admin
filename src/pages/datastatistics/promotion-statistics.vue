@@ -397,7 +397,7 @@
             id: row.id,
             bookId: row.bookId,
             channel: row.qid,
-            chapterNum: row.chapterNum,
+            chapterNum: parseInt(row.chapterNum) - 1,
           }
         })
         window.open(href, '_blank')

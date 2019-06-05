@@ -176,7 +176,7 @@
           title: _this.title,
           bookid: _this.bookid,
           chapterId: _this.chapterId,
-          chapterNum: _this.chapterNum + 1,
+          chapterNum: parseInt(_this.chapterNum) + 1,
           qrCodeUrl: _this.common.h5_url + 'readPage.html?chapterId=' + _this.chapterId
           + '&bookid=' + _this.bookid + '&booktitle=' + _this.bookname,
         }

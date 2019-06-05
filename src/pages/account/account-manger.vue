@@ -68,7 +68,7 @@
       <el-table :data="tableData" style="width:100%;" stripe border>
         <el-table-column label="序号" min-width="30" align="center">
           <template slot-scope="scope">
-            <span>{{scope.$index+pageNo * pageSize + 1}} </span>
+            <span>{{scope.$index+(pageNo-1) * pageSize + 1}} </span>
           </template>
         </el-table-column>
         <el-table-column prop="account" label="邮箱" min-width="30" align="center"></el-table-column>
@@ -246,7 +246,7 @@
           status: [],
         },
         tableData: [],
-        pageNo: 0,
+        pageNo: 1,
         pageSize: 10,
         currentPage: 1,
         totalSize: 0,
@@ -282,7 +282,7 @@
       },
       getAccountLists() {
         var params = {
-          page: this.pageNo,
+          page: this.pageNo - 1,
           size: this.pageSize,
           username	: this.account_condition.account,
           name: this.account_condition.nickName,

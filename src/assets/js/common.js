@@ -27,6 +27,28 @@ export default {
     s = y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
     return s;
   },
+  getDate2: function(value){
+    var s = '';
+    var date = new Date();
+    date.setTime(value);
+    // 计算本地时间与GMT时间的偏移量
+    var len = date.getTime();
+    var offset = date.getTimezoneOffset() * 60000;
+    var utcTime = len + offset;
+    date = new Date(utcTime + 3600000 * 8) // 按照东八区获得时间
+
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    s = y + '-' + m + '-' + d+' '+h+':'+minute;
+    return s;
+  },
   getDateTime(){
     var s = '';
     var date = new Date();

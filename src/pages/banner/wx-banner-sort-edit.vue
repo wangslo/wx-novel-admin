@@ -10,8 +10,8 @@
     <div class="banner-wx-sort-body">
       <div class="banner-wx-sort-position">
         <span>选择位置：</span>
-        <el-radio v-model="position" label="1" @change="getPosition">男频</el-radio>
-        <el-radio v-model="position" label="2" @change="getPosition">女频</el-radio>
+        <el-radio v-model="position" label="0" @change="getPosition">男频</el-radio>
+        <el-radio v-model="position" label="1" @change="getPosition">女频</el-radio>
         <span style="display: block;margin-top: 10px;color:#888888;">长按banner区域可进行拖动</span>
       </div>
       <div class="banner-wx-sort-img">
@@ -24,8 +24,8 @@
             </div>
           </transition-group>
         </draggable>
-        <div class="banner-wx-sort-btn">
-          <el-button type="success" size="mini">保存</el-button>
+        <div class="banner-wx-sort-btn" v-if="banner_lists.length > 0">
+          <el-button type="success" size="mini" @click="saveOrder">保存</el-button>
           <el-button type="warning" size="mini">取消</el-button>
         </div>
       </div>
@@ -34,61 +34,77 @@
 </template>
 <script>
   import draggable from 'vuedraggable'
+  import {orgModuleApi} from "../../api/main";
 
   export default {
     name: 'WxBannerSortEdit',
+    inject:['reload'],
     data() {
       return {
-        position: "1",
-        banner_lists: [
-          {
-            name: '1',
-            url: 'http://up.enterdesk.com/edpic/8b/89/86/8b8986b40f7fc1ff4f7f6ea7b6c4447d.jpg',
-            showTime: '2019-05-03 12:12:12'
-          },
-          {
-            name: '2',
-            url: 'http://attach.bbs.miui.com/forum/201403/23/210134o8y38c7m8y4726xa.jpg',
-            showTime: '2019-05-03 12:12:12'
-          },
-          {
-            name: '3',
-            url: 'http://img3.redocn.com/tupian/20141017/tianyeweimeiyijing_3148673.jpg',
-            showTime: '2019-05-03 12:12:12'
-          },
-          {
-            name: '4',
-            url: 'http://img5.imgtn.bdimg.com/it/u=3300305952,1328708913&fm=26&gp=0.jpg',
-            showTime: '2019-05-03 12:12:12'
-          },
-          {
-            name: '5',
-            url: 'http://pic27.nipic.com/20130309/9527735_191152373000_2.jpg',
-            showTime: '2019-05-03 12:12:12'
-          },
-          {
-            name: '6',
-            url: 'http://pic11.nipic.com/20101208/6332275_140730007350_2.jpg',
-            showTime: '2019-05-03 12:12:12'
-          },
-        ],
+        position: "0",
+        banner_lists: [],
       }
     },
     components: {
       draggable
     },
+    created() {
+      this.initBannerLists()
+    },
     methods: {
+      saveOrder() {
+        var _this = this
+
+        let orderMap = '{'
+        this.banner_lists.map((item,idx)=>{
+          orderMap += '"'+item.id+'":'+(idx+1)+','
+        })
+        orderMap += '}'
+        orderMap = orderMap.replace(',}','}')
+
+        var params = {
+          bannerGroup: this.position,
+          odrmap: JSON.parse(orderMap),
+        }
+        orgModuleApi.setBannerOrder(params).then(res=>{
+          console.log(res)
+          if(res.success){
+            this.$message.success('保存成功！')
+            _this.reload()
+          }
+        })
+      },
+      initBannerLists() {
+        var _this = this
+        var params = {
+          bannerGroup: _this.position,
+        }
+        _this.banner_lists = []
+        orgModuleApi.getOnlineBanner(params).then(res => {
+          console.log(res)
+          if (res.success) {
+            res.data.map((item, index) => {
+              _this.banner_lists.push({
+                id: item.id,
+                url: item.imgsrc,
+                name: item.bookid,
+                showTime: _this.common.getDate2(item.startDate) + '~' +_this.common.getDate2(item.endDate),
+              })
+            })
+          }
+        })
+      },
       getdata(evt) {
-        console.log(evt.draggedContext.element)
+        // console.log(evt.draggedContext.element)
       },
       datadragEnd(evt) {
         evt.preventDefault();
-        console.log('拖动前的索引 :' + evt.oldIndex)
-        console.log('拖动后的索引 :' + evt.newIndex)
-        console.log(this.banner_lists);
+        // console.log('拖动前的索引 :' + evt.oldIndex)
+        // console.log('拖动后的索引 :' + evt.newIndex)
+        // console.log(this.banner_lists);
       },
       getPosition() {
-        console.log(this.position)
+        this.initBannerLists()
       }
     },
     mounted() {

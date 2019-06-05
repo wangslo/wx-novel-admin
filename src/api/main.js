@@ -101,6 +101,26 @@ export const orgModuleApi = {
   getBannerList:(params) =>{
     return orgAxios.post('/novelcms/banner/list.html',qs.stringify(params)).then(res=>res.data);
   },
+  getBannerInfo:(params) =>{
+    return orgAxios.post('/novelcms/banner/info.html',qs.stringify(params)).then(res=>res.data);
+  },
+  setBannerOrder:(params) =>{
+    return orgAxios.post('/novelcms/banner/resetodr.html',qs.stringify(params)).then(res=>res.data);
+  },
+  getOnlineBanner:(params) =>{
+    return orgAxios.post('/novelcms/banner/online.html',qs.stringify(params)).then(res=>res.data);
+  },
+  addBanner:(params) =>{
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+    return orgAxios.post('/novelcms/banner/edit.html',params, config).then(res=>res.data);
+  },
+  editBanner:(params) =>{
+    return orgAxios.post('/novelcms/banner/edit.html',qs.stringify(params)).then(res=>res.data);
+  },
 }
 
 export const msgModuleApi = {

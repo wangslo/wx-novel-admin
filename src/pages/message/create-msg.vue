@@ -321,7 +321,6 @@
         msgModuleApi.getNovels(params).then(res=>{
           console.log(res)
           if(res.success) {
-            var data = res.data.list
             _this.tableData.push({
               bookid: res.data.bookid,
               bookname: res.data.name,
