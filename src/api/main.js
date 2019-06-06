@@ -121,6 +121,13 @@ export const orgModuleApi = {
   offBanner:(params) =>{
     return orgAxios.post('/novelcms/banner/off.html',qs.stringify(params)).then(res=>res.data);
   },
+  //推荐书籍
+  editRecommendBook:(params) => {
+    return orgAxios.post('/novelcms/recmd/edit.html',qs.stringify(params)).then(res=>res.data);
+  },
+  listRecommendBook:(params) => {
+    return orgAxios.post('/novelcms/recmd/load.html',qs.stringify(params)).then(res=>res.data);
+  },
 }
 
 export const msgModuleApi = {

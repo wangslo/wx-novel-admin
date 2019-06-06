@@ -14,19 +14,20 @@
           <el-cascader expand-trigger="hover"
                        v-model="recommend_condition.option"
                        :options="options"
-                       change-on-select="false"
+                       @change="getRecommendList"
+
           ></el-cascader>
         </el-form-item>
         <el-form-item style="float: right;">
-          <el-button type="primary" @click="clearData">清空</el-button>
-          <el-button type="primary" @click="onsubmit">查找</el-button>
+          <el-button @click="clearData">清空</el-button>
+          <el-button type="primary" @click="getRecommendList">查找</el-button>
         </el-form-item>
       </el-form>
       <div style="width: 100%;">
         <div class="recommend-left">
           <div class="recommend-left-cond">
-            <el-input v-model="xx" placeholder="请输入书籍名称或关键词" size="small"></el-input>
-            <el-button type="primary" @click="onsubmit" size="small">搜索</el-button>
+            <el-input v-model="bookName" placeholder="请输入书籍名称或关键词" size="small"></el-input>
+            <el-button type="primary" @click="queryBannerUrl" size="small">搜索</el-button>
           </div>
           <el-table :data="tableData1" stripe border>
             <el-table-column label="序号" min-width="30" align="center">
@@ -39,7 +40,7 @@
             <el-table-column prop="source" label="来源" min-width="80" align="center"></el-table-column>
             <el-table-column label="操作" min-width="80" align="center">
               <template slot-scope="scope">
-                <el-button size="mini" @click="handleAdd(scope.$index, scope.row)">添加</el-button>
+                <el-button type="success" size="mini" @click="handleAdd(scope.$index, scope.row)">添加</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -56,13 +57,13 @@
         </div>
         <div class="recommend-right">
           <div class="recommend-right-btn">
-            <el-button type="primary" @click="defriendDialogAll = true" size="small">全部删除</el-button>
+            <el-button type="danger" @click="defriendDialogAll = true" size="small">全部删除</el-button>
             <el-button type="primary" @click="onsubmit" size="small">提交</el-button>
           </div>
-          <el-table class="recommend-table" :data="tableData2" stripe border row-key="id">
+          <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId">
             <el-table-column label="序号" min-width="30" align="center">
               <template slot-scope="scope">
-                <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
+                <span>{{scope.$index + 1}} </span>
               </template>
             </el-table-column>
             <el-table-column prop="bookName" label="书籍名称" min-width="80" align="center"></el-table-column>
@@ -70,7 +71,7 @@
             <el-table-column prop="source" label="来源" min-width="80" align="center"></el-table-column>
             <el-table-column label="操作" min-width="80" align="center">
               <template slot-scope="scope">
-                <el-button size="mini" @click="movedelete(scope.$index, scope.row)">删除</el-button>
+                <el-button type="danger" size="mini" @click="movedelete(scope.$index, scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -97,6 +98,7 @@
 </template>
 <script>
   import Sortable from 'sortablejs'
+  import {orgModuleApi,msgModuleApi} from '../../api/main'
 
   export default {
     name: 'recommend',
@@ -108,7 +110,7 @@
             label: '火爆热书',
             children: [
               {
-                value: '热门书单',
+                value: '1000-0100',
                 label: '热门书单',
               },
             ],
@@ -117,13 +119,13 @@
             value: '热门书单（排行榜）',
             label: '热门书单（排行榜）',
             children: [{
-              value: '女频榜',
+              value: '5000-0100',
               label: '女频榜',
             }, {
-              value: '男频榜',
+              value: '3000-0100',
               label: '男频榜',
             }, {
-              value: '总榜',
+              value: '2000-0100',
               label: '总榜',
             },]
           },
@@ -131,16 +133,16 @@
             value: '男频',
             label: '男频',
             children: [{
-              value: '精品推荐',
+              value: '4000-0100',
               label: '精品推荐',
             }, {
-              value: '热门书单',
+              value: '4000-0200',
               label: '热门书单',
             }, {
-              value: '新书推荐',
+              value: '4000-0300',
               label: '新书推荐',
             }, {
-              value: '排行榜',
+              value: '4000-0400',
               label: '排行榜',
             },]
           },
@@ -148,16 +150,16 @@
             value: '女频',
             label: '女频',
             children: [{
-              value: '精品推荐',
+              value: '5000-0200',
               label: '精品推荐',
             }, {
-              value: '热门书单',
+              value: '5000-0300',
               label: '热门书单',
             }, {
-              value: '新书推荐',
+              value: '5000-0400',
               label: '新书推荐',
             }, {
-              value: '排行榜',
+              value: '5000-0500',
               label: '排行榜',
             },]
           },
@@ -165,25 +167,25 @@
             value: '分类',
             label: '分类',
             children: [{
-              value: '玄幻',
+              value: '6000-0100',
               label: '玄幻',
             }, {
-              value: '武侠',
+              value: '6000-0200',
               label: '武侠',
             }, {
-              value: '都市',
+              value: '6000-0300',
               label: '都市',
             }, {
-              value: '穿越',
+              value: '6000-0400',
               label: '穿越',
             },{
-              value: '旅游',
+              value: '6000-0500',
               label: '旅游',
             },{
-              value: '灵异',
+              value: '6000-0600',
               label: '灵异',
             },{
-              value: '古代',
+              value: '6000-0700',
               label: '古代',
             },]
           },
@@ -191,7 +193,7 @@
             value: '搜索',
             label: '搜索',
             children: [{
-              value: '精品推荐',
+              value: '7000-0100',
               label: '精品推荐',
             },]
           },
@@ -199,7 +201,7 @@
             value: '书籍尾页',
             label: '书籍尾页',
             children: [{
-              value: '为你推荐',
+              value: '8000-0100',
               label: '为你推荐',
             },]
           },
@@ -211,21 +213,10 @@
           option: [],
         },
         tableData1: [
-          {"bookName": "张三三的20岁", "author": "张三", "source": "xxxx"},
-          {"bookName": "盛世骑兵", "author": "张三", "source": "xxxx"},
-          {"bookName": "盛世骑兵4", "author": "张三", "source": "xxxx"}
         ],
         tableData2: [
-          {'id': '1', "bookName": "张三三的20岁", "author": "张三", "source": "xxxx"},
-          {'id': '2', "bookName": "盛世骑兵", "author": "张三", "source": "xxxx"},
-          {'id': '3', "bookName": "盛世骑兵4", "author": "张三", "source": "xxxx"},
-          {'id': '4', "bookName": "张三三的20岁", "author": "张三", "source": "xxxx"},
-          {'id': '5', "bookName": "盛世骑兵", "author": "张三", "source": "xxxx"},
-          {'id': '6', "bookName": "盛世骑兵4", "author": "张三", "source": "xxxx"},
-          {'id': '7', "bookName": "张三三的20岁", "author": "张三", "source": "xxxx"},
-          {'id': '8', "bookName": "盛世骑兵", "author": "张三", "source": "xxxx"},
-          {'id': '9', "bookName": "盛世骑兵4", "author": "张三", "source": "xxxx"},
         ],
+        bookName:"",
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
@@ -253,10 +244,12 @@
         })
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.pageSize = val
+        this.queryBannerUrl()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.pageNo = val
+        this.queryBannerUrl()
       },
       handleDefriend(idx, row) {
         this.defriendDialog = true
@@ -271,48 +264,145 @@
         this.tableData2.splice(this.tmpIdx, 1)
         this.allLine = this.allLine - 1;
         this.tmpIdx = 999
+        this.onsubmit()
       },
       confirmdeleteall() {
-        this.defriendDialog = false
-        this.tableData2.splice(this.tmpIdx, 1)
-        this.allLine = this.allLine - 1;
+        this.defriendDialogAll = false
+        this.tableData2 = []
+        this.allLine = 0;
         this.tmpIdx = 999
+        this.onsubmit()
       },
       handleAdd(idx, row) {
-        if(this.tableData2.length < 10){
-          this.tableData2.push(row)
-        }else {
-          this.$message.error('添加失败，此位置仅能添加10本书籍')
+        let _position = [];
+        _position[1] = this.checkPosition();
+        if(!_position[1]) return
+        if(!this.checkBookUnqie(row.bookId,this.tableData2)) return
+
+        switch (_position[1]) {
+          case '8000-0100':
+            if(this.tableData2.length < 3){
+              this.tableData2.push(row)
+            }else {
+              this.$message.error('添加失败，此位置仅能添加3本书籍')
+            }
+            break;
+          case '7000-0100':
+            if(this.tableData2.length < 5){
+              this.tableData2.push(row)
+            }else {
+              this.$message.error('添加失败，此位置仅能添加5本书籍')
+            }
+            break;
+          default:
+            if(this.tableData2.length < 10){
+              this.tableData2.push(row)
+            }else {
+              this.$message.error('添加失败，此位置仅能添加10本书籍')
+            }
         }
+
+
       },
       clearData() {
         this.$refs.recommendForm.resetFields()
       },
-      onsubmit() {
-        this.tableData = [
-          {
-            headerImg: 'http://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png',
-            phone: '1233',
-            nickName: 'asa',
-            loginType: 'QQ',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          },
-          {
-            headerImg: '',
-            phone: '111',
-            nickName: '',
-            loginType: '',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
+      queryBannerUrl(bookname) {
+        var _this = this
+        bookname = _this.bookName;
+        if (bookname != '') {
+          this.loading = false
+          var params = {
+            kwd: bookname,
+            page: _this.pageNo,
+            size: _this.pageSize,
           }
-        ]
+          msgModuleApi.searchNovel(params).then(res=>{
+            console.log(res)
+            if(res.success){
+              _this.tableData1 = [];
+              res.data.list.map((item,index)=>{
+                _this.tableData1.push({
+                  bookName:item.name,
+                  author:item.author,
+                  source:item.ufr,
+                  bookId:item.bookid,
+                })
+              })
+              _this.totalSize = parseInt(res.data.total)
+            }
+          })
+        } else {
+          this.loading = true
+//          this.search_banner_name = []
+        }
+      },
+      checkPosition(){
+        let _position = this.recommend_condition.option
+        if(_position.length < 2){
+          this.$message.error('请选择推荐位置')
+          return false
+        }
+        return _position[1]
+      },
+      checkBookUnqie(bookId,_table){
+        let _flag = true;
+        if(_table.length>0){
+          _table.map((item,index)=>{
+              if(item.bookId == bookId){
+                this.$message.error('本书籍在该推荐位置已存在')
+                _flag = false
+              }
+          })
+        }
+        return _flag
+      },
+      getRecommendList(){
+        let _position = [];
+        let _this = this
+        _position[1] = this.checkPosition();
+        if(_position[1].length > 2){
+          var params = {
+            pos:_position[1],
+          }
+          orgModuleApi.listRecommendBook(params).then(res=>{
+            console.log(res)
+            _this.tableData2 = [];
+            if(res.success && res.data){
+              res.data.map((item,index)=>{
+                _this.tableData2.push({
+                  bookName:item.name,
+                  author:item.author,
+                  source:item.ufr,
+                  bookId:item.bookid,
+                })
+              })
+            }
+          })
+        }
+      },
+      onsubmit() {
+        let _position = [];
+        _position[1] = this.checkPosition();
+        let _bookids = [];
+        let _this = this
+        console.log(_this.tableData2)
+
+        _this.tableData2.map((item,index)=>{
+          _bookids.push(item.bookId)
+        })
+        this.loading = false
+        var params = {
+          pos:_position[1],
+          bookids:_bookids,
+        }
+        console.log(params)
+        orgModuleApi.editRecommendBook(params).then(res=>{
+          console.log(res)
+          this.$message.success('成功')
+
+        })
+
       },
     }
   }
