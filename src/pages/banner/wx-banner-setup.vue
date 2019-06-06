@@ -48,7 +48,7 @@
                 <span v-show="show_time" style="color: #F56C6C;font-size: 12px;">请设置展示时间</span>
               </el-form-item>
             </el-col>
-            <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
+            <el-col :span="2" style="width:20px;text-align:center">至</el-col>
             <el-col :span="11" class="endTime">
               <el-form-item>
                 <el-input id="endTime" v-model="banner_wx_setup_condition.show_end_time" placeholder="结束时间"></el-input>

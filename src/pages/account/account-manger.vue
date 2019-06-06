@@ -28,7 +28,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col class="line" style="width:20px;text-align:center">至</el-col>
+          <el-col style="width:20px;text-align:center">至</el-col>
           <el-col :span="10" class="endTime">
             <el-form-item prop="create_end_time">
               <el-date-picker
