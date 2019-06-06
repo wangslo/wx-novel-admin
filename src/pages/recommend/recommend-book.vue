@@ -40,7 +40,7 @@
             <el-table-column prop="source" label="来源" min-width="80" align="center"></el-table-column>
             <el-table-column label="操作" min-width="80" align="center">
               <template slot-scope="scope">
-                <el-button size="mini" @click="handleAdd(scope.$index, scope.row)">添加</el-button>
+                <el-button type="success" size="mini" @click="handleAdd(scope.$index, scope.row)">添加</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -57,7 +57,7 @@
         </div>
         <div class="recommend-right">
           <div class="recommend-right-btn">
-            <el-button type="primary" @click="defriendDialogAll = true" size="small">全部删除</el-button>
+            <el-button type="danger" @click="defriendDialogAll = true" size="small">全部删除</el-button>
             <el-button type="primary" @click="onsubmit" size="small">提交</el-button>
           </div>
           <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId">
@@ -71,7 +71,7 @@
             <el-table-column prop="source" label="来源" min-width="80" align="center"></el-table-column>
             <el-table-column label="操作" min-width="80" align="center">
               <template slot-scope="scope">
-                <el-button size="mini" @click="movedelete(scope.$index, scope.row)">删除</el-button>
+                <el-button type="danger" size="mini" @click="movedelete(scope.$index, scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -276,6 +276,7 @@
       handleAdd(idx, row) {
         let _position = [];
         _position[1] = this.checkPosition();
+        if(!_position[1]) return
         if(!this.checkBookUnqie(row.bookId,this.tableData2)) return
 
         switch (_position[1]) {
@@ -340,7 +341,7 @@
         let _position = this.recommend_condition.option
         if(_position.length < 2){
           this.$message.error('请选择推荐位置')
-          return
+          return false
         }
         return _position[1]
       },
