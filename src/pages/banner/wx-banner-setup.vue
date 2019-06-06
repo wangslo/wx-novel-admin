@@ -27,8 +27,9 @@
               action=""
               list-type="picture"
               :show-file-list="false"
-              :before-upload="beforeAvatarUpload">
-              <el-button size="small" type="primary">点击上传</el-button>
+              :before-upload="beforeAvatarUpload"
+              :disabled="banner_wx_setup_condition.position == ''">
+              <el-button size="small" type="primary" :disabled="banner_wx_setup_condition.position == ''">点击上传</el-button>
             </el-upload>
           </el-form-item>
           <el-form-item label="书籍名称：" prop="banner_name">
@@ -40,6 +41,7 @@
               style="width: 420px;"
               :hide-loading="loading"
             ></el-autocomplete>
+            <span v-show="show_book" style="color: #F56C6C;font-size: 12px;">请选择书籍</span>
           </el-form-item>
           <el-form-item label="展示时间：">
             <el-col :span="11" class="startTime">
@@ -86,6 +88,7 @@
           banner_name: [{ required: true, message: '请先确认书籍名称'}],
         },
         show_time:false,
+        show_book:false,
         uploadFile: '',
         chooseBook: {
           value: '',
@@ -109,7 +112,7 @@
         elem: '#startTime',
         type: 'datetime',
         format: 'yyyy-MM-dd HH:mm',
-        min: this.common.getDateTime(),
+        min: this.common.getDateTime(5),
         ready: function () {
           $(".laydate-btns-now").hide();
         },
@@ -117,6 +120,7 @@
           if(value != ''){
             _this.banner_wx_setup_condition.show_start_time = value
             date.month = date.month - 1
+            date.minutes = date.minutes + 5
             end.config.min = date
           }
         }
@@ -125,7 +129,7 @@
         elem: '#endTime',
         type: 'datetime',
         format: 'yyyy-MM-dd HH:mm',
-        min: this.common.getDateTime(),
+        min: this.common.getDateTime(10),
         ready: function () {
           $(".laydate-btns-now").hide();
         },
@@ -133,6 +137,7 @@
           if(value != ''){
             _this.banner_wx_setup_condition.show_end_time = value
             date.month = date.month - 1
+            date.minutes = date.minutes - 5
             start.config.max = date
           }
         }
@@ -147,20 +152,20 @@
         orgModuleApi.getBannerInfo(params).then(res=>{
           if(res.success) {
             _this.banner_wx_setup_condition = {
-              position: res.data.bannerGroup.toString(),
-              bannerImg: res.data.imgsrc,
-              banner_name: '',
-              show_start_time: _this.common.getDate2(res.data.startDate),
-              show_end_time: _this.common.getDate2(res.data.endDate),
+              position: res.data.data.bannerGroup.toString(),
+              bannerImg: res.data.data.imgsrc,
+              banner_name: res.data.data.bookname,
+              show_start_time: _this.common.getDate2(res.data.data.startDate),
+              show_end_time: _this.common.getDate2(res.data.data.endDate),
             }
             _this.chooseBook = {
               value: '',
-              label: res.data.bookid,
+              label: res.data.data.bookid,
               name: '',
             },
-            _this.queryNovelsById(_this,res.data.bookid)
-            _this.imgsrc = res.data.imgsrc
-            _this.idx = res.data.idx
+            _this.queryNovelsById(_this,res.data.data.bookid)
+            _this.imgsrc = res.data.data.imgsrc
+            _this.idx = res.data.data.idx
           }
         })
       },
@@ -247,7 +252,13 @@
               return false
             }else {
               this.show_time = false
-              this.saveBannerWx();
+              if(this.chooseBook.label == ''){
+                this.show_book = true
+                return false
+              }else {
+                this.show_book = false
+                this.saveBannerWx();
+              }
             }
           } else {
             if(this.banner_wx_setup_condition.show_start_time == '' || this.banner_wx_setup_condition.show_end_time == ''){

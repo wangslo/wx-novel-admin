@@ -49,7 +49,7 @@ export default {
     s = y + '-' + m + '-' + d+' '+h+':'+minute;
     return s;
   },
-  getDateTime(){
+  getDateTime(num){
     var s = '';
     var date = new Date();
     var len = date.getTime();
@@ -65,7 +65,7 @@ export default {
     var h = date.getHours();
     h = h < 10 ? ('0' + h) : h;
     var minute = date.getMinutes();
-    minute = minute + 5
+    minute = minute + num
     var second = date.getSeconds();
     minute = minute < 10 ? ('0' + minute) : minute;
     second = second < 10 ? ('0' + second) : second;

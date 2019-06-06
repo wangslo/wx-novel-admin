@@ -190,6 +190,9 @@
           span {
             display: block;
           }
+          .item-value{
+            margin-top: 0;
+          }
         }
       }
       .line {
