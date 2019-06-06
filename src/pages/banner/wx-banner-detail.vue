@@ -172,8 +172,8 @@
         margin-right: 20px;
         margin-bottom: 10px;
         .item-name {
-          font-size: 16px;
-          font-weight: 600;
+          font-size: 14px;
+          /*font-weight: 600;*/
         }
         .item-value{
           font-size: 14px;
