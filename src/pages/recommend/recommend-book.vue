@@ -430,6 +430,7 @@
         width : 40%;
         float: left;
         padding-top: 30px;
+        padding-bottom: 50px;
         .recommend-left-cond{
           .el-input{
             width: 300px;

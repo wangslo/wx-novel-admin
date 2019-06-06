@@ -137,12 +137,13 @@
         orgModuleApi.getBannerInfo(params).then(res=>{
           console.log(res)
           if(res.success) {
-            _this.status = res.data.status == 1 ? '在线' : res.data.status == 0 ? '待上线' : '已下线'
-            _this.position = res.data.bannerGroup == 1 ? '女频' : '男频'
-            _this.show_time = _this.common.getDate2(res.data.startDate) + ' 至 ' +  _this.common.getDate2(res.data.endDate)
-            _this.create_time = _this.common.getDate(res.data.createDate)
-            _this.book_name = res.data.bookid
-            _this.banner_img = res.data.imgsrc
+            _this.status = res.data.data.status == 1 ? '在线' : res.data.data.status == 0 ? '待上线' : '已下线'
+            _this.position = res.data.data.bannerGroup == 1 ? '女频' : '男频'
+            _this.show_time = _this.common.getDate2(res.data.data.startDate) + ' 至 ' +  _this.common.getDate2(res.data.data.endDate)
+            _this.create_time = _this.common.getDate(res.data.data.createDate)
+            _this.book_name = res.data.data.bookname
+            _this.banner_img = res.data.data.imgsrc
+            _this.reasons = res.data.log
           }
         })
       },
