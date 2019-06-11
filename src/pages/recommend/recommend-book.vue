@@ -61,7 +61,7 @@
             <el-button type="primary" @click="onsubmit" size="small">提交</el-button>
             &nbsp;<span>（提交后生效）</span>
           </div>
-          <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId" empty-text="未找到对应的书籍信息">
+          <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId" empty-text="未找到对应的书籍信息" style="cursor: pointer">
             <el-table-column label="序号" min-width="30" align="center">
               <template slot-scope="scope">
                 <span>{{scope.$index + 1}} </span>
