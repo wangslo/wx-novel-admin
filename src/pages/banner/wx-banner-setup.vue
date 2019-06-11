@@ -298,6 +298,8 @@
           if(res.success){
             this.$message.success('提交成功！')
             _this.reload()
+          }else {
+            this.$message.error(res.msg)
           }
         })
       },

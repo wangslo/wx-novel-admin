@@ -29,7 +29,7 @@
             <el-input v-model="bookName" placeholder="请输入书籍名称或关键词" size="small"></el-input>
             <el-button type="primary" @click="queryBannerUrl" size="small">搜索</el-button>
           </div>
-          <el-table :data="tableData1" stripe border>
+          <el-table :data="tableData1" stripe border empty-text="未找到对应的书籍信息">
             <el-table-column label="序号" min-width="30" align="center">
               <template slot-scope="scope">
                 <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
@@ -60,7 +60,7 @@
             <el-button type="danger" @click="defriendDialogAll = true" size="small">全部删除</el-button>
             <el-button type="primary" @click="onsubmit" size="small">提交</el-button>
           </div>
-          <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId">
+          <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId" empty-text="未找到对应的书籍信息">
             <el-table-column label="序号" min-width="30" align="center">
               <template slot-scope="scope">
                 <span>{{scope.$index + 1}} </span>
@@ -334,7 +334,10 @@
           })
         } else {
           this.loading = true
-//          this.search_banner_name = []
+          this.$message.error('请输入书籍名称')
+          _this.tableData1 = [];
+          _this.pageNo = 1
+          _this.totalSize = 0
         }
       },
       checkPosition(){
