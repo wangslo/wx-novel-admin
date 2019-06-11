@@ -59,6 +59,7 @@
           <div class="recommend-right-btn">
             <el-button type="danger" @click="defriendDialogAll = true" size="small">全部删除</el-button>
             <el-button type="primary" @click="onsubmit" size="small">提交</el-button>
+            &nbsp;<span>（提交后生效）</span>
           </div>
           <el-table class="recommend-table" :data="tableData2" stripe border row-key="bookId" empty-text="未找到对应的书籍信息">
             <el-table-column label="序号" min-width="30" align="center">
@@ -390,21 +391,24 @@
         let _bookids = [];
         let _this = this
         console.log(_this.tableData2)
+        if(_position[1].length > 2){
 
-        _this.tableData2.map((item,index)=>{
-          _bookids.push(item.bookId)
-        })
-        this.loading = false
-        var params = {
-          pos:_position[1],
-          bookids:_bookids,
+          _this.tableData2.map((item,index)=>{
+            _bookids.push(item.bookId)
+          })
+          this.loading = false
+          var params = {
+            pos:_position[1],
+            bookids:_bookids,
+          }
+          console.log(params)
+          orgModuleApi.editRecommendBook(params).then(res=>{
+            console.log(res)
+            this.$message.success('成功')
+
+          })
         }
-        console.log(params)
-        orgModuleApi.editRecommendBook(params).then(res=>{
-          console.log(res)
-          this.$message.success('成功')
 
-        })
 
       },
     }
