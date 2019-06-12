@@ -180,7 +180,7 @@
   import {orgModuleApi,msgModuleApi} from '../../api/main'
 
   export default {
-    name: 'stackRoomList',
+    name: 'stackRoomDetail',
     data() {
       return {
         info : {

@@ -378,6 +378,7 @@
       },
       clearData() {
         this.$refs.stackRoomForm.resetFields()
+        this.getStackRoomLists()
       },
     }
   }
