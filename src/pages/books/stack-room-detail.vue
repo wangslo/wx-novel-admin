@@ -416,6 +416,7 @@
 </script>
 <style lang="scss" scoped>
   .stack-room-detail-page {
+    padding-bottom: 50px;
     .stack-room-detail-header {
       height: 50px;
       padding-left: 15px;
