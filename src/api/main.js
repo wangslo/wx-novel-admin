@@ -188,4 +188,28 @@ export const msgModuleApi = {
   jumpPage: (params) => {
     return orgAxios.post('/novelcms/gzh/referral/findbyid', qs.stringify(params)).then(res => res.data);
   },
+  //书库列表
+  bookList:(params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/list', qs.stringify(params)).then(res => res.data);
+  },
+  //书籍切换上下架
+  bookUpdateStatus:(params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/updatestatus', qs.stringify(params)).then(res => res.data);
+  },
+  //更改收费起始章节
+  updateBookStartChapter:(params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/updatecoststartchapter', qs.stringify(params)).then(res => res.data);
+  },
+  //获取书库书籍详情
+  getStackBookDetail:(params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/searchoptiondetails', qs.stringify(params)).then(res => res.data);
+  },
+  //书库分页章节查询
+  getStackChapters:(params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/searchchapter', qs.stringify(params)).then(res => res.data);
+  },
+  //书库章节详情查询
+  getStackChapterDetail:(params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/searchChapterNum', qs.stringify(params)).then(res => res.data);
+  },
 }
