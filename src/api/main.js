@@ -1,4 +1,5 @@
 import qs from 'qs'
+import {Message,Loading} from 'element-ui'
 var baseURLStr = process.env.API_ROOT
 const orgAxios = axios.create({
   baseURL: baseURLStr,
@@ -25,7 +26,7 @@ orgAxios.interceptors.response.use(
   },
   error => {
     if (!error.response || error.response.status == 404 || error.response.status == 401 || error.response.status == 500) {
-      Vue.$message.error('服务器报错')
+      Message.error({message: '服务器被吃了⊙﹏⊙∥'})
     }
     return Promise.reject(error)  // 返回接口返回的错误信息
   });
