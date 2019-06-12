@@ -154,7 +154,7 @@
           </span>
       </el-dialog>
       <el-dialog title="" :visible.sync="offlineDialog" width="500px" center>
-        <span v-if="ifOnline" class="offline-title">确认将“{{info.bookName}}”上架吗？</span>
+        <span v-if="info.status != '上架中'" class="offline-title">确认将“{{info.bookName}}”上架吗？</span>
         <span v-else class="offline-title">确认将“{{info.bookName}}”下架吗？</span>
         <el-input
           type="textarea"
@@ -168,7 +168,7 @@
         <p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>
         <span slot="footer" class="dialog-footer">
             <el-button @click="offlineDialog = false">取 消</el-button>
-            <el-button v-if="ifOnline" type="primary" @click="updateStatus(1)">上 架</el-button>
+            <el-button v-if="info.status != '上架中'" type="primary" @click="updateStatus(1)">上 架</el-button>
             <el-button v-else type="primary" @click="updateStatus(2)">下 架</el-button>
           </span>
       </el-dialog>
@@ -297,7 +297,7 @@
         }
         this.offlineDialog = false
         let params = {
-          bookid:this.tmpRow.bookid,
+          bookid:this.redirectBookId,
           status:status,
           reason:this.reason,
         }
@@ -306,6 +306,9 @@
           console.log(res)
           if(res.success){
             _this.getBookDetailInfo();
+            this.reason = ''
+          }else{
+            this.$message.error('服务器出错~~~')
           }
         })
       },
@@ -313,7 +316,7 @@
         this.editDialog = true
       },
       confirmChangeStartChapter(bookid){
-        if(this.new_buyChapter < 1){
+        if(parseInt(this.new_buyChapter) < 1){
           this.$message.error('请填写起始章节')
           return
         }
@@ -328,6 +331,8 @@
           console.log(res)
           if(res.success){
             _this.getBookDetailInfo();
+          }else{
+            this.$message.error('服务器出错~~~')
           }
         })
       },
