@@ -3,7 +3,7 @@
     <div class="banner-wx-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>banner管理</el-breadcrumb-item>
+        <el-breadcrumb-item>推荐管理</el-breadcrumb-item>
         <el-breadcrumb-item>banner管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -121,9 +121,6 @@
           <template slot-scope="scope">
             <el-button size="mini" v-if="scope.row.status == '在线'" type="danger"
                        @click="handleOffLine(scope.$index, scope.row)">下线
-            </el-button>
-            <el-button size="mini" v-if="scope.row.status == '待上线'" type="primary"
-                       @click="handleEdit(scope.$index, scope.row)">上线
             </el-button>
             <el-button size="mini" v-if="scope.row.status == '待上线'" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑
             </el-button>

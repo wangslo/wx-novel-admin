@@ -3,7 +3,7 @@
     <div class="banner-wx-setup-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/wx-banner-list'}">banner管理</el-breadcrumb-item>
+        <el-breadcrumb-item>推荐管理</el-breadcrumb-item>
         <el-breadcrumb-item>创建banner</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -43,7 +43,7 @@
             ></el-autocomplete>
             <span v-show="show_book" style="color: #F56C6C;font-size: 12px;">请选择书籍</span>
           </el-form-item>
-          <el-form-item label="展示时间：">
+          <el-form-item label="展示时间：" required>
             <el-col :span="11" class="startTime">
               <el-form-item>
                 <el-input id="startTime" v-model="banner_wx_setup_condition.show_start_time" placeholder="开始时间"></el-input>
@@ -296,8 +296,14 @@
         orgModuleApi.editBanner(uploadData).then(res=>{
           console.log(res)
           if(res.success){
-            this.$message.success('提交成功！')
-            _this.reload()
+            if(this.$route.query.id != undefined){
+              _this.$router.push({
+                path: '/wx-banner-list',
+              })
+            }else {
+              this.$message.success('提交成功！')
+              _this.reload()
+            }
           }else {
             this.$message.error(res.msg)
           }

@@ -3,6 +3,7 @@
     <div class="banner-detail-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>推荐管理</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/wx-banner-list'}">banner管理</el-breadcrumb-item>
         <el-breadcrumb-item>{{book_name}}详情</el-breadcrumb-item>
       </el-breadcrumb>
@@ -36,7 +37,6 @@
           <img :src="banner_img" style="width:300px;height:180px"/>
           <div class="banner-detail-btn-box">
             <el-button v-if="status == '待上线'" type="warning" size="mini" class="banner-detail-btn" @click="handleEdit">编辑</el-button>
-            <el-button v-if="status == '待上线'" type="danger" size="mini" class="banner-detail-btn" @click="handleEdit">上线</el-button>
             <el-button v-if="status == '在线'" type="danger" size="mini" class="banner-detail-btn" @click="handleOffLine">下线</el-button>
           </div>
         </div>
@@ -165,15 +165,17 @@
       .banner-detail-box {
         margin: 0 auto;
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: column;
       }
       .banner-detail-item {
-        margin-right: 20px;
         margin-bottom: 10px;
         .item-name {
           font-size: 14px;
-          /*font-weight: 600;*/
+          display: inline-block;
+          height: 100%;
+          width: 80px;
+          text-align: right;
+          font-weight: 600;
         }
         .item-value{
           font-size: 14px;

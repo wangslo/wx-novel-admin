@@ -3,7 +3,7 @@
     <div class="banner-wx-sort-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>banner管理</el-breadcrumb-item>
+        <el-breadcrumb-item>推荐管理</el-breadcrumb-item>
         <el-breadcrumb-item>更改banner排序</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
