@@ -306,6 +306,8 @@
           console.log(res)
           if(res.success){
             _this.getStackRoomLists();
+          }else {
+            this.$message.error('请设置正确格式的起始章节')
           }
         })
       },

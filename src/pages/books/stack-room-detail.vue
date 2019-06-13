@@ -332,7 +332,7 @@
           if(res.success){
             _this.getBookDetailInfo();
           }else{
-            this.$message.error('服务器出错~~~')
+            this.$message.error('请设置正确格式的起始章节')
           }
         })
       },
