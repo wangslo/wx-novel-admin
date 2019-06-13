@@ -12,7 +12,7 @@
         <el-input v-model="form.password" show-password placeholder="请输入密码" @keyup.enter.native="onSubmit('loginForm')"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button class="login-btn" type="primary" @click.prevent="onSubmit('loginForm')" :loading="isLogin">登录</el-button>
+        <el-button class="login-btn" type="info" style="background: #444444" @click.prevent="onSubmit('loginForm')" :loading="isLogin">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -97,7 +97,7 @@
     span{
       display: block;
       font-size: 30px;
-      color: #409eff;
+      color: #444444;
     }
   }
 </style>

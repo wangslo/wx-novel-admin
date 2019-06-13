@@ -3,7 +3,7 @@
     <el-col :span="4" class="v-icon" style="float: left;">
       <i :class="{'el-icon-more': !mini,'el-icon-more-outline': mini}" @click="handleSwitchSide"></i>
     </el-col>
-    <el-col :span="20">
+    <el-col :span="20" style="margin-top: 7px;">
       <div class="v-user" style="float: right;">
         <el-dropdown @command="handleCommand" v-if="user">
           <span class="el-dropdown-link user">
@@ -13,7 +13,7 @@
             <el-dropdown-item command="loginInfo">账号信息</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button type="primary" class="logout" @click="onLogout">退出登录</el-button>
+        <el-button type="info" size="mini" class="logout" @click="onLogout">退出登录</el-button>
       </div>
     </el-col>
   </el-row>

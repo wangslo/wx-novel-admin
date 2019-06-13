@@ -8,7 +8,7 @@
       <Vaside :collapse="isCollapse" :theme="theme.theme"></Vaside>
     </el-aside>
     <el-container style="overflow-x: auto">
-      <el-header class="v-header" :height="headerHeight + 'px'">
+      <el-header class="v-header" :height="headerHeight - 1 + 'px'">
         <Vheader @switch="handleSideSwitch"></Vheader>
       </el-header>
       <el-main class="v-main">
@@ -29,7 +29,7 @@
         isCollapse: false,
         hideSide: false,
         sideWidth: 200,
-        headerHeight: 50,
+        headerHeight: 51,
         theme: {theme: {}},
       }
     },
@@ -57,7 +57,7 @@
   }
   .v-header{
     padding: 0;
-    background: #409EFF;
+    background: #444444;
     overflow: visible;
     z-index: 100;
   }
@@ -79,7 +79,8 @@
     white-space: nowrap;
     cursor: pointer;
     border-bottom: 1px solid #e0e0e0;
-    color: #409eff;
+    color: #ffffff;
+    background: #444444;
   }
   .v-header-logo-box .header-logo{
     height: 42px;
