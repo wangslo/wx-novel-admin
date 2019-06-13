@@ -76,7 +76,10 @@
       activeTextColor: String,
       defaultActive: String,
       defaultOpeneds: Array,
-      uniqueOpened: Boolean,
+      uniqueOpened: {
+        type: Boolean,
+        default: true,
+      },
       menuTrigger: String,
       router: Boolean,
       menus: {

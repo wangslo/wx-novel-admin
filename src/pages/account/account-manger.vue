@@ -8,11 +8,11 @@
       </el-breadcrumb>
     </div>
     <div class="account-body">
-      <el-form ref="accountForm" :model="account_condition" class="account-form" label-width="80px" :rules="accountRules" size="small">
-        <el-form-item label="邮箱" prop="account" label-width="60px">
+      <el-form ref="accountForm" :model="account_condition" class="account-form" label-width="77px" :rules="accountRules" size="small">
+        <el-form-item label="邮箱" prop="account" label-width="50px">
           <el-input v-model="account_condition.account"></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="nickName" label-width="60px" >
+        <el-form-item label="姓名" prop="nickName" label-width="50px" >
           <el-input v-model="account_condition.nickName"></el-input>
         </el-form-item>
         <el-form-item label="创建时间">
@@ -49,7 +49,7 @@
             <el-option label="禁用" value="true"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="部门" prop="branch" label-width="60px">
+        <el-form-item label="部门" prop="branch" label-width="50px">
           <el-select v-model="account_condition.branch" placeholder="请选择部门">
             <el-option label="请选择部门" value=""></el-option>
             <el-option label="运营" value="运营"></el-option>

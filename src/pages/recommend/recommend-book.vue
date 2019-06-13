@@ -307,6 +307,7 @@
       },
       clearData() {
         this.$refs.recommendForm.resetFields()
+        this.tableData2 = []
       },
       queryBannerUrl(bookname) {
         var _this = this
