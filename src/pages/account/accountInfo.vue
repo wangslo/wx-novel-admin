@@ -103,10 +103,11 @@
     .accountInfo-body{
       margin-left: 15px;
       margin-right: 15px;
+      background: #ffffff;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
       .accountInfo-box{
-        width: 95%;
         margin: 0 auto;
-        margin-top: 20px;
         .accountInfo-item{
           margin-bottom: 20px;
           display: flex;
