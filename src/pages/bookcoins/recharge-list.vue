@@ -9,16 +9,16 @@
         </div>
         <div class="rechargelist-body">
             <el-form ref="userForm" :model="form_condition" class="rechargelist-form" :rules="userRules" label-width="80px" size="small">
-                <el-form-item label="账号(OPENID)" prop="openId" label-width="130px">
+                <el-form-item label="账号(OPENID)" prop="openId" label-width="110px">
                     <el-input v-model="form_condition.openId"></el-input>
                 </el-form-item>
-                <el-form-item v-if="false" label="昵称" prop="nickName" label-width="60px" >
+                <el-form-item v-if="false" label="昵称" prop="nickName" label-width="50px" >
                     <el-input v-model="form_condition.nickName"></el-input>
                 </el-form-item>
                 <el-form-item label="订单号" prop="orderNum" label-width="60px">
                     <el-input v-model="form_condition.orderNum"></el-input>
                 </el-form-item>
-                <el-form-item label="充值时间">
+                <el-form-item label="充值时间" label-width="77px">
                     <el-col :span="10" class="startTime">
                         <el-form-item  prop="create_start_time">
                             <el-date-picker
@@ -46,7 +46,7 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="支付状态" prop="status">
+                <el-form-item label="支付状态" prop="status" label-width="77px">
                     <el-select v-model="form_condition.status" placeholder="请选择">
                         <el-option label="待支付" value="0"></el-option>
                         <el-option label="支付成功未发货" value="1"></el-option>

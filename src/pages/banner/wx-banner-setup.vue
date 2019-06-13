@@ -7,61 +7,59 @@
         <el-breadcrumb-item>创建banner</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div style="width: 100%">
-      <div style="margin-left: 15px;width : 40%;float: left" class="banner-wx-setup-body">
-        <el-form ref="bannerWxSetupForm" :model="banner_wx_setup_condition" class="banner-wx-setup-form" :rules="banner_wx_setup_rules"
-                 label-width="140px" size="small">
-          <el-form-item label="选择位置：" prop="position">
-            <el-select v-model="banner_wx_setup_condition.position" placeholder="请选择展示位置">
-              <el-option label="请选择展示位置" value=""></el-option>
-              <el-option label="男频" value="0"></el-option>
-              <el-option label="女频" value="1"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="上传图片：" class="banner-wx-setup-img" prop="bannerImg">
-            <div class="img-box">
-              <img v-show="banner_wx_setup_condition.bannerImg != ''" :src="banner_wx_setup_condition.bannerImg"/>
-            </div>
-            <el-upload
-              class="banner-wx-img-upload"
-              action=""
-              list-type="picture"
-              :show-file-list="false"
-              :before-upload="beforeAvatarUpload"
-              :disabled="banner_wx_setup_condition.position == ''">
-              <el-button size="small" type="primary" :disabled="banner_wx_setup_condition.position == ''">点击上传</el-button>
-            </el-upload>
-          </el-form-item>
-          <el-form-item label="书籍名称：" prop="banner_name">
-            <el-autocomplete
-              v-model="banner_wx_setup_condition.banner_name"
-              :fetch-suggestions="queryBannerUrl"
-              placeholder="请输入书籍名称检索"
-              @select="handleSelect"
-              style="width: 420px;"
-              :hide-loading="loading"
-            ></el-autocomplete>
-            <span v-show="show_book" style="color: #F56C6C;font-size: 12px;">请选择书籍</span>
-          </el-form-item>
-          <el-form-item label="展示时间：" required>
-            <el-col :span="11" class="startTime">
-              <el-form-item>
-                <el-input id="startTime" v-model="banner_wx_setup_condition.show_start_time" placeholder="开始时间"></el-input>
-                <span v-show="show_time" style="color: #F56C6C;font-size: 12px;">请设置展示时间</span>
-              </el-form-item>
-            </el-col>
-            <el-col :span="2" style="width:20px;text-align:center">至</el-col>
-            <el-col :span="11" class="endTime">
-              <el-form-item>
-                <el-input id="endTime" v-model="banner_wx_setup_condition.show_end_time" placeholder="结束时间"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-form-item style="text-align: center;">
-            <el-button type="primary" style="width: 100px;" @click="submitForm('bannerWxSetupForm')">提交</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+    <div style="margin-left: 15px;" class="banner-wx-setup-body">
+      <el-form ref="bannerWxSetupForm" :model="banner_wx_setup_condition" class="banner-wx-setup-form" :rules="banner_wx_setup_rules"
+               label-width="140px" size="small">
+        <el-form-item label="选择位置：" prop="position">
+          <el-select v-model="banner_wx_setup_condition.position" placeholder="请选择展示位置">
+            <el-option label="请选择展示位置" value=""></el-option>
+            <el-option label="男频" value="0"></el-option>
+            <el-option label="女频" value="1"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="上传图片：" class="banner-wx-setup-img" prop="bannerImg">
+          <div class="img-box">
+            <img v-show="banner_wx_setup_condition.bannerImg != ''" :src="banner_wx_setup_condition.bannerImg"/>
+          </div>
+          <el-upload
+            class="banner-wx-img-upload"
+            action=""
+            list-type="picture"
+            :show-file-list="false"
+            :before-upload="beforeAvatarUpload"
+            :disabled="banner_wx_setup_condition.position == ''">
+            <el-button size="small" type="primary" :disabled="banner_wx_setup_condition.position == ''">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="书籍名称：" prop="banner_name">
+          <el-autocomplete
+            v-model="banner_wx_setup_condition.banner_name"
+            :fetch-suggestions="queryBannerUrl"
+            placeholder="请输入书籍名称检索"
+            @select="handleSelect"
+            style="width: 420px;"
+            :hide-loading="loading"
+          ></el-autocomplete>
+          <span v-show="show_book" style="color: #F56C6C;font-size: 12px;">请选择书籍</span>
+        </el-form-item>
+        <el-form-item label="展示时间：" required>
+          <el-col :span="11" class="startTime">
+            <el-form-item>
+              <el-input id="startTime" v-model="banner_wx_setup_condition.show_start_time" placeholder="开始时间"></el-input>
+              <span v-show="show_time" style="color: #F56C6C;font-size: 12px;">请设置展示时间</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="2" style="width:20px;text-align:center">至</el-col>
+          <el-col :span="11" class="endTime">
+            <el-form-item>
+              <el-input id="endTime" v-model="banner_wx_setup_condition.show_end_time" placeholder="结束时间"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-form-item>
+        <el-form-item style="text-align: center;">
+          <el-button type="primary" style="width: 100px;" @click="submitForm('bannerWxSetupForm')">提交</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -325,6 +323,9 @@
     .banner-wx-setup-body {
       margin-left: 15px;
       margin-right: 15px;
+      background: #ffffff;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
       .banner-wx-setup-form {
         width: 560px;
         .banner-wx-setup-img {

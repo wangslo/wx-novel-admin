@@ -17,7 +17,7 @@
             <el-option label="已下线" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="位置" label-width="60px">
+        <el-form-item label="位置" label-width="50px">
           <el-select v-model="banner_wx_condition.position" placeholder="请选择位置">
             <el-option label="全部" value=""></el-option>
             <el-option label="男频" value="0"></el-option>
@@ -78,10 +78,10 @@
             </el-form-item>
           </el-col>
         </el-form-item>
-        <el-form-item label="书籍名" label-width="60px">
+        <el-form-item label="书籍名" label-width="67px">
           <el-input v-model="banner_wx_condition.bookName"></el-input>
         </el-form-item>
-        <el-form-item label="创建人" label-width="70px">
+        <el-form-item label="创建人" label-width="67px">
           <el-input v-model="banner_wx_condition.createAdmin"></el-input>
         </el-form-item>
         <el-form-item style="float: right;">
