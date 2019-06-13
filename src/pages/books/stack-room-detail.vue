@@ -292,7 +292,7 @@
       },
       updateStatus(status = 1){
         if(this.reason.length <3){
-          this.$message.error('请填写原因')
+          this.$message.error('请填写原因（不少于三个字）')
           return
         }
         this.offlineDialog = false
