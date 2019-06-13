@@ -401,6 +401,10 @@
       },
       clearData() {
         this.chapter = ''
+        this.pageNo = 1
+        this.pageSize = 5
+        this.currentPage = 1
+        this.totalSize = 0
         this.getStackChapters(this.redirectBookId)
       },
       handleSizeChange(val) {
