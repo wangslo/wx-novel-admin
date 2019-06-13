@@ -166,7 +166,7 @@
             </el-select>
           </el-form-item>
           <el-form-item style="width: 100%;text-align: right">
-            <el-button @click="clearData">清空</el-button>
+            <el-button type="info" @click="clearData">清空</el-button>
             <el-button type="primary" @click="onsubmit">查找</el-button>
           </el-form-item>
         </el-form>

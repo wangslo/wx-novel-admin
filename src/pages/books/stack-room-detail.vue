@@ -106,7 +106,7 @@
             </div>
             <div class="payment-search-btn">
               <el-button type="primary" size="mini" @click="getStackChapterDetail">查找</el-button>
-              <el-button size="mini" @click="clearData">清空</el-button>
+              <el-button type="info" size="mini" @click="clearData">清空</el-button>
             </div>
           </div>
         </div>

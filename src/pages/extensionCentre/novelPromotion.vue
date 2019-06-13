@@ -53,7 +53,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="mini" @click="clearData">清空</el-button>
+          <el-button type="info" size="mini" @click="clearData">清空</el-button>
           <el-button type="primary" size="mini" @click="query">查询</el-button>
         </el-form-item>
       </el-form>

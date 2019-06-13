@@ -81,7 +81,7 @@
           </el-col>
         </el-form-item>
         <el-form-item style="float: right;">
-          <el-button type="primary" @click="clearData">清空</el-button>
+          <el-button type="info" @click="clearData">清空</el-button>
           <el-button type="primary" @click="onsubmit">查找</el-button>
         </el-form-item>
       </el-form>
