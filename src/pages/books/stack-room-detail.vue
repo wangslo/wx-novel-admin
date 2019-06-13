@@ -445,9 +445,16 @@
             flex-wrap: wrap;
             margin-left: 10px;
             .stack-room-detail-item {
-              margin-right: 20px;
+              margin-right: 30px;
               margin-bottom: 10px;
               font-size: 14px;
+            }
+            .item-name{
+              color: #999999;
+            }
+            .item-value{
+              color: #333333;
+              font-weight: 600;
             }
             .operat-reason {
               float: left;
@@ -465,6 +472,13 @@
         .stack-room-detail-operat{
           display: flex;
           font-size: 14px;
+          .item-name{
+            color: #999999;
+          }
+          .item-value{
+            color: #333333;
+            font-weight: 600;
+          }
           .operat-reason{
             display: flex;
             flex-direction: column;

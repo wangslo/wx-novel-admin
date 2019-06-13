@@ -118,6 +118,14 @@
             display: flex;
             flex-direction: column;
           }
+          .item-name{
+            color: #999999;
+            font-size: 14px;
+          }
+          .item-value{
+            color: #333333;
+            font-weight: 600;
+          }
         }
       }
     }

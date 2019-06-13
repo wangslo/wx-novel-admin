@@ -176,9 +176,12 @@
           width: 80px;
           text-align: right;
           font-weight: 600;
+          color: #999999;
         }
         .item-value{
           font-size: 14px;
+          color: #333333;
+          font-weight: 600;
         }
       }
       .operat-info {
