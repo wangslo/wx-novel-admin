@@ -18,7 +18,7 @@
             <el-form-item prop="update_start_time">
               <el-date-picker
                 type="datetime"
-                format="yyyy-MM-dd"
+                format="yyyy-MM-dd HH:mm:ss"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="起始时间"
                 v-model="stack_room_condition.update_start_time"
@@ -32,7 +32,7 @@
             <el-form-item prop="update_end_time">
               <el-date-picker
                 type="datetime"
-                format="yyyy-MM-dd"
+                format="yyyy-MM-dd HH:mm:ss"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="结束时间"
                 v-model="stack_room_condition.update_end_time"
