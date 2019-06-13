@@ -214,7 +214,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.stack_room_condition.update_end_time;
             if (beginDateVal) {
-              return time.getTime() > beginDateVal;
+              return time.getTime() > new Date(beginDateVal).getTime();
             }
           }
         },
@@ -222,7 +222,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.stack_room_condition.update_start_time;
             if (beginDateVal) {
-              return time.getTime() < beginDateVal;
+              return time.getTime() < new Date(beginDateVal).getTime();
             }
           }
         },
