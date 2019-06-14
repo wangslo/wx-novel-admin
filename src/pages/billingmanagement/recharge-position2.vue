@@ -12,7 +12,8 @@
         </el-row>
         <el-row :gutter="10">
             <template v-for="(item, index) in ulList">
-                <el-col :span="6">
+                <el-col :span="ulList.length<4 ? 24/ulList.length:6">
+                    <div style="width:350px">
                     <div class="grid-content bg-purple menu-pic" @click="changeType(1)" style="background-image: url('//ywopen-1252317822.file.myqcloud.com/openwx/recommendimg/20190117/5c40386892ccd.png')">
                         <div  class="menu-check" :style="{'display' : index == 0 ? 'block' : 'none'}"><i class="fa fa-check-circle"></i></div>
                         <div style="border: 0;width: 100%;margin-top: 240px;">
@@ -44,6 +45,7 @@
                         <br />
                         <br />
                         <a @click="clickButton(item.id)">编辑配置</a>
+                    </div>
                     </div>
                 </el-col>
             </template>
