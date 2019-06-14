@@ -9,7 +9,7 @@
     </div>
     <div style="margin-left: 15px;" class="banner-wx-setup-body">
       <el-form ref="bannerWxSetupForm" :model="banner_wx_setup_condition" class="banner-wx-setup-form" :rules="banner_wx_setup_rules"
-               label-width="140px" size="small">
+               label-width="100px" size="small">
         <el-form-item label="选择位置：" prop="position">
           <el-select v-model="banner_wx_setup_condition.position" placeholder="请选择展示位置">
             <el-option label="请选择展示位置" value=""></el-option>

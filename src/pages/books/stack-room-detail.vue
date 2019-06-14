@@ -482,6 +482,8 @@
           .operat-reason{
             display: flex;
             flex-direction: column;
+            max-height: 96px;
+            overflow: auto;
           }
         }
       }
