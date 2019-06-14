@@ -194,6 +194,7 @@
           float: left;
           span {
             display: block;
+            margin: 0;
           }
           .item-value{
             margin-top: 0;

@@ -21,8 +21,7 @@
           </template>
         </el-form-item>
         <el-form-item label="认证主体" required prop="company">
-          <el-input v-model="wechatForm.company" maxlength="11"></el-input>
-          <span>（请输入公众号认证主体）</span>
+          <el-input v-model="wechatForm.company" maxlength="11" placeholder="请输入公众号认证主体"></el-input>
         </el-form-item>
         <el-form-item label="原始ID" required prop="originId">
           <el-input v-model="wechatForm.originId" maxlength="11"></el-input>
@@ -59,44 +58,13 @@
             <div>请上传公众号二维码</div>
           </el-upload>
         </el-form-item>
-
-        <!--<el-form-item label="是否收费" required prop="realName">-->
-        <!--<el-checkbox-group v-model="checkList">-->
-        <!--<el-checkbox label="jiekou">收费</el-checkbox>-->
-        <!--<el-checkbox label="wenben">免费</el-checkbox>-->
-        <!--</el-checkbox-group>-->
-        <!--<span>（可多选，必选项）</span>-->
-        <!--</el-form-item>-->
-
-
         <el-form-item label="用户选择*" required prop="uid">
           <el-select v-model="wechatForm.uid" placeholder="请选择用户" @change="inputDept">
             <template v-for="(name,key,index) in users">
               <el-option :label="name" :value="key"></el-option>
             </template>
-            <!--<el-option label="全部" value=""></el-option>-->
-            <!--<el-option label="运营" value="运营"></el-option>-->
-            <!--<el-option label="产品" value="产品"></el-option>-->
-            <!--<el-option label="测试" value="测试"></el-option>-->
-            <!--<el-option label="商务" value="商务"></el-option>-->
-            <!--<el-option label="开发" value="开发"></el-option>-->
-            <!--<el-option label="其它" value="5"></el-option>-->
           </el-select>
-          <span>（请选择用户）</span>
-          <!--<template v-for="(name,key,index) in users">-->
-          <!--<el-radio v-model="wechatForm.uid" :label="key">{{name}}</el-radio>-->
-          <!--</template>-->
         </el-form-item>
-        <!--<el-form-item label-width="0px" prop="power">-->
-
-        <!--<el-checkbox-group v-model="accountInfoForm.power">-->
-        <!--<div v-for="(item,idx) in authList"  :key="idx">-->
-        <!--<el-checkbox :label="item.id">{{item.name}}</el-checkbox>-->
-        <!--</div>-->
-        <!--</el-checkbox-group>-->
-        <!--</el-form-item>-->
-
-
         <el-form-item>
           <el-button type="primary" @click="submitForm('wechatForm')" :loading="isSave">保存</el-button>
         </el-form-item>
@@ -321,7 +289,6 @@
       margin-right: 15px;
       background: #ffffff;
       padding: 15px;
-      border: 2px solid #e0e0e0;
     }
     .el-input {
       width: 300px;

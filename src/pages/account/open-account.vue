@@ -10,11 +10,10 @@
     <div class="accountInfo-body">
       <el-form ref="accountInfoForm" :model="accountInfoForm" :rules="accountInfoRules" label-width="100px" size="small" class="account-info-form" label-position="left">
         <el-form-item label="邮箱" prop="account" required>
-          <el-input v-model="accountInfoForm.account"></el-input>
-          <span>（请输入邮箱）</span>
+          <el-input v-model="accountInfoForm.account" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item label="真实姓名" prop="realName" required>
-          <el-input v-model="accountInfoForm.realName"></el-input>
+          <el-input v-model="accountInfoForm.realName" placeholder="请输入真实姓名"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="branch" required>
           <el-select v-model="accountInfoForm.branch" placeholder="请选择部门" @change="inputDept">
@@ -26,13 +25,12 @@
             <el-option label="开发" value="开发"></el-option>
             <el-option label="其它" value="5"></el-option>
           </el-select>
-          <span>（请选择部门）</span>
           <el-form-item prop="otherBranch" v-show="otherDept">
             <el-input v-model="accountInfoForm.otherBranch" placeholder="请输入部门"></el-input>
           </el-form-item>
         </el-form-item>
         <el-form-item label="密码" prop="password" required>
-          <el-input v-model="accountInfoForm.password" show-password></el-input>
+          <el-input v-model="accountInfoForm.password" show-password placeholder="请输入密码"></el-input>
           <span>（数字或字母，6—12个字符）</span>
         </el-form-item>
         <el-form-item label="权限选择（可多选）" label-width="300px" required>
@@ -191,7 +189,6 @@
       margin-right: 15px;
       background: #ffffff;
       padding: 15px;
-      border: 2px solid #e0e0e0;
     }
     .el-input{
       width: 300px;

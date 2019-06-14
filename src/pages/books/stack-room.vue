@@ -102,7 +102,7 @@
             <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="bookName" label="书籍名称" min-width="80" align="center"></el-table-column>
+        <el-table-column prop="bookName" label="书籍名称" min-width="50" align="center"></el-table-column>
         <el-table-column prop="author" label="作者" min-width="30" align="center"></el-table-column>
         <el-table-column prop="category" label="书籍分类" min-width="30" align="center"></el-table-column>
         <el-table-column prop="sex" label="男女分类" min-width="30" align="center"></el-table-column>
@@ -124,12 +124,12 @@
         </el-table-column>
         <el-table-column prop="addDate" label="审核通过时间" min-width="80" align="center"></el-table-column>
         <el-table-column prop="status" label="展示状态" min-width="30" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="80" align="center">
+        <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
             <el-button v-if="scope.row.status == '上架中'" size="mini" type="danger"
                        @click="handleOffLine(scope.$index, scope.row, '1')">下架
             </el-button>
-            <el-button v-else size="mini" type="primary" @click="handleOffLine(scope.$index, scope.row, '0')">上架
+            <el-button v-else size="mini" type="success" @click="handleOffLine(scope.$index, scope.row, '0')">上架
             </el-button>
             <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
           </template>

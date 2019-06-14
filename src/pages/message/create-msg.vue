@@ -561,7 +561,6 @@
       margin-right: 15px;
       background: #ffffff;
       padding: 15px;
-      border: 2px solid #e0e0e0;
       .img-box{
         width: 100px;
         height: 100px;
