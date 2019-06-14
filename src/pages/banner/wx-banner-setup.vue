@@ -325,7 +325,6 @@
       margin-right: 15px;
       background: #ffffff;
       padding: 15px;
-      border: 2px solid #e0e0e0;
       .banner-wx-setup-form {
         width: 560px;
         .banner-wx-setup-img {

@@ -105,7 +105,6 @@
       margin-right: 15px;
       background: #ffffff;
       padding: 15px;
-      border: 2px solid #e0e0e0;
       .accountInfo-box{
         margin: 0 auto;
         .accountInfo-item{

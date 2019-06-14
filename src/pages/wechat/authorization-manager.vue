@@ -166,7 +166,6 @@
         font-weight: bold;
         background: #ffffff;
         padding: 15px;
-        border: 2px solid #e0e0e0;
         /*margin: 0 auto;*/
         /*margin-top: 20px;*/
         .authorization-item {
