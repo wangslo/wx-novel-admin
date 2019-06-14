@@ -181,6 +181,8 @@
     .loginInfo-body{
       margin-left: 15px;
       margin-right: 15px;
+      background: #ffffff;
+      padding: 15px;
       .loginInfo-item-row{
         height: 30px;
         font-size: 16px;
@@ -191,6 +193,8 @@
           text-align: justify;
           width: 100px;
           float: left;
+          color: #999999;
+          font-size: 14px;
         }
         .loginInfo-item-col:after{
           content: " ";
@@ -199,14 +203,22 @@
         }
         .loginInfo-item-col1-list{
           margin-top: 30px;
+          color: #333333;
+          font-weight: 600;
           .loginInfo-item-col-small{
             display: inline-block;
             margin-right: 50px;
             margin-bottom: 20px;
             color: #303133;
-            font-size: 14px;
           }
         }
+        .loginInfo-item-col1{
+          color: #333333;
+          font-weight: 600;
+        }
+      }
+      .loginInfo-item-row:nth-child(1){
+        margin-top: 0;
       }
       .loginInfo-auth{
         height: auto;
