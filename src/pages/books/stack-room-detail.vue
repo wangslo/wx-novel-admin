@@ -367,21 +367,24 @@
         })
       },
       getStackChapterDetail(){
-
         if(this.chapter < 1){
           this.$message.error('请填写章节序号')
           return
         }
+        var _this = this
         let params = {
           bookid:this.redirectBookId,
           chapternum:this.chapter,
         }
-        var _this = this
+
         this.$message.success('查询中···')
         msgModuleApi.getStackChapterDetail(params).then((res)=>{
           console.log(res)
           if(res.success){
             _this.tableData = []
+            _this.pageNo = 1
+            _this.currentPage = 1
+            _this.totalSize = 0
             res.data.map((item,index)=>{
               _this.tableData.push({
                 chapter: item.title,
