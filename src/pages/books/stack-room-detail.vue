@@ -208,14 +208,14 @@
         redirectBookId:'',
         chapter: '',
         tableData: [
-          {
-            chapter: '第一章：发发',
-            status:'收费',
-            words:"1000",
-            needcoins:'100',
-            subscribers:'10',
-            subscribecoins:'',
-          },
+//          {
+//            chapter: '第一章：发发',
+//            status:'收费',
+//            words:"1000",
+//            needcoins:'100',
+//            subscribers:'10',
+//            subscribecoins:'',
+//          },
         ],
         pageNo: 1,
         pageSize: 5,
@@ -308,7 +308,7 @@
             _this.getBookDetailInfo();
             this.reason = ''
           }else{
-            this.$message.error('服务器出错~~~')
+            //this.$message.error('服务器出错~~~')
           }
         })
       },
