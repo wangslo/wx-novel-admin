@@ -6,7 +6,7 @@
       </div>
       <el-form ref="loginForm" :rules="rules" :model="form" class="login-form">
         <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
+          <el-input v-model="form.username" placeholder="请输入用户名" autofocus></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model="form.password" show-password placeholder="请输入密码" @keyup.enter.native="onSubmit('loginForm')"></el-input>

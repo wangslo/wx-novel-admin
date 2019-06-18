@@ -138,7 +138,7 @@
                 </div>
                 <div class="dialog-div">
                     <el-dialog title="二维码" :visible.sync="qrcodeDialog" width="280px" center>
-                        <div style="width:200px;height:200px;">
+                        <div style="text-align: center;">
                             <canvas id="promotion-qrcode"></canvas>
                         </div>
                     </el-dialog>

@@ -410,11 +410,8 @@
           orgModuleApi.editRecommendBook(params).then(res=>{
             console.log(res)
             this.$message.success('成功')
-
           })
         }
-
-
       },
     }
   }
