@@ -187,13 +187,14 @@
       },
       openImgPage(idx, row) {
         var _this = this
-        const {href} = this.$router.resolve({
+        /*const {href} = this.$router.resolve({
           path: '/imgPromotion',
           query: {
             id: _this.bookid,
             chapterNum: idx+1,
           }
-        })
+        })*/
+        let href = 'http://' + window.location.host + '/#/imgPromotion?id=' + _this.bookid + '&chapterNum=' + parseInt(idx+1)
         window.open(href, '_blank')
       },
     }

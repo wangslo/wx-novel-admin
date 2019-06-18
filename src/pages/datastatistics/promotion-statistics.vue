@@ -391,7 +391,7 @@
         })
       },
       viewText(idx, row){
-        const {href} = this.$router.resolve({
+        /*const {href} = this.$router.resolve({
           path:'/promotion',
           query: {
             id: row.id,
@@ -399,7 +399,8 @@
             channel: row.qid,
             chapterNum: parseInt(row.chapterNum) - 1,
           }
-        })
+        })*/
+        let href = 'http://' + window.location.host + '/#/promotion?id=' + row.id + '&bookId=' + row.bookId + '&channel=' + row.qid + '&chapterNum=' + (parseInt(row.chapterNum) - 1)
         window.open(href, '_blank')
       },
       reds:function(index){
