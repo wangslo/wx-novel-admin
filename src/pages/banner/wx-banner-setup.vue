@@ -57,7 +57,7 @@
           </el-col>
         </el-form-item>
         <el-form-item style="text-align: center;">
-          <el-button type="primary" style="width: 100px;" @click="submitForm('bannerWxSetupForm')">提交</el-button>
+          <el-button type="primary" style="width: 100px;" @click="submitForm('bannerWxSetupForm')" :disabled="subFlage">提交</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -96,6 +96,7 @@
         id: '',
         imgsrc: '',
         idx: '',
+        subFlage: false,
       }
     },
     created() {
@@ -223,6 +224,7 @@
             page: 1,
             size: 100,
           }
+          _this.search_banner_name = []
           msgModuleApi.searchNovel(params).then(res=>{
             if(res.success){
               res.data.list.map((item,index)=>{
@@ -271,6 +273,7 @@
         });
       },
       saveBannerWx() {
+        this.subFlage = true
         let _URL = window.URL || window.webkitURL;
         _URL.revokeObjectURL(this.banner_wx_setup_condition.bannerImg)
 
@@ -293,6 +296,7 @@
 
         orgModuleApi.editBanner(uploadData).then(res=>{
           console.log(res)
+          _this.subFlage = false
           if(res.success){
             if(this.$route.query.id != undefined){
               _this.$router.push({

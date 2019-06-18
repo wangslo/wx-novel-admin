@@ -294,7 +294,6 @@
         }
         _this.tableData = []
         msgModuleApi.searchNovel(params).then(res=>{
-          console.log(res)
           if(res.success) {
             var data = res.data.list
             data.map((item,idx) => {
@@ -308,7 +307,6 @@
               })
             })
             _this.totalSize = res.data.total
-            _this.booksForm.bookname = ''
           }
         })
       },
@@ -319,7 +317,6 @@
         }
         _this.tableData = []
         msgModuleApi.getNovels(params).then(res=>{
-          console.log(res)
           if(res.success) {
             _this.tableData.push({
               bookid: res.data.bookid,
@@ -330,7 +327,6 @@
               status: res.data.bookstatus == 1 ? '完结' : '连载中',
             })
             _this.totalSize = 1
-            _this.booksForm.cbid = ''
           }
         })
       },

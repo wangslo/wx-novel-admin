@@ -305,13 +305,19 @@
           this.chargeStartChapter = ''
           console.log(res)
           if(res.success){
-            _this.getStackRoomLists();
+            _this.getStackRoomLists(1);
           }else {
             this.$message.error('请设置正确格式的起始章节')
           }
         })
       },
-      getStackRoomLists() {
+      getStackRoomLists(type) {
+        var _this = this
+        if(type != 1) {
+          _this.pageNo = 1
+          _this.currentPage = 1
+          _this.totalSize = 0
+        }
         let params = {
           kwd:this.stack_room_condition.author,
           cateid:this.stack_room_condition.category,
@@ -323,7 +329,6 @@
           startDate: this.stack_room_condition.update_start_time,
           endDate: this.stack_room_condition.update_end_time,
         }
-        var _this = this
         _this.tableData = []
         msgModuleApi.bookList(params).then((res)=>{
           console.log(res)
@@ -366,17 +371,17 @@
         msgModuleApi.bookUpdateStatus(params).then((res)=>{
           console.log(res)
           if(res.success){
-            _this.getStackRoomLists();
+            _this.getStackRoomLists(1);
           }
         })
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.getStackRoomLists()
+        this.getStackRoomLists(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
-        this.getStackRoomLists()
+        this.getStackRoomLists(1)
       },
       clearData() {
         this.$refs.stackRoomForm.resetFields()

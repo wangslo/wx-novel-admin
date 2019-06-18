@@ -280,7 +280,14 @@
         this.psw_status = false
         this.pwd_placeholder = ''
       },
-      getAccountLists() {
+      getAccountLists(type) {
+        var _this = this
+        _this.tableData = []
+        if(type != 1) {
+          _this.pageNo = 1
+          _this.currentPage = 1
+          _this.totalSize = 0
+        }
         var params = {
           page: this.pageNo - 1,
           size: this.pageSize,
@@ -291,8 +298,7 @@
           registDate_s: this.account_condition.create_start_time,
           registDate_e: this.account_condition.create_end_time,
         }
-        var _this = this
-        _this.tableData = []
+
         orgModuleApi.getAccountList(params).then((res)=>{
           if(res.success){
             res.data.data.map((item,index)=>{
@@ -311,11 +317,11 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.getAccountLists()
+        this.getAccountLists(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
-        this.getAccountLists()
+        this.getAccountLists(1)
       },
       handleForbid(idx,row) {
         if(row.status=='正常'){
@@ -398,7 +404,7 @@
           if(res.code == 0) {
             this.$message.success('保存成功')
             _this.editDialog = false
-            _this.getAccountLists()
+            _this.getAccountLists(1)
           }
         })
       },

@@ -246,11 +246,11 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.queryBannerUrl()
+        this.queryBannerUrl(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
-        this.queryBannerUrl()
+        this.queryBannerUrl(1)
       },
       handleDefriend(idx, row) {
         this.defriendDialog = true
@@ -302,18 +302,22 @@
               this.$message.error('添加失败，此位置仅能添加10本书籍')
             }
         }
-
-
       },
       clearData() {
         this.$refs.recommendForm.resetFields()
         this.tableData2 = []
       },
-      queryBannerUrl(bookname) {
+      queryBannerUrl(type) {
         var _this = this
-        bookname = _this.bookName;
+        var bookname = _this.bookName;
         if (bookname != '') {
           this.loading = false
+          if(type != 1){
+            _this.tableData1 = [];
+            _this.pageNo = 1
+            _this.currentPage = 1
+            _this.totalSize = 0
+          }
           var params = {
             kwd: bookname,
             page: _this.pageNo,
@@ -406,11 +410,8 @@
           orgModuleApi.editRecommendBook(params).then(res=>{
             console.log(res)
             this.$message.success('成功')
-
           })
         }
-
-
       },
     }
   }

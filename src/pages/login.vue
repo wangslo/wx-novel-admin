@@ -1,20 +1,21 @@
 <template>
   <div class="v-login">
-    <div class="v-login-img">
-      <!--<img src="../assets/login-logo.png"/>-->
-      <span>趣阅读管理后台</span>
+    <div class="login-body">
+      <div class="v-login-img">
+        <span>趣阅读管理后台</span>
+      </div>
+      <el-form ref="loginForm" :rules="rules" :model="form" class="login-form">
+        <el-form-item prop="username">
+          <el-input v-model="form.username" placeholder="请输入用户名" autofocus></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input v-model="form.password" show-password placeholder="请输入密码" @keyup.enter.native="onSubmit('loginForm')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button class="login-btn" type="primary" @click.prevent="onSubmit('loginForm')" :loading="isLogin">登录</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-    <el-form ref="loginForm" :rules="rules" :model="form" class="login-form">
-      <el-form-item prop="username">
-        <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="form.password" show-password placeholder="请输入密码" @keyup.enter.native="onSubmit('loginForm')"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button class="login-btn" type="info" style="background: #444444" @click.prevent="onSubmit('loginForm')" :loading="isLogin">登录</el-button>
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 <script>
@@ -77,8 +78,14 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    padding-top: 50px;
     background: #ecf0f5;
+  }
+  .login-body{
+    width: 400px;
+    height: 400px;
+    padding-top: 50px;
+    background: #ffffff;
+    margin: 100px auto;
   }
   .login-form{
     width: 250px;
@@ -89,7 +96,7 @@
     height: 40px;
   }
   .v-login-img{
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     img{
       width: 150px;
       height: 150px;

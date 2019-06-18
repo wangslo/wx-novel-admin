@@ -269,8 +269,14 @@
           this.textSize = this.reason.length
         }
       },
-      getBannerWxLists() {
+      getBannerWxLists(type) {
         var _this = this
+        if(type != 1) {
+          _this.pageNo = 1
+          _this.currentPage = 1
+          _this.totalSize = 0
+        }
+
         var params = {
           bannerGroup: _this.banner_wx_condition.position,
           bookname: _this.banner_wx_condition.bookName,
@@ -306,11 +312,11 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.getBannerWxLists()
+        this.getBannerWxLists(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
-        this.getBannerWxLists()
+        this.getBannerWxLists(1)
       },
       clearData() {
         this.banner_wx_condition = {

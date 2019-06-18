@@ -11,21 +11,9 @@
             <el-form ref="userForm" :model="wechatlist_condition" class="wechatlist-form" :rules="userRules" label-width="80px" size="small">
                 <el-form-item label="公众号ID" label-width="80px" prop="wechatId">
                     <el-input v-model="wechatlist_condition.wechatId"></el-input>
-                    <!--<el-select v-model="wechatlist_condition.wechatId" placeholder="请选择">-->
-                        <!--<el-option label="全部" value="999"></el-option>-->
-                        <!--<el-option label="adsfasd" value="0"></el-option>-->
-                        <!--<el-option label="dfdfd" value="1"></el-option>-->
-                        <!--<el-option label="erew" value="2"></el-option>-->
-                    <!--</el-select>-->
                 </el-form-item>
                 <el-form-item label="公众号名称" label-width="95px" prop="wechatName">
                     <el-input v-model="wechatlist_condition.wechatName"></el-input>
-                    <!--<el-select v-model="wechatlist_condition.wechatName" placeholder="请选择">-->
-                        <!--<el-option label="全部" value="999"></el-option>-->
-                        <!--<el-option label="A" value="0"></el-option>-->
-                        <!--<el-option label="B" value="1"></el-option>-->
-                        <!--<el-option label="C" value="2"></el-option>-->
-                    <!--</el-select>-->
                 </el-form-item>
                 <el-form-item label="创建人" label-width="67px">
                     <el-input v-model="wechatlist_condition.createAdmin"></el-input>
@@ -279,17 +267,24 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.getWechatLists()
+        this.getWechatLists(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val - 1
-        this.getWechatLists()
+        this.getWechatLists(1)
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
         console.log(row)
       },
-      getWechatLists(){
+      getWechatLists(type){
+        var _this = this
+        _this.tableData = []
+        if(type != 1) {
+          _this.pageNo = 0
+          _this.currentPage = 1
+          _this.totalSize = 0
+        }
         var params = {
           page: this.pageNo,
           size: this.pageSize,
@@ -300,8 +295,7 @@
           registDate_s:this.wechatlist_condition.create_start_time,
           registDate_e:this.wechatlist_condition.create_end_time,
         }
-        var _this = this
-        _this.tableData = []
+
         orgModuleApi.wechatList(params).then((res)=>{
           console.log(res)
           if(res.success){

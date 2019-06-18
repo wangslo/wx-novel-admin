@@ -93,19 +93,6 @@
                     <el-table-column prop="newConcern" label="新增关注" min-width="40" align="center"></el-table-column>
                     <el-table-column prop="recharge" label="充值金额" min-width="40" align="center"></el-table-column>
                     <el-table-column prop="NumOfRecharge" label="充值笔数" min-width="40" align="center"></el-table-column>
-
-
-                    <!--<el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"-->
-                                     <!--prop="updateTime" label="创建时间" width="180" align="center"></el-table-column>-->
-                    <!--<el-table-column prop="bookType" label="创建人" width="180" align="center"></el-table-column>-->
-                    <!--<el-table-column label="操作" min-width="250" align="center">-->
-                    <!--<template slot-scope="scope">-->
-                    <!--<el-button size="mini" type="danger" @click="handleOffLine(scope.$index, scope.row)">下架</el-button>-->
-                    <!--<el-button size="mini" type="primary" @click="handleOnLine(scope.$index, scope.row)">上架</el-button>-->
-                    <!--<el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
-                    <!--<el-button size="mini" type="info" @click="handleDetail(scope.$index, scope.row)">详情</el-button>-->
-                    <!--</template>-->
-                    <!--</el-table-column>-->
                     <el-table-column label="操作" min-width="360" align="center">
                         <template slot-scope="scope">
                             <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">数据明细</el-button>
@@ -143,16 +130,6 @@
                                 <el-input v-model="tmpChanelName">222</el-input>
                             </el-form-item>
                         </el-form>
-                        <!--<el-input-->
-                        <!--type="textarea"-->
-                        <!--:rows="3"-->
-                        <!--resize="none"-->
-                        <!--maxlength='50'-->
-                        <!--placeholder="请输入下线原因（不得少于5个汉字）"-->
-                        <!--@keyup.native = "watchSize"-->
-                        <!--v-model="reason">-->
-                        <!--</el-input>-->
-                        <!--<p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>-->
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="editChanelDialog = false">取 消</el-button>
                             <el-button type="primary" @click="editChannelConfirm">确 认</el-button>
@@ -161,32 +138,12 @@
                 </div>
                 <div class="dialog-div">
                     <el-dialog title="二维码" :visible.sync="qrcodeDialog" width="280px" center>
-                        <!--<el-form  label-width="12px" size="small" class="account-info-form" label-position="left">-->
-                            <!--<el-form-item label="渠道名称" required  label-width="110px">-->
-                                <!--<el-input v-model="tmpChanelName">222</el-input>-->
-                            <!--</el-form-item>-->
-                        <!--</el-form>-->
-                        <!--<el-input-->
-                        <!--type="textarea"-->
-                        <!--:rows="3"-->
-                        <!--resize="none"-->
-                        <!--maxlength='50'-->
-                        <!--placeholder="请输入下线原因（不得少于5个汉字）"-->
-                        <!--@keyup.native = "watchSize"-->
-                        <!--v-model="reason">-->
-                        <!--</el-input>-->
-                        <!--<p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>-->
-                        <!--<span slot="footer" class="dialog-footer">-->
-                            <!--<el-button @click="qrcodeDialog = false">取 消</el-button>-->
-                            <!--<el-button type="primary" @click="editChannelConfirm">确 认</el-button>-->
-                        <!--</span>-->
-                        <div style="width:200px;height:200px;">
+                        <div style="text-align: center;">
                             <canvas id="promotion-qrcode"></canvas>
                         </div>
                     </el-dialog>
                 </div>
             </div>
-
             <br />
             <br />
         </div>
@@ -295,7 +252,7 @@
                 qid:item.qid,
                 chapterNum:item.chapterNum,
                 channelName:item.qname,
-                qrCodeUrl:item.qrCodeUrl,
+                qrCodeUrl: _this.common.h5_url + 'promotion.html?channel=' + item.qid,
                 qrcode:'开启',
                 pv:item.pv,
                 uv:item.uv,
@@ -365,11 +322,6 @@
           size: this.pageSize,
           appid:this.common.appid,
           type:1,
-//          openid:this.form_condition.openId,
-//          orderno:this.form_condition.orderNum,
-//          createDate_s: create_start_time,
-//          createDate_e: create_end_time,
-//          status:this.form_condition.status,
         }
         var _this = this
         orgModuleApi.dataPromotionList(params).then((res)=>{
@@ -391,7 +343,7 @@
         })
       },
       viewText(idx, row){
-        const {href} = this.$router.resolve({
+        /*const {href} = this.$router.resolve({
           path:'/promotion',
           query: {
             id: row.id,
@@ -399,7 +351,8 @@
             channel: row.qid,
             chapterNum: parseInt(row.chapterNum) - 1,
           }
-        })
+        })*/
+        let href = 'http://' + window.location.host + '/#/promotion?id=' + row.id + '&bookId=' + row.bookId + '&channel=' + row.qid + '&chapterNum=' + (parseInt(row.chapterNum) - 1)
         window.open(href, '_blank')
       },
       reds:function(index){
