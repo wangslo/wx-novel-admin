@@ -3,7 +3,7 @@ import {Message,Loading} from 'element-ui'
 var baseURLStr = process.env.API_ROOT
 const orgAxios = axios.create({
   baseURL: baseURLStr,
-  timeout: 5000,
+  timeout: 30000,
   withCredentials: true,
 });
 
