@@ -22,6 +22,9 @@
           <el-button type="info" @click="clearData">清空</el-button>
           <el-button type="primary" @click="getRecommendList">查找</el-button>
         </el-form-item>
+        <el-form-item >
+          <el-button style="float: right;" type="success" @click="getRecommendLogList">推荐列表</el-button>
+        </el-form-item>
       </el-form>
       <div style="width: 100%;">
         <div class="recommend-left">
@@ -348,6 +351,7 @@
       },
       checkPosition(){
         let _position = this.recommend_condition.option
+        console.log(_position)
         if(_position.length < 2){
           this.$message.error('请选择推荐位置')
           return false
@@ -365,6 +369,11 @@
           })
         }
         return _flag
+      },
+      getRecommendLogList(){
+        this.$router.push({
+          name:'recommendBookList',
+        })
       },
       getRecommendList(){
         let _position = [];

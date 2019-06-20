@@ -48,6 +48,7 @@ export default new VueRouter({
 
         {path: '/loginInfo', name: 'loginInfo', component: page('loginInfo')},
         {path: '/recommend-book', name: 'recommendBook', component: page('recommend/recommend-book')},
+        {path: '/recommend-book-list', name: 'recommendBookList', component: page('recommend/recommend-book-list')},
         //公众号
         {path: '/wechat-list', name: 'wechatList', component: page('wechat/wechatlist')},
         {path: '/authorization-manager', name: 'authorizationManager', component: page('wechat/authorization-manager')},
