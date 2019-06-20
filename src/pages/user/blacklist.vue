@@ -3,31 +3,23 @@
     <div class="blacklist-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item >用户管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/userManger'}">用户管理</el-breadcrumb-item>
         <el-breadcrumb-item >黑名单</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="blacklist-body">
       <el-form ref="blacklistForm" :model="blacklist_condition" :rules="blacklistRules" class="blacklist-form" label-width="80px" size="small">
-        <el-form-item label="昵称" label-width="60px" prop="nickName">
+        <el-form-item label="昵称" label-width="50px" prop="nickName">
           <el-input v-model="blacklist_condition.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="手机号" label-width="70px" prop="phone">
-          <el-input v-model="blacklist_condition.phone"></el-input>
+        <el-form-item label="微信号" label-width="62px" prop="wxh">
+          <el-input v-model="blacklist_condition.wxh"></el-input>
         </el-form-item>
-        <el-form-item label="ACCID" label-width="70px" prop="accid">
-          <el-input v-model="blacklist_condition.accid"></el-input>
+        <el-form-item label="OPENID" label-width="75px" prop="openid">
+          <el-input v-model="blacklist_condition.openid"></el-input>
         </el-form-item>
-        <el-form-item label="操作人" label-width="90px" prop="operator">
-          <el-select v-model="blacklist_condition.operator" placeholder="请选择操作人">
-            <el-option label="全部" value="999"></el-option>
-            <el-option label="QQ" value="0"></el-option>
-            <el-option label="微信" value="1"></el-option>
-            <el-option label="微博" value="2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="注册时间" label-width="80px">
-          <el-col :span="10" class="startTime">
+        <el-form-item label="关注时间" label-width="78px">
+          <el-col :span="11" class="startTime">
             <el-form-item  prop="create_start_time">
               <el-date-picker
                 type="date"
@@ -40,7 +32,7 @@
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
-          <el-col :span="10" class="endTime">
+          <el-col :span="11" class="endTime">
             <el-form-item  prop="create_end_time">
               <el-date-picker
                 type="date"
@@ -53,8 +45,23 @@
             </el-form-item>
           </el-col>
         </el-form-item>
-        <el-form-item label="加黑时间" label-width="110px">
-          <el-col :span="10" class="startTime">
+        <el-form-item label="性别" label-width="50px" prop="sex">
+          <el-select v-model="blacklist_condition.sex" placeholder="请选择性别">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="男" value="1"></el-option>
+            <el-option label="女" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="操作人" label-width="65px" prop="operator">
+          <el-select v-model="blacklist_condition.operator" placeholder="请选择操作人">
+            <el-option label="全部" value="999"></el-option>
+            <el-option label="QQ" value="0"></el-option>
+            <el-option label="微信" value="1"></el-option>
+            <el-option label="微博" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="加黑时间" label-width="78px">
+          <el-col :span="11" class="startTime">
             <el-form-item  prop="bolding_start_time">
               <el-date-picker
                 type="date"
@@ -67,7 +74,7 @@
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
-          <el-col :span="10" class="endTime">
+          <el-col :span="11" class="endTime">
             <el-form-item  prop="bolding_end_time">
               <el-date-picker
                 type="date"
@@ -85,16 +92,13 @@
           <el-button type="primary" @click="onsubmit">查找</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="tableData" style="width:100%;"
-                :default-sort = "{prop: 'create_time', order: 'descending'}"
-                stripe border
-                @sort-change='sortChange'>
-        <el-table-column label="序号" width="80" align="center">
+      <el-table :data="tableData" style="width:100%;" stripe border>
+        <el-table-column label="序号" min-width="30" align="center">
           <template slot-scope="scope">
             <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" width="180" align="center">
+        <el-table-column label="头像" min-width="60" align="center">
           <template slot-scope="scope">
             <el-popover
               placement="right"
@@ -105,16 +109,13 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" width="180" align="center"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
-        <el-table-column prop="accid" label="ACCID" width="180" align="center"></el-table-column>
-        <el-table-column prop="bolding" label="加黑原因" width="180" align="center"></el-table-column>
-        <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                         prop="bolding_time" label="加黑时间" width="180" align="center"></el-table-column>
-        <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                         prop="create_time" label="注册时间" width="180" align="center"></el-table-column>
-        <el-table-column prop="operator" label="操作人" width="180" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="250" align="center">
+        <el-table-column prop="nickName" label="昵称" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="openid" label="OPENID" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="create_time" label="关注时间" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="bolding" label="加黑原因" min-width="60" align="center"></el-table-column>
+        <el-table-column prop="bolding_time" label="加黑时间" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="operator" label="操作人" min-width="40" align="center"></el-table-column>
+        <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" type="danger" @click="handleDefriend(scope.$index, scope.row)">启用</el-button>
@@ -127,13 +128,12 @@
         :current-page="currentPage"
         :page-sizes="[20, 50, 100]"
         background
-        :page-size="20"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="totalSize">
       </el-pagination>
       <div class="dialog-div">
-        <el-dialog title="启用账号" :visible.sync="defriendDialog" width="500px" center>
-          <span>启用后，改账号将可以正常访问魅狐文学APP。</span>
+        <el-dialog title="启用账号" :visible.sync="defriendDialog" width="300px" center>
           <span>是否启用“XXXXX”？</span>
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog = false">取 消</el-button>
@@ -150,20 +150,22 @@
     data() {
       return {
         blacklist_condition: {
-          accid: '',
-          phone: '',
+          openid: '',
+          wxh: '',
           nickName: '',
-          operator: '999',
+          operator: '',
+          sex: '',
           create_start_time: '',
           create_end_time: '',
           bolding_start_time: '',
           bolding_end_time: '',
         },
         blacklistRules: {
-          accid: '',
-          phone: '',
+          openid: '',
+          wxh: '',
           nickName: '',
-          operator: '999',
+          operator: '',
+          sex: '',
           create_start_time: '',
           create_end_time: '',
           bolding_start_time: '',
@@ -205,15 +207,16 @@
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
+        totalSize: 0,
         defriendDialog:false,
       }
     },
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.pageSize = val
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.pageNo = val
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
@@ -221,14 +224,14 @@
       },
       handleSearch(idx,row) {
         this.$router.push({
-          name:'blacklistInfo'
+          path:'userInfo',
+          query: {
+            from: 'black'
+          }
         })
       },
       clearData() {
         this.$refs.blacklistForm.resetFields()
-      },
-      sortChange: function(column, prop, order) {
-        console.log(column.prop + '-' + column.order)
       },
       onsubmit() {
         this.tableData = [

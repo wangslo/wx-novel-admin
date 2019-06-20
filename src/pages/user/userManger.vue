@@ -3,23 +3,23 @@
     <div class="user-header">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
-        <el-breadcrumb-item >用户管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/userManger'}">用户管理</el-breadcrumb-item>
         <el-breadcrumb-item >用户列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="user-body">
       <el-form ref="userForm" :model="user_condition" class="user-form" :rules="userRules" label-width="80px" size="small">
-        <el-form-item label="昵称" label-width="60px" prop="nickName">
+        <el-form-item label="昵称" label-width="50px" prop="nickName">
           <el-input v-model="user_condition.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="手机号" label-width="70px" prop="phone">
-          <el-input v-model="user_condition.phone"></el-input>
+        <el-form-item label="微信号" label-width="65px" prop="wxh">
+          <el-input v-model="user_condition.wxh"></el-input>
         </el-form-item>
-        <el-form-item label="ACCID" label-width="70px" prop="accid">
-          <el-input v-model="user_condition.accid"></el-input>
+        <el-form-item label="OPENID" label-width="75px" prop="openid">
+          <el-input v-model="user_condition.openid"></el-input>
         </el-form-item>
-        <el-form-item label="注册时间" label-width="80px">
-          <el-col :span="10" class="startTime">
+        <el-form-item label="关注时间" label-width="78px">
+          <el-col :span="11" class="startTime">
             <el-form-item prop="create_start_time">
               <el-date-picker
                 type="date"
@@ -32,7 +32,7 @@
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2" style="width:20px;text-align:center">至</el-col>
-          <el-col :span="10" class="endTime">
+          <el-col :span="11" class="endTime">
             <el-form-item prop="create_end_time">
               <el-date-picker
                 type="date"
@@ -45,19 +45,25 @@
             </el-form-item>
           </el-col>
         </el-form-item>
-        <el-form-item label="第三方登录" label-width="90px" prop="loginType">
-          <el-select v-model="user_condition.loginType" placeholder="请选择登录方式">
-            <el-option label="全部" value="999"></el-option>
-            <el-option label="QQ" value="0"></el-option>
-            <el-option label="微信" value="1"></el-option>
-            <el-option label="微博" value="2"></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="账号状态" prop="status">
           <el-select v-model="user_condition.status" placeholder="请选择账号状态">
-            <el-option label="全部" value="999"></el-option>
+            <el-option label="全部" value=""></el-option>
             <el-option label="正常" value="0"></el-option>
             <el-option label="黑名单" value="1"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="关注状态" label-width="80px" prop="concernStatus">
+          <el-select v-model="user_condition.concernStatus" placeholder="请选择关注状态">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="已关注" value="0"></el-option>
+            <el-option label="取消关注" value="1"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="性别" label-width="55px" prop="sex">
+          <el-select v-model="user_condition.sex" placeholder="请选择性别">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="男" value="1"></el-option>
+            <el-option label="女" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="最近登录时间" label-width="110px">
@@ -92,16 +98,13 @@
           <el-button type="primary" @click="onsubmit">查找</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="tableData" style="width:100%;"
-                :default-sort = "{prop: 'create_time', order: 'descending'}"
-                stripe border
-                @sort-change='sortChange'>
-        <el-table-column label="序号" width="80" align="center">
+      <el-table :data="tableData" style="width:100%;" stripe border>
+        <el-table-column label="序号" min-width="30" align="center">
           <template slot-scope="scope">
             <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" width="180" align="center">
+        <el-table-column label="头像" min-width="60" align="center">
           <template slot-scope="scope">
             <el-popover
               placement="right"
@@ -112,17 +115,16 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" width="180" align="center"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
-        <el-table-column prop="loginType" label="第三方登录" width="180" align="center"></el-table-column>
-        <el-table-column prop="accid" label="ACCID" width="180" align="center"></el-table-column>
-        <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                         prop="login_time" label="最近登录时间" width="180" align="center"></el-table-column>
-        <el-table-column sortable='custom' :sort-orders="['ascending', 'descending']"
-                         prop="create_time" label="注册时间" width="180" align="center"></el-table-column>
-        <el-table-column prop="status" label="账号状态" width="180" align="center"></el-table-column>
-        <el-table-column prop="bookMoney" label="书币" width="180" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="250" align="center">
+        <el-table-column prop="nickName" label="昵称" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="sex" label="性别" min-width="30" align="center"></el-table-column>
+        <el-table-column prop="openid" label="OPENID" min-width="60" align="center"></el-table-column>
+        <el-table-column prop="create_time" label="关注时间" min-width="60" align="center"></el-table-column>
+        <el-table-column prop="login_time" label="最近登录时间" min-width="60" align="center"></el-table-column>
+        <el-table-column prop="channel" label="推广渠道" min-width="60" align="center"></el-table-column>
+        <el-table-column prop="status" label="账号状态" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="concernStatus" label="关注状态" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="bookMoney" label="书币" min-width="60" align="center"></el-table-column>
+        <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" v-if="scope.row.status == '正常' ? true:false" type="danger" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
@@ -134,36 +136,32 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[20, 50, 100]"
+        :page-sizes="[10, 20, 50, 100]"
         background
-        :page-size="20"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="totalSize">
       </el-pagination>
       <div class="dialog-div">
-        <el-dialog title="加入黑名单" :visible.sync="defriendDialog" width="500px" center>
-          <span>加入黑名单后，用户将无法在登录魅狐文学进行阅读操作。</span>
-          <span>确认将“{{tmpNickname}}”加入黑名单吗？</span>
+        <el-dialog title="" :visible.sync="defriendDialog" width="500px" center>
+          <span style="font-size: 16px;margin-bottom: 20px;">确认将“{{tmpNickname}}”用户加黑吗？</span>
           <el-input
             type="textarea"
             :rows="3"
             resize="none"
-            maxlength='100'
-            placeholder="请输入原因"
+            placeholder="请输入加黑原因，不少于5个汉字。"
             @keyup.native = "watchSize"
             v-model="reason">
           </el-input>
-          <p style="margin: 0;"><span style="text-align: right;">{{textSize}}/100</span></p>
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog = false">取 消</el-button>
-            <el-button type="primary" @click="defriendDialog = false">确 认</el-button>
+            <el-button type="primary" @click="defriendDialog = false" :disabled="jhconfirm">确 认</el-button>
           </span>
         </el-dialog>
       </div>
       <div class="dialog-div">
-        <el-dialog title="" :visible.sync="defriendDialog2" width="500px" center>
-          <span>确认启用“{{tmpNickname}}”用户吗？</span>
-
+        <el-dialog title="" :visible.sync="defriendDialog2" width="300px" center>
+          <span style="font-size: 16px;margin-bottom: 0px;">确认启用“{{tmpNickname}}”用户吗？</span>
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog2 = false">取 消</el-button>
             <el-button type="primary" @click="defriendDialog2 = false">确 认</el-button>
@@ -179,30 +177,33 @@
     data() {
       return {
         reason: '',
-        textSize: 0,
+        jhconfirm: true,
         user_condition: {
-          accid: '',
-          phone: '',
+          openid: '',
+          wxh: '',
           nickName: '',
-          loginType: '999',
+          concernStatus: '',
+          sex: '',
           create_start_time: '',
           create_end_time: '',
           login_start_time: '',
           login_end_time: '',
-          status: '999',
+          status: '',
         },
         userRules: {
-          accid: '',
-          phone: '',
+          openid: '',
+          wxh: '',
           nickName: '',
-          loginType: '999',
+          concernStatus: '',
+          sex: '',
           create_start_time: '',
           create_end_time: '',
           login_start_time: '',
           login_end_time: '',
-          status: '999',
+          status: '',
         },
         tmpNickname:"xAx",
+        id:"",
         pickerBeginDateBefore:{
           disabledDate: (time) => {
             let beginDateVal = this.user_condition.create_end_time;
@@ -236,40 +237,40 @@
           }
         },
         tableData: [
-          {headImg:'',nickName:"nike",login_time:"2019-05-13 13:53",status:'正常',bookMoney:5000},
-          {headImg:'',nickName:"2323",login_time:"2019-05-13 13:53",status:'!正常',bookMoney:7000},
+          {id: 1,headImg:'',nickName:"nike",login_time:"2019-05-13 13:53",status:'正常',bookMoney:5000},
+          {id: 2,headImg:'',nickName:"2323",login_time:"2019-05-13 13:53",status:'!正常',bookMoney:7000},
         ],
         pageNo: 1,
         pageSize: 10,
         currentPage: 1,
+        totalSize: 0,
         defriendDialog:false,
         defriendDialog2:false,
       }
     },
     methods: {
       watchSize() {
-        if(this.reason.length == 100){
-          this.textSize = 100
-          return false
+        if(this.reason.length >= 5){
+          this.jhconfirm = false
         }else {
-          this.textSize = this.reason.length
+          this.jhconfirm = true
         }
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.pageSize = val
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.pageNo = val
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
         this.tmpNickname = row.nickName
-        console.log(row)
+        this.id = row.id
       },
       handleEnable(idx,row) {
         this.defriendDialog2 = true
         this.tmpNickname = row.nickName
-        console.log(row)
+        this.id = row.id
       },
       handleSearch(idx,row) {
         this.$router.push({
@@ -278,9 +279,6 @@
       },
       clearData() {
         this.$refs.userForm.resetFields()
-      },
-      sortChange: function(column, prop, order) {
-        console.log(column.prop + '-' + column.order)
       },
       onsubmit() {
         this.tableData = [
@@ -311,7 +309,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .user-page{
     .user-header{
       height: 50px;
@@ -330,10 +328,14 @@
         flex-wrap: wrap;
       }
     }
-    .el-dialog__body{
-      span{
+    .el-dialog__header {
+      padding: 0 !important;
+    }
+    .el-dialog__body {
+      span {
         display: block;
         text-align: center;
+        margin-bottom: 10px;
       }
     }
   }
