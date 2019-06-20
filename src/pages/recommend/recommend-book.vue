@@ -265,17 +265,53 @@
       },
       confirmdelete() {
         this.defriendDialog = false
-        this.tableData2.splice(this.tmpIdx, 1)
-        this.allLine = this.allLine - 1;
-        this.tmpIdx = 999
-        this.onsubmit()
+//        this.tableData2.splice(this.tmpIdx, 1)
+//        this.onsubmit()
+        let _position = [];
+        _position[1] = this.checkPosition();
+        if(!_position[1]) return
+        let params = {
+          bookids:[this.tmpRow.bookId],
+          pos:_position[1],
+        }
+        var _this = this
+        orgModuleApi.deleteRecommendBook(params).then((res)=>{
+          if(res.success){
+            this.$message.success('成功')
+            this.allLine = this.allLine - 1;
+            this.tmpIdx = 999
+            _this.getRecommendList();
+          }else{
+            this.$message.error('失败')
+          }
+        })
       },
       confirmdeleteall() {
         this.defriendDialogAll = false
-        this.tableData2 = []
-        this.allLine = 0;
-        this.tmpIdx = 999
-        this.onsubmit()
+        let _position = [];
+        _position[1] = this.checkPosition();
+        let bookids = []
+        if(!_position[1]) return
+
+        this.tableData2.map((item,index)=>{
+          bookids.push(item.bookId)
+        })
+        let params = {
+          bookids:bookids,
+          pos:_position[1],
+        }
+        var _this = this
+        orgModuleApi.deleteRecommendBook(params).then((res)=>{
+          if(res.success){
+            this.$message.success('成功')
+            this.tableData2 = []
+            this.allLine = 0;
+            this.tmpIdx = 999
+            _this.getRecommendList();
+          }else{
+            this.$message.error('失败')
+          }
+        })
       },
       handleAdd(idx, row) {
         let _position = [];
