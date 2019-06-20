@@ -120,14 +120,26 @@ export const orgModuleApi = {
     return orgAxios.post('/novelcms/banner/edit.html',params, config).then(res=>res.data);
   },
   offBanner:(params) =>{
-    return orgAxios.post('/novelcms/banner/off.html',qs.stringify(params)).then(res=>res.data);
+    return orgAxios.post('/novelcms/banner/off.html', qs.stringify(params)).then(res=>res.data);
   },
-  //推荐书籍
+  // 推荐书籍
   editRecommendBook:(params) => {
-    return orgAxios.post('/novelcms/recmd/edit.html',qs.stringify(params)).then(res=>res.data);
+    return orgAxios.post('/novelcms/recmd/edit.html', qs.stringify(params)).then(res => res.data);
   },
   listRecommendBook:(params) => {
-    return orgAxios.post('/novelcms/recmd/load.html',qs.stringify(params)).then(res=>res.data);
+    return orgAxios.post('/novelcms/recmd/load.html', qs.stringify(params)).then(res => res.data);
+  },
+  // 推荐列表log
+  getRecommendBookLogList: (params) => {
+    return orgAxios.post('novelcms/recmd/list.html', qs.stringify(params)).then(res => res.data);
+  },
+  // 删除推荐书籍
+  deleteRecommendBook: (params) => {
+    return orgAxios.post('novelcms/recmd/delete.html', qs.stringify(params)).then(res => res.data);
+  },
+  // 推荐书籍操作记录
+  recommendBookHistory: (params) => {
+    return orgAxios.post('novelcms/recmd/history.html', qs.stringify(params)).then(res => res.data);
   },
 }
 
@@ -213,4 +225,5 @@ export const msgModuleApi = {
   getStackChapterDetail:(params) => {
     return orgAxios.post('novelcms/gzh/noveldatabase/searchChapterNum', qs.stringify(params)).then(res => res.data);
   },
+
 }
