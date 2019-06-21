@@ -19,43 +19,43 @@
         </div>
         <div class="user-infos-item">
           <span class="item-name">昵称：</span>
-          <span class="item-value">{{nickName}}</span>
+          <span class="item-value">{{info.nickName}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">性别：</span>
-          <span class="item-value">{{sex}}</span>
+          <span class="item-value">{{info.sex}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">账号状态：</span>
-          <span class="item-value">{{status}}</span>
+          <span class="item-value">{{info.status}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">书币：</span>
-          <span class="item-value">{{bookMoney}}</span>
+          <span class="item-value">{{info.bookMoney}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">OPENID：</span>
-          <span class="item-value">{{openid}}</span>
+          <span class="item-value">{{info.openid}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">关注时间：</span>
-          <span class="item-value">{{}}</span>
+          <span class="item-value">{{info.subTime}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">最近登录时间：</span>
-          <span class="item-value">{{}}</span>
+          <span class="item-value">{{info.loginTime}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">推广渠道：</span>
-          <span class="item-value">{{}}</span>
+          <span class="item-value">{{info.qidName}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">关注状态：</span>
-          <span class="item-value">{{}}</span>
+          <span class="item-value">{{info.subStatus}}</span>
         </div>
         <div class="user-infos-item">
           <span class="item-name">加黑原因：</span>
-          <span class="item-value">{{}}</span>
+          <span class="item-value">{{info.reason}}</span>
         </div>
       </div>
       <el-button type="danger" v-if="info.status == '正常' ? true:false" class="defriend-btn" size="mini" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
@@ -150,7 +150,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[10,20, 50, 100]"
+          :page-sizes="[5,10,20, 50, 100]"
           background
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
@@ -187,6 +187,7 @@
   </div>
 </template>
 <script>
+  import {orgModuleApi,msgModuleApi} from '../../api/main'
   export default {
     name: 'userInfo',
     data() {
@@ -199,19 +200,18 @@
           status: '',
         },
         info : {
-          headerImg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jp',
-          nickName:'nick',
+          headerImg:'',
+          nickName:'-',
+          openid:'xxx',
           sex:'男',
-          status:"33正常",
-          wechatType:'服务号',
-          authorizationStatus:'授权成功',
-          company:'上海嵩恒网络科技有限股份公司',
-          createAdmin:'Tom',
-          createTime:'2019-05-13 11:47',
-          originId:'12345',
+          status:"正常",
+          bookMoney:'-',
+          subTime:'-',
+          loginTime:'-',
+          qidName:'-',
+          subStatus:'-',
+          reason:'-',
           appId:this.common.appid,
-          authorizationAuthority:"首页、用户管理、推荐管理",
-          qrcode:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'
         },
         pickerBeginDateBefore:{
           disabledDate: (time) => {
@@ -242,7 +242,7 @@
           'xxxxx-xxxxxx-xxxxxxx xxxxxxx 操作加黑用户，原因：xxx',
         ],
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 5,
         currentPage: 1,
         totalSize: 0,
         defriendDialog:false,
@@ -252,8 +252,45 @@
     },
     created:function(){
       console.log("openid:"+this.$route.query.openid)
+      this.info.openid = this.$route.query.openid
+    },
+    mounted(){
+      this.userDetail()
     },
     methods: {
+      userDetail() {
+        var params = {
+          appid:this.common.appid,
+          openid: this.info.openid,
+        }
+        console.log(params)
+        orgModuleApi.userManagerDetail(params).then(res=>{
+          if(res.success){
+            let detail = res.data.userDetail
+            this.info = {
+              headerImg: detail.uicon,
+              nickName: detail.nickName,
+              openid: detail.openid,
+              sex: detail.sex>1?'女':(detail.sex>0?'男':"-"),
+              status: detail.black ? '黑名单':"正常",
+              bookMoney: detail.coin,
+              subTime: this.common.getDate(detail.subDate),
+              loginTime: this.common.getDate(detail.lastLoginDate),
+              qidName: detail.qname,
+              qid: detail.qid,
+              subStatus: detail.subscribed ? '已关注':'取消关注',
+              reason: detail.blackReason,
+              appId: detail.appid,
+            }
+            if(detail.black){
+              this.operationRecords = res.data.operate
+            }
+          }else{
+            this.$message.error('服务器异常')
+          }
+
+        })
+      },
       reds:function(index){
         this.button_type = index;
       },
@@ -287,30 +324,43 @@
         }
       },
       onsubmit() {
-        this.tableData = [
-          {
-            headerImg: 'http://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png',
-            phone: '1233',
-            nickName: 'asa',
-            loginType: 'QQ',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          },
-          {
-            headerImg: '',
-            phone: '111',
-            nickName: '',
-            loginType: '',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          }
-        ]
+        let params = {
+          nickName: this.user_condition.nickName,
+          openid: this.user_condition.openid,
+          subscribed: this.user_condition.concernStatus,
+          sex: this.user_condition.sex,
+          subDate_s: this.user_condition.create_start_time,
+          subDate_e: this.user_condition.create_end_time,
+          lastLoginDate_s: this.user_condition.login_start_time,
+          lastLoginDate_e: this.user_condition.login_end_time,
+          black: this.user_condition.status,
+          page: this.pageNo ,
+          size: this.pageSize,
+        }
+        console.log(params)
+        orgModuleApi.userManagerList(params).then(res=>{
+          console.log(res)
+//          this.$message.success('成功')
+          this.tableData = []
+          res.data.data.map((item,index) => {
+            this.tableData.push({
+              appid: item.appid,
+              headerImg: item.uicon,
+              openid: item.openid,
+              nickName: item.nickName,
+              channelid: item.qid,
+              channel: item.qname?item.qname:"-",
+              sex: item.sex>1?'女':(item.sex>0?'男':"-"),
+              create_time: this.common.getDate(item.subDate),
+              login_time:this.common.getDate(item.lastLoginDate),
+              status: item.black ? '黑名单':"正常",
+              concernStatus: item.subscribed ? '已关注':'取消关注',
+              bookMoney:item.coin,
+            })
+          })
+          this.totalSize = parseInt(res.data.total)
+        })
+
       },
     }
   }

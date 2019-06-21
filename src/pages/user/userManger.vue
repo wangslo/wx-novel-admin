@@ -286,7 +286,10 @@
       },
       handleSearch(idx,row) {
         this.$router.push({
-          name:'userInfo'
+          name:'userInfo',
+          query: {
+            openid: row.openid
+          }
         })
       },
       clearData() {
@@ -325,7 +328,6 @@
 
       },
       onsubmit() {
-
         this.loading = true
         var params = {
           nickName: this.user_condition.nickName,
@@ -357,7 +359,7 @@
               create_time: this.common.getDate(item.subDate),
               login_time:this.common.getDate(item.lastLoginDate),
               status: item.black ? '黑名单':"正常",
-              concernStatus: item.subscribed ? '关注':'取消关注',
+              concernStatus: item.subscribed ? '已关注':'取消关注',
               bookMoney:item.coin,
             })
           })
