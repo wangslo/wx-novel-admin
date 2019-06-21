@@ -141,6 +141,18 @@ export const orgModuleApi = {
   recommendBookHistory: (params) => {
     return orgAxios.post('novelcms/recmd/history.html', qs.stringify(params)).then(res => res.data);
   },
+  userManagerList: (params) => {
+    return orgAxios.post('novelcms/gzh/userconfig/list.html', qs.stringify(params)).then(res => res.data);
+  },
+  userUpdateStatus: (params) => {
+    return orgAxios.post('novelcms/gzh/userconfig/black.html', qs.stringify(params)).then(res => res.data);
+  },
+  userManagerDetail: (params) => {
+    return orgAxios.post('novelcms/gzh/userconfig/detail.html', qs.stringify(params)).then(res => res.data);
+  },
+  userBlackList: (params) => {
+    return orgAxios.post('novelcms/gzh/userconfig/blackList.html', qs.stringify(params)).then(res => res.data);
+  },
 }
 
 export const msgModuleApi = {
