@@ -53,7 +53,7 @@
           <span class="item-name">关注状态：</span>
           <span class="item-value">{{info.subStatus}}</span>
         </div>
-        <div class="user-infos-item">
+        <div class="user-infos-item" v-if="info.reason">
           <span class="item-name">加黑原因：</span>
           <span class="item-value">{{info.reason}}</span>
         </div>
