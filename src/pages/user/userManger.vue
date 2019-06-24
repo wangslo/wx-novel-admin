@@ -12,7 +12,7 @@
         <el-form-item label="昵称" label-width="50px" prop="nickName">
           <el-input v-model="user_condition.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="微信号" label-width="65px" prop="wxh">
+        <el-form-item label="微信号" label-width="65px" prop="wxh" v-if="false">
           <el-input v-model="user_condition.wxh"></el-input>
         </el-form-item>
         <el-form-item label="OPENID" label-width="75px" prop="openid">
@@ -23,6 +23,7 @@
             <el-form-item prop="create_start_time">
               <el-date-picker
                 type="date"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 format="yyyy-MM-dd"
                 placeholder="起始时间"
                 v-model="user_condition.create_start_time"
@@ -36,6 +37,7 @@
             <el-form-item prop="create_end_time">
               <el-date-picker
                 type="date"
+                value-format="yyyy-MM-dd 23:59:59"
                 format="yyyy-MM-dd"
                 placeholder="结束时间"
                 v-model="user_condition.create_end_time"
@@ -47,21 +49,21 @@
         </el-form-item>
         <el-form-item label="账号状态" prop="status">
           <el-select v-model="user_condition.status" placeholder="请选择账号状态">
-            <el-option label="全部" value=""></el-option>
+            <el-option label="全部" value="-1"></el-option>
             <el-option label="正常" value="0"></el-option>
             <el-option label="黑名单" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="关注状态" label-width="80px" prop="concernStatus">
           <el-select v-model="user_condition.concernStatus" placeholder="请选择关注状态">
-            <el-option label="全部" value=""></el-option>
-            <el-option label="已关注" value="0"></el-option>
-            <el-option label="取消关注" value="1"></el-option>
+            <el-option label="全部" value="-1"></el-option>
+            <el-option label="取消关注" value="0"></el-option>
+            <el-option label="已关注" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="性别" label-width="55px" prop="sex">
           <el-select v-model="user_condition.sex" placeholder="请选择性别">
-            <el-option label="全部" value=""></el-option>
+            <el-option label="全部" value="-1"></el-option>
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="2"></el-option>
           </el-select>
@@ -71,6 +73,7 @@
             <el-form-item prop="login_start_time">
               <el-date-picker
                 type="date"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 format="yyyy-MM-dd"
                 placeholder="起始时间"
                 v-model="user_condition.login_start_time"
@@ -84,6 +87,7 @@
             <el-form-item prop="login_end_time">
               <el-date-picker
                 type="date"
+                value-format="yyyy-MM-dd 23:59:59"
                 format="yyyy-MM-dd"
                 placeholder="结束时间"
                 v-model="user_condition.login_end_time"
@@ -104,31 +108,31 @@
             <span>{{scope.$index+(pageNo - 1) * pageSize + 1}} </span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" min-width="60" align="center">
+        <el-table-column label="头像" min-width="30" align="center">
           <template slot-scope="scope">
             <el-popover
               placement="right"
               title=""
               trigger="hover">
-              <img :src="headerImg?headerImg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'"/>
-              <img slot="reference" :src="headerImg?headerImg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'" style="max-height: 20px;max-width: 20px">
+              <img :src="scope.row.headerImg?scope.row.headerImg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'"/>
+              <img slot="reference" :src="scope.row.headerImg?scope.row.headerImg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1222929928,1326821480&fm=26&gp=0.jpg'" style="max-height: 20px;max-width: 20px">
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="nickName" label="昵称" min-width="60" align="center"></el-table-column>
         <el-table-column prop="sex" label="性别" min-width="30" align="center"></el-table-column>
-        <el-table-column prop="openid" label="OPENID" min-width="60" align="center"></el-table-column>
+        <el-table-column prop="openid" label="OPENID" min-width="100" align="center"></el-table-column>
         <el-table-column prop="create_time" label="关注时间" min-width="60" align="center"></el-table-column>
         <el-table-column prop="login_time" label="最近登录时间" min-width="60" align="center"></el-table-column>
         <el-table-column prop="channel" label="推广渠道" min-width="60" align="center"></el-table-column>
         <el-table-column prop="status" label="账号状态" min-width="40" align="center"></el-table-column>
         <el-table-column prop="concernStatus" label="关注状态" min-width="40" align="center"></el-table-column>
-        <el-table-column prop="bookMoney" label="书币" min-width="60" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="150" align="center">
+        <el-table-column prop="bookMoney" label="书币" min-width="40" align="center"></el-table-column>
+        <el-table-column label="操作" min-width="100" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" v-if="scope.row.status == '正常' ? true:false" type="danger" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
             <el-button size="mini" v-if="scope.row.status != '正常' ? true:false" type="primary" @click="handleEnable(scope.$index, scope.row)">启用</el-button>
+            <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,7 +140,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[10, 20, 50, 100]"
+        :page-sizes="[5,10, 20, 50, 100]"
         background
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
@@ -155,7 +159,7 @@
           </el-input>
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog = false">取 消</el-button>
-            <el-button type="primary" @click="defriendDialog = false" :disabled="jhconfirm">确 认</el-button>
+            <el-button type="primary" @click="confirmStatus(1)" :disabled="jhconfirm">确 认</el-button>
           </span>
         </el-dialog>
       </div>
@@ -164,7 +168,7 @@
           <span style="font-size: 16px;margin-bottom: 0px;">确认启用“{{tmpNickname}}”用户吗？</span>
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog2 = false">取 消</el-button>
-            <el-button type="primary" @click="defriendDialog2 = false">确 认</el-button>
+            <el-button type="primary" @click="confirmStatus(2)">确 认</el-button>
           </span>
         </el-dialog>
       </div>
@@ -172,6 +176,8 @@
   </div>
 </template>
 <script>
+  import {orgModuleApi,msgModuleApi} from '../../api/main'
+
   export default {
     name: 'user',
     data() {
@@ -180,15 +186,14 @@
         jhconfirm: true,
         user_condition: {
           openid: '',
-          wxh: '',
           nickName: '',
-          concernStatus: '',
-          sex: '',
+          concernStatus: "-1",
+          sex: "-1",
           create_start_time: '',
           create_end_time: '',
           login_start_time: '',
           login_end_time: '',
-          status: '',
+          status: "-1",
         },
         userRules: {
           openid: '',
@@ -203,12 +208,13 @@
           status: '',
         },
         tmpNickname:"xAx",
+        tmpRow:{},
         id:"",
         pickerBeginDateBefore:{
           disabledDate: (time) => {
             let beginDateVal = this.user_condition.create_end_time;
             if (beginDateVal) {
-              return time.getTime() > beginDateVal;
+              return time.getTime() > new Date(beginDateVal).getTime();
             }
           }
         },
@@ -216,7 +222,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.user_condition.create_start_time;
             if (beginDateVal) {
-              return time.getTime() < beginDateVal;
+              return time.getTime() < new Date(beginDateVal).getTime();
             }
           }
         },
@@ -224,7 +230,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.user_condition.login_end_time;
             if (beginDateVal) {
-              return time.getTime() > beginDateVal;
+              return time.getTime() > new Date(beginDateVal).getTime();
             }
           }
         },
@@ -237,16 +243,18 @@
           }
         },
         tableData: [
-          {id: 1,headImg:'',nickName:"nike",login_time:"2019-05-13 13:53",status:'正常',bookMoney:5000},
           {id: 2,headImg:'',nickName:"2323",login_time:"2019-05-13 13:53",status:'!正常',bookMoney:7000},
         ],
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 5,
         currentPage: 1,
         totalSize: 0,
         defriendDialog:false,
         defriendDialog2:false,
       }
+    },
+    created() {
+      this.onsubmit()
     },
     methods: {
       watchSize() {
@@ -258,11 +266,14 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
+        this.onsubmit()
       },
       handleCurrentChange(val) {
         this.pageNo = val
+        this.onsubmit()
       },
       handleDefriend(idx,row) {
+        this.tmpRow = row
         this.defriendDialog = true
         this.tmpNickname = row.nickName
         this.id = row.id
@@ -271,40 +282,90 @@
         this.defriendDialog2 = true
         this.tmpNickname = row.nickName
         this.id = row.id
+        this.tmpRow = row
       },
       handleSearch(idx,row) {
         this.$router.push({
-          name:'userInfo'
+          name:'userInfo',
+          query: {
+            openid: row.openid
+          }
         })
       },
       clearData() {
         this.$refs.userForm.resetFields()
+        this.pageNo = 1;
+        this.onsubmit();
+      },
+      confirmStatus(num){
+        let black = 1
+        if(num == 1){
+          black = 1
+        }else{
+          black = 0
+        }
+
+        var params = {
+          appid: this.tmpRow.appid,
+          openid: this.tmpRow.openid,
+          black: black,
+          reason: this.reason,
+        }
+        console.log(params)
+        orgModuleApi.userUpdateStatus(params).then(res=>{
+          console.log(res)
+          if(res.success){
+            this.$message.success('成功')
+            if(black){
+              this.defriendDialog = false
+            }else{
+              this.defriendDialog2 = false
+            }
+            this.onsubmit()
+          }
+        })
+
+
       },
       onsubmit() {
-        this.tableData = [
-          {
-            headerImg: 'http://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png',
-            phone: '1233',
-            nickName: 'asa',
-            loginType: 'QQ',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          },
-          {
-            headerImg: '',
-            phone: '111',
-            nickName: '',
-            loginType: '',
-            accid: '',
-            login_time: '',
-            create_time: '',
-            status: '',
-            bookMoney: '',
-          }
-        ]
+        this.loading = true
+        var params = {
+          nickName: this.user_condition.nickName,
+          openid: this.user_condition.openid,
+          subscribed: this.user_condition.concernStatus,
+          sex: this.user_condition.sex,
+          subDate_s: this.user_condition.create_start_time,
+          subDate_e: this.user_condition.create_end_time,
+          lastLoginDate_s: this.user_condition.login_start_time,
+          lastLoginDate_e: this.user_condition.login_end_time,
+          black: this.user_condition.status,
+          page: this.pageNo ,
+          size: this.pageSize,
+        }
+        console.log(params)
+        orgModuleApi.userManagerList(params).then(res=>{
+          console.log(res)
+//          this.$message.success('成功')
+          this.tableData = []
+          res.data.data.map((item,index) => {
+            this.tableData.push({
+              appid: item.appid,
+              headerImg: item.uicon,
+              openid: item.openid,
+              nickName: item.nickName,
+              channelid: item.qid,
+              channel: item.qname?item.qname:"-",
+              sex: item.sex>1?'女':(item.sex>0?'男':"-"),
+              create_time: this.common.getDate(item.subDate),
+              login_time:this.common.getDate(item.lastLoginDate),
+              status: item.black ? '黑名单':"正常",
+              concernStatus: item.subscribed ? '已关注':'取消关注',
+              bookMoney:item.coin,
+            })
+          })
+          this.totalSize = parseInt(res.data.total)
+        })
+
       },
     }
   }
