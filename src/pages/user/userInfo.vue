@@ -58,8 +58,8 @@
           <span class="item-value">{{info.reason}}</span>
         </div>
       </div>
-      <el-button type="danger" v-if="info.status == '正常' ? true:false" class="defriend-btn" size="mini" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
-      <el-button type="primary" v-if="info.status != '正常' ? true:false" class="defriend-btn" size="mini" @click="handleEnable(scope.$index, scope.row)">启用</el-button>
+      <el-button type="danger" v-if="info.status == '正常' ? true:false" class="defriend-btn" size="mini" @click="handleDefriend">加黑</el-button>
+      <el-button type="primary" v-if="info.status != '正常' ? true:false" class="defriend-btn" size="mini" @click="handleEnable">启用</el-button>
 
       <el-row style="width: 95%;margin: 0 auto;">
         <span class="item-name" style="display: block;float: left;color: #999999;font-size: 14px;">操作记录：</span>
@@ -84,6 +84,7 @@
                 <el-date-picker
                   type="date"
                   format="yyyy-MM-dd"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   placeholder="起始时间"
                   v-model="bookCurrency_condition.start_time"
                   :picker-options="pickerBeginDateBefore"
@@ -97,6 +98,7 @@
                 <el-date-picker
                   type="date"
                   format="yyyy-MM-dd"
+                  value-format="yyyy-MM-dd 23:59:59"
                   placeholder="结束时间"
                   v-model="bookCurrency_condition.end_time"
                   :picker-options="pickerBeginDateAfter"
@@ -110,9 +112,9 @@
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="bookCurrency_condition.status" placeholder="请选择状态">
-              <el-option label="全部" value=""></el-option>
-              <el-option label="成功" value="0"></el-option>
-              <el-option label="失败" value="1"></el-option>
+              <el-option label="全部" value="-1"></el-option>
+              <el-option label="成功" value="1"></el-option>
+              <el-option label="失败" value="0"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -158,7 +160,7 @@
         </el-pagination>
         <div class="dialog-div">
           <el-dialog title="" :visible.sync="defriendDialog" width="500px" center>
-            <span style="font-size: 16px;margin-bottom: 20px;">确认将“{{tmpNickname}}”用户加黑吗？</span>
+            <span style="font-size: 16px;margin-bottom: 20px;">确认将“{{info.nickName}}”用户加黑吗？</span>
             <el-input
               type="textarea"
               :rows="3"
@@ -169,16 +171,16 @@
             </el-input>
             <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog = false">取 消</el-button>
-            <el-button type="primary" @click="defriendDialog = false" :disabled="jhconfirm">确 认</el-button>
+            <el-button type="primary" @click="confirmStatus(1)" :disabled="jhconfirm">确 认</el-button>
           </span>
           </el-dialog>
         </div>
         <div class="dialog-div">
           <el-dialog title="" :visible.sync="defriendDialog2" width="300px" center>
-            <span style="font-size: 16px;margin-bottom: 0px;">确认启用“{{tmpNickname}}”用户吗？</span>
+            <span style="font-size: 16px;margin-bottom: 0px;">确认启用“{{info.nickName}}”用户吗？</span>
             <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog2 = false">取 消</el-button>
-            <el-button type="primary" @click="defriendDialog2 = false">确 认</el-button>
+            <el-button type="primary" @click="confirmStatus(2)">确 认</el-button>
           </span>
           </el-dialog>
         </div>
@@ -197,14 +199,14 @@
           start_time: '',
           end_time: '',
           serialnum: '',
-          status: '',
+          status: '-1',
         },
         info : {
-          headerImg:'',
+          headerImg:'-',
           nickName:'-',
-          openid:'xxx',
-          sex:'男',
-          status:"正常",
+          openid:'-',
+          sex:'-',
+          status:"-",
           bookMoney:'-',
           subTime:'-',
           loginTime:'-',
@@ -229,18 +231,9 @@
             }
           }
         },
-        tableData: [
-          {time:'2019-05-13 14:39',projectName:'线下狐仙 第四十二章 不一样的世界',status:'成功'},
-          {time:'2019-05-13 14:49',projectName:'线下狐仙 第四十三章 一样的life',status:'成功'},
-        ],
-        tableData2: [
-          {time:'2019-05-13 14:39',projectName:'充值',status:'成功'},
-          {time:'2019-05-13 14:49',projectName:'充值',status:'成功'},
-        ],
-        operationRecords:[
-          'xxxxx-xxxxxx-xxxxxxx xxxxxxx 操作加黑用户，原因：xxx',
-          'xxxxx-xxxxxx-xxxxxxx xxxxxxx 操作加黑用户，原因：xxx',
-        ],
+        tableData: [],
+        tableData2: [],
+        operationRecords:[],
         pageNo: 1,
         pageSize: 5,
         currentPage: 1,
@@ -248,17 +241,45 @@
         defriendDialog:false,
         defriendDialog2:false,
         jhconfirm:true,
+        reason:'',
       }
     },
     created:function(){
-      console.log("openid:"+this.$route.query.openid)
       this.info.openid = this.$route.query.openid
-    },
-    mounted(){
       this.userDetail()
+      this.onsubmit()
     },
     methods: {
+      confirmStatus(num){
+        let black = 1
+        if(num == 1){
+          black = 1
+        }else{
+          black = 0
+        }
+        var _this = this
+        var params = {
+          appid:this.common.appid,
+          openid: this.info.openid,
+          black: black,
+          reason: this.reason,
+        }
+        orgModuleApi.userUpdateStatus(params).then(res=>{
+          if(res.success){
+            this.$message.success('成功')
+            if(black){
+              _this.defriendDialog = false
+              _this.userDetail()
+            }else{
+              _this.defriendDialog2 = false
+              _this.userDetail()
+            }
+            _this.onsubmit()
+          }
+        })
+      },
       userDetail() {
+        var _this = this
         var params = {
           appid:this.common.appid,
           openid: this.info.openid,
@@ -267,7 +288,7 @@
         orgModuleApi.userManagerDetail(params).then(res=>{
           if(res.success){
             let detail = res.data.userDetail
-            this.info = {
+            _this.info = {
               headerImg: detail.uicon,
               nickName: detail.nickName,
               openid: detail.openid,
@@ -283,7 +304,9 @@
               appId: detail.appid,
             }
             if(detail.black){
-              this.operationRecords = res.data.operate
+              _this.operationRecords = res.data.operate
+            }else {
+              _this.operationRecords = []
             }
           }else{
             this.$message.error('服务器异常')
@@ -293,6 +316,7 @@
       },
       reds:function(index){
         this.button_type = index;
+        this.onsubmit()
       },
       watchSize() {
         if(this.reason.length >= 5){
@@ -303,62 +327,72 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
+        this.onsubmit(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
+        this.onsubmit(1)
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
-        this.tmpNickname = row.nickName
       },
       handleEnable(idx,row) {
         this.defriendDialog2 = true
-        this.tmpNickname = row.nickName
       },
       clearData() {
         this.bookCurrency_condition = {
           start_time: '',
           end_time: '',
           serialnum: '',
-          status: '',
+          status: '-1',
         }
       },
-      onsubmit() {
+      onsubmit(type) {
+        var _this = this
+        if(type != 1){
+          this.pageNo = 1
+          this.pageSize = 5
+        }
         let params = {
-          nickName: this.user_condition.nickName,
-          openid: this.user_condition.openid,
-          subscribed: this.user_condition.concernStatus,
-          sex: this.user_condition.sex,
-          subDate_s: this.user_condition.create_start_time,
-          subDate_e: this.user_condition.create_end_time,
-          lastLoginDate_s: this.user_condition.login_start_time,
-          lastLoginDate_e: this.user_condition.login_end_time,
-          black: this.user_condition.status,
-          page: this.pageNo ,
+          appid: this.common.appid,
+          openid: this.info.openid,
+          type: this.button_type,
+          startDate: this.bookCurrency_condition.start_time,
+          endDate: this.bookCurrency_condition.end_time,
+          status: this.bookCurrency_condition.status,
+          serialNum: this.bookCurrency_condition.serialnum,
+          page: this.pageNo,
           size: this.pageSize,
         }
-        console.log(params)
-        orgModuleApi.userManagerList(params).then(res=>{
-          console.log(res)
-//          this.$message.success('成功')
-          this.tableData = []
-          res.data.data.map((item,index) => {
-            this.tableData.push({
-              appid: item.appid,
-              headerImg: item.uicon,
-              openid: item.openid,
-              nickName: item.nickName,
-              channelid: item.qid,
-              channel: item.qname?item.qname:"-",
-              sex: item.sex>1?'女':(item.sex>0?'男':"-"),
-              create_time: this.common.getDate(item.subDate),
-              login_time:this.common.getDate(item.lastLoginDate),
-              status: item.black ? '黑名单':"正常",
-              concernStatus: item.subscribed ? '已关注':'取消关注',
-              bookMoney:item.coin,
-            })
-          })
-          this.totalSize = parseInt(res.data.total)
+        orgModuleApi.payOrPurchaseList(params).then(res=>{
+          if(res.success){
+            if(_this.button_type == 1){
+              _this.tableData = []
+              res.data.data.map((item,index) => {
+                _this.tableData.push({
+                  time: _this.common.getDate(item.payDate),
+                  projectName: item.bookName + ' ' + item.cOrder + ' ' + item.chapterName,
+                  incomeOrExpenses: item.coin,
+                  status: item.status?'成功':'失败',
+                  serialnum: item.id,
+                })
+              })
+            }else {
+              _this.tableData2 = []
+              res.data.data.map((item,index) => {
+                _this.tableData2.push({
+                  time: _this.common.getDate(item.createDate),
+                  projectName: '充值',
+                  recharge: item.amount,
+                  bookmoney: item.coin,
+                  sendmoney: item.addition,
+                  status: item.status == 2 ? '成功':'失败',
+                  ordernum: item.orderno,
+                })
+              })
+            }
+            this.totalSize = parseInt(res.data.total)
+          }
         })
 
       },

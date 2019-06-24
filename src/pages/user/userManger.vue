@@ -128,7 +128,7 @@
         <el-table-column prop="status" label="账号状态" min-width="40" align="center"></el-table-column>
         <el-table-column prop="concernStatus" label="关注状态" min-width="40" align="center"></el-table-column>
         <el-table-column prop="bookMoney" label="书币" min-width="40" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="100" align="center">
+        <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
             <el-button size="mini" v-if="scope.row.status == '正常' ? true:false" type="danger" @click="handleDefriend(scope.$index, scope.row)">加黑</el-button>
             <el-button size="mini" v-if="scope.row.status != '正常' ? true:false" type="primary" @click="handleEnable(scope.$index, scope.row)">启用</el-button>
@@ -207,7 +207,7 @@
           login_end_time: '',
           status: '',
         },
-        tmpNickname:"xAx",
+        tmpNickname:"",
         tmpRow:{},
         id:"",
         pickerBeginDateBefore:{
@@ -242,9 +242,7 @@
             }
           }
         },
-        tableData: [
-          {id: 2,headImg:'',nickName:"2323",login_time:"2019-05-13 13:53",status:'!正常',bookMoney:7000},
-        ],
+        tableData: [],
         pageNo: 1,
         pageSize: 5,
         currentPage: 1,

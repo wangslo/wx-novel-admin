@@ -122,7 +122,7 @@
         <el-table-column prop="bolding" label="加黑原因" min-width="60" align="center"></el-table-column>
         <el-table-column prop="bolding_time" label="加黑时间" min-width="40" align="center"></el-table-column>
         <el-table-column prop="operator" label="操作人" min-width="40" align="center"></el-table-column>
-        <el-table-column label="操作" min-width="100" align="center">
+        <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" type="danger" @click="handleDefriend(scope.$index, scope.row)">启用</el-button>
@@ -241,7 +241,8 @@
         this.$router.push({
           path:'userInfo',
           query: {
-            from: 'black'
+            from: 'black',
+            openid: row.openid,
           }
         })
       },

@@ -153,6 +153,9 @@ export const orgModuleApi = {
   userBlackList: (params) => {
     return orgAxios.post('novelcms/gzh/userconfig/blackList.html', qs.stringify(params)).then(res => res.data);
   },
+  payOrPurchaseList: (params) => {
+    return orgAxios.post('novelcms/gzh/userconfig/payOrPurchaseHistory.html', qs.stringify(params)).then(res => res.data);
+  },
 }
 
 export const msgModuleApi = {
