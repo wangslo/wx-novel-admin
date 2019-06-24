@@ -153,10 +153,12 @@
             type="textarea"
             :rows="3"
             resize="none"
+            maxlength='50'
             placeholder="请输入加黑原因，不少于5个汉字。"
             @keyup.native = "watchSize"
             v-model="reason">
           </el-input>
+          <p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>
           <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog = false">取 消</el-button>
             <el-button type="primary" @click="confirmStatus(1)" :disabled="jhconfirm">确 认</el-button>
@@ -182,6 +184,7 @@
     name: 'user',
     data() {
       return {
+        textSize: 0,
         reason: '',
         jhconfirm: true,
         user_condition: {
@@ -238,7 +241,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.user_condition.login_start_time;
             if (beginDateVal) {
-              return time.getTime() < beginDateVal;
+              return time.getTime() < new Date(beginDateVal).getTime();
             }
           }
         },
@@ -256,19 +259,25 @@
     },
     methods: {
       watchSize() {
-        if(this.reason.length >= 5){
-          this.jhconfirm = false
-        }else {
-          this.jhconfirm = true
+        if (this.reason.length == 50) {
+          this.textSize = 50
+          return false
+        } else {
+          if(this.reason.length >= 5){
+            this.jhconfirm = false
+          }else {
+            this.jhconfirm = true
+          }
+          this.textSize = this.reason.length
         }
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.onsubmit()
+        this.onsubmit(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
-        this.onsubmit()
+        this.onsubmit(1)
       },
       handleDefriend(idx,row) {
         this.tmpRow = row
@@ -292,7 +301,6 @@
       },
       clearData() {
         this.$refs.userForm.resetFields()
-        this.pageNo = 1;
         this.onsubmit();
       },
       confirmStatus(num){
@@ -319,14 +327,17 @@
             }else{
               this.defriendDialog2 = false
             }
-            this.onsubmit()
+            this.onsubmit(1)
           }
         })
-
-
       },
-      onsubmit() {
+      onsubmit(type) {
         this.loading = true
+        if(type != 1){
+          this.pageNo = 1
+          this.pageSize = 5
+          this.currentPage = 1
+        }
         var params = {
           nickName: this.user_condition.nickName,
           openid: this.user_condition.openid,
@@ -363,7 +374,6 @@
           })
           this.totalSize = parseInt(res.data.total)
         })
-
       },
     }
   }

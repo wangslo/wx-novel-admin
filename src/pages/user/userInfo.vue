@@ -165,14 +165,16 @@
               type="textarea"
               :rows="3"
               resize="none"
+              maxlength='50'
               placeholder="请输入加黑原因，不少于5个汉字。"
               @keyup.native = "watchSize"
               v-model="reason">
             </el-input>
+            <p style="margin: 0;"><span style="text-align: right;">{{textSize}}/50</span></p>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="defriendDialog = false">取 消</el-button>
-            <el-button type="primary" @click="confirmStatus(1)" :disabled="jhconfirm">确 认</el-button>
-          </span>
+              <el-button @click="defriendDialog = false">取 消</el-button>
+              <el-button type="primary" @click="confirmStatus(1)" :disabled="jhconfirm">确 认</el-button>
+            </span>
           </el-dialog>
         </div>
         <div class="dialog-div">
@@ -219,7 +221,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.bookCurrency_condition.end_time;
             if (beginDateVal) {
-              return time.getTime() > beginDateVal;
+              return time.getTime() > new Date(beginDateVal).getTime();
             }
           }
         },
@@ -227,7 +229,7 @@
           disabledDate: (time) => {
             let beginDateVal = this.bookCurrency_condition.start_time;
             if (beginDateVal) {
-              return time.getTime() < beginDateVal;
+              return time.getTime() < new Date(beginDateVal).getTime();
             }
           }
         },
@@ -242,6 +244,7 @@
         defriendDialog2:false,
         jhconfirm:true,
         reason:'',
+        textSize: 0,
       }
     },
     created:function(){
@@ -303,11 +306,7 @@
               reason: detail.blackReason,
               appId: detail.appid,
             }
-            if(detail.black){
-              _this.operationRecords = res.data.operate
-            }else {
-              _this.operationRecords = []
-            }
+            _this.operationRecords = res.data.operate
           }else{
             this.$message.error('服务器异常')
           }
@@ -319,10 +318,16 @@
         this.onsubmit()
       },
       watchSize() {
-        if(this.reason.length >= 5){
-          this.jhconfirm = false
-        }else {
-          this.jhconfirm = true
+        if (this.reason.length == 50) {
+          this.textSize = 50
+          return false
+        } else {
+          if(this.reason.length >= 5){
+            this.jhconfirm = false
+          }else {
+            this.jhconfirm = true
+          }
+          this.textSize = this.reason.length
         }
       },
       handleSizeChange(val) {
@@ -352,6 +357,7 @@
         if(type != 1){
           this.pageNo = 1
           this.pageSize = 5
+          this.currentPage = 1
         }
         let params = {
           appid: this.common.appid,

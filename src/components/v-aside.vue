@@ -62,7 +62,7 @@
       },
       setMenuList() {
         var _this = this
-        /*_this.qxlist = JSON.parse(sessionStorage.getItem('role'))
+        _this.qxlist = JSON.parse(sessionStorage.getItem('role'))
         for(var item in _this.qxlist){
           var submenuList = _this.getSubMenu(_this.qxlist[item])
           var arr = {
@@ -72,11 +72,11 @@
             submenu: submenuList
           }
           _this.menuList.push(arr)
-        }*/
+        }
 
-        menus.map((item,index)=>{
+        /*menus.map((item,index)=>{
           _this.menuList.push(item)
-        })
+        })*/
       }
     }
   }

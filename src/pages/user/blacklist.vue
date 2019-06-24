@@ -47,14 +47,14 @@
             </el-form-item>
           </el-col>
         </el-form-item>
-        <el-form-item label="性别" label-width="50px" prop="sex">
+        <el-form-item label="性别" label-width="50px" prop="sex" v-show="false">
           <el-select v-model="blacklist_condition.sex" placeholder="请选择性别">
             <el-option label="全部" value="-1"></el-option>
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="操作人" label-width="70px" prop="operator">
+        <el-form-item label="操作人" label-width="65px" prop="operator">
           <el-input v-model="blacklist_condition.operator"></el-input>
         </el-form-item>
         <el-form-item label="操作人" label-width="65px" prop="a" v-if="false">
@@ -124,8 +124,8 @@
         <el-table-column prop="operator" label="操作人" min-width="40" align="center"></el-table-column>
         <el-table-column label="操作" min-width="150" align="center">
           <template slot-scope="scope">
+            <el-button size="mini" type="primary" @click="handleDefriend(scope.$index, scope.row)">启用</el-button>
             <el-button size="mini" @click="handleSearch(scope.$index, scope.row)">查看</el-button>
-            <el-button size="mini" type="danger" @click="handleDefriend(scope.$index, scope.row)">启用</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -226,11 +226,11 @@
     methods: {
       handleSizeChange(val) {
         this.pageSize = val
-        this.onsubmit()
+        this.onsubmit(1)
       },
       handleCurrentChange(val) {
         this.pageNo = val
-        this.onsubmit()
+        this.onsubmit(1)
       },
       handleDefriend(idx,row) {
         this.defriendDialog = true
@@ -262,11 +262,16 @@
           if(res.success){
             this.$message.success('成功')
             this.defriendDialog = false
-            this.onsubmit()
+            this.onsubmit(1)
           }
         })
       },
-      onsubmit() {
+      onsubmit(type) {
+        if(type != 1){
+          this.pageNo = 1
+          this.pageSize = 5
+          this.currentPage = 1
+        }
         var params = {
           nickName: this.blacklist_condition.nickName,
           openid: this.blacklist_condition.openid,
@@ -279,7 +284,6 @@
           page: this.pageNo ,
           size: this.pageSize,
         }
-        console.log(params)
         orgModuleApi.userBlackList(params).then(res=>{
           console.log(res)
           this.tableData = []
