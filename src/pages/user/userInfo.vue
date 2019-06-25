@@ -38,6 +38,10 @@
           <span class="item-value">{{info.openid}}</span>
         </div>
         <div class="user-infos-item">
+          <span class="item-name">注册时间：</span>
+          <span class="item-value">{{info.registerTime}}</span>
+        </div>
+        <div class="user-infos-item">
           <span class="item-name">关注时间：</span>
           <span class="item-value">{{info.subTime}}</span>
         </div>
@@ -298,6 +302,7 @@
               sex: detail.sex>1?'女':(detail.sex>0?'男':"-"),
               status: detail.black ? '黑名单':"正常",
               bookMoney: detail.coin,
+              registerTime: this.common.getDate(detail.registerDate),
               subTime: this.common.getDate(detail.subDate),
               loginTime: this.common.getDate(detail.lastLoginDate),
               qidName: detail.qname,

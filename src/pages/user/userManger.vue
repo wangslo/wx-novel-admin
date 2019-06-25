@@ -122,6 +122,7 @@
         <el-table-column prop="nickName" label="昵称" min-width="60" align="center"></el-table-column>
         <el-table-column prop="sex" label="性别" min-width="30" align="center"></el-table-column>
         <el-table-column prop="openid" label="OPENID" min-width="100" align="center"></el-table-column>
+        <el-table-column prop="register_time" label="注册时间" min-width="60" align="center"></el-table-column>
         <el-table-column prop="create_time" label="关注时间" min-width="60" align="center"></el-table-column>
         <el-table-column prop="login_time" label="最近登录时间" min-width="60" align="center"></el-table-column>
         <el-table-column prop="channel" label="推广渠道" min-width="60" align="center"></el-table-column>
@@ -366,6 +367,7 @@
                 sex: item.sex>1?'女':(item.sex>0?'男':"-"),
                 create_time: this.common.getDate(item.subDate),
                 login_time:this.common.getDate(item.lastLoginDate),
+                register_time: this.common.getDate(item.registerDate),
                 status: item.black ? '黑名单':"正常",
                 concernStatus: item.subscribed ? '已关注':'取消关注',
                 bookMoney:item.coin,
