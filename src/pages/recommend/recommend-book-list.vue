@@ -439,32 +439,32 @@
         flex-wrap: wrap;
       }
     }
-  }
-  .dialog-div{
-    .el-dialog__header {
-      padding: 0 !important;
-    }
-    .el-dialog__body {
-      span {
-        display: block;
-        text-align: center;
-        margin-bottom: 10px;
+    .dialog-div{
+      .el-dialog__header {
+        padding: 0 !important;
       }
-      .operat-reason {
-        display: flex;
-        flex-direction: column;
-        max-height: 150px;
-        overflow: auto;
-        margin-top: 20px;
+      .el-dialog__body {
         span {
-          margin: 0;
-          text-align: left;
-          color: #333333;
-          margin-bottom: 5px;
+          display: block;
+          text-align: center;
+          margin-bottom: 10px;
         }
-      }
-      .offline-title {
-        font-size: 16px;
+        .operat-reason {
+          display: flex;
+          flex-direction: column;
+          max-height: 150px;
+          overflow: auto;
+          margin-top: 20px;
+          span {
+            margin: 0;
+            text-align: left;
+            color: #333333;
+            margin-bottom: 5px;
+          }
+        }
+        .offline-title {
+          font-size: 16px;
+        }
       }
     }
   }
