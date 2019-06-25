@@ -168,12 +168,12 @@
       </div>
       <div class="dialog-div">
         <el-dialog title="" :visible.sync="defriendDialog2" width="300px" center>
-          <span style="font-size: 16px;margin-bottom: 0px;">确认启用“{{tmpNickname}}”用户吗？</span>
-          <span slot="footer" class="dialog-footer">
+        <span style="font-size: 16px;margin-bottom: 0px;">确认启用“{{tmpNickname}}”用户吗？</span>
+        <span slot="footer" class="dialog-footer">
             <el-button @click="defriendDialog2 = false">取 消</el-button>
             <el-button type="primary" @click="confirmStatus(2)">确 认</el-button>
           </span>
-        </el-dialog>
+      </el-dialog>
       </div>
     </div>
   </div>

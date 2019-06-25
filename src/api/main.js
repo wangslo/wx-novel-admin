@@ -156,6 +156,9 @@ export const orgModuleApi = {
   payOrPurchaseList: (params) => {
     return orgAxios.post('novelcms/gzh/userconfig/payOrPurchaseHistory.html', qs.stringify(params)).then(res => res.data);
   },
+  checkShelf: (params) => {
+    return orgAxios.post('novelcms/gzh/noveldatabase/checkUnshelf', qs.stringify(params)).then(res => res.data);
+  },
 }
 
 export const msgModuleApi = {
