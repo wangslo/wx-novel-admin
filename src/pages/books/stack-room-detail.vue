@@ -80,8 +80,8 @@
           </div>
         </div>
         <div class="stack-room-detail-btn">
-          <el-button v-if="info.status != '上架中'" type="primary" size="mini" @click="setOnline">上架</el-button>
-          <el-button v-else type="danger" size="mini" @click="setOnline">下架</el-button>
+          <el-button v-if="info.status != '上架中'" type="primary" size="mini" @click="setOnline('0')">上架</el-button>
+          <el-button v-else type="danger" size="mini" @click="setOnline('1')">下架</el-button>
           <el-button type="primary" size="mini" @click="setChapter">设置收费章节</el-button>
         </div>
         <div class="stack-room-detail-operat">
@@ -172,6 +172,19 @@
             <el-button v-else type="primary" @click="updateStatus(2)">下 架</el-button>
           </span>
       </el-dialog>
+      <el-dialog title="" :visible.sync="checkBannerDialog" width="300px" center>
+        <span style="font-size: 16px;margin-bottom: 0px;margin-top: 20px;">此书籍正在banner展示队列，请先下线banner后在进行下架操作</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="checkBannerDialog = false">关 闭</el-button>
+          </span>
+      </el-dialog>
+      <el-dialog title="" :visible.sync="checkRemmonDialog" width="350px" center>
+        <span style="font-size: 16px;margin-top: 20px;">此书籍正在推荐展示队列，下架将导致此书从推荐位删除，是否继续下架？</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="setOffline">下 架</el-button>
+            <el-button @click="checkRemmonDialog = false">关 闭</el-button>
+          </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -227,6 +240,8 @@
         offlineDialog: false,
         reason: '',
         textSize: 0,
+        checkBannerDialog: false,
+        checkRemmonDialog: false,
       }
     },
     created() {
@@ -287,8 +302,32 @@
           this.textSize = this.reason.length
         }
       },
-      setOnline() {
+      setOffline() {
+        this.checkRemmonDialog = false
         this.offlineDialog = true
+      },
+      setOnline(type) {
+        var _this = this
+        if(type == 1){
+          var params = {
+            bookid: this.redirectBookId
+          }
+          orgModuleApi.checkShelf(params).then(res=>{
+            if(res.success) {
+              if(res.code == '200') {
+                _this.offlineDialog = true
+              }
+              if(res.code == '10001') { // banner存在
+                _this.checkBannerDialog = true
+              }
+              if(res.code == '10002') { // 推荐位存在
+                _this.checkRemmonDialog = true
+              }
+            }
+          })
+        }else {
+          this.offlineDialog = true
+        }
       },
       updateStatus(status = 1){
         if(this.reason.length <3){
