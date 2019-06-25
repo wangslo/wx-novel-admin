@@ -117,6 +117,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="nickName" label="昵称" min-width="40" align="center"></el-table-column>
+        <el-table-column prop="sex" label="性别" min-width="40" align="center"></el-table-column>
         <el-table-column prop="openid" label="OPENID" min-width="40" align="center"></el-table-column>
         <el-table-column prop="create_time" label="关注时间" min-width="40" align="center"></el-table-column>
         <el-table-column prop="bolding" label="加黑原因" min-width="60" align="center"></el-table-column>
