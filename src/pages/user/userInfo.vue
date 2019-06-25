@@ -356,8 +356,8 @@
         var _this = this
         if(type != 1){
           this.pageNo = 1
-          this.pageSize = 5
           this.currentPage = 1
+          this.totalSize = 0
         }
         let params = {
           appid: this.common.appid,

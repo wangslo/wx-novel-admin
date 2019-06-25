@@ -269,8 +269,8 @@
       onsubmit(type) {
         if(type != 1){
           this.pageNo = 1
-          this.pageSize = 5
           this.currentPage = 1
+          this.totalSize = 0
         }
         var params = {
           nickName: this.blacklist_condition.nickName,
@@ -285,28 +285,29 @@
           size: this.pageSize,
         }
         orgModuleApi.userBlackList(params).then(res=>{
-          console.log(res)
-          this.tableData = []
-          res.data.data.map((item,index) => {
-            this.tableData.push({
-              appid: item.appid,
-              headerImg: item.uicon,
-              openid: item.openid,
-              operator: item.blackOperator,
-              bolding: item.blackReason,
+          if(res.success){
+            this.tableData = []
+            res.data.data.map((item,index) => {
+              this.tableData.push({
+                appid: item.appid,
+                headerImg: item.uicon,
+                openid: item.openid,
+                operator: item.blackOperator,
+                bolding: item.blackReason,
 
-              nickName: item.nickName,
-              channelid: item.qid,
-              channel: item.qname?item.qname:"-",
-              sex: item.sex>1?'女':(item.sex>0?'男':"-"),
-              bolding_time: this.common.getDate(item.lastBlackDate),
-              create_time:this.common.getDate(item.subDate),
-              status: item.black ? '黑名单':"正常",
-              concernStatus: item.subscribed ? '关注':'取消关注',
-              bookMoney:item.coin,
+                nickName: item.nickName,
+                channelid: item.qid,
+                channel: item.qname?item.qname:"-",
+                sex: item.sex>1?'女':(item.sex>0?'男':"-"),
+                bolding_time: this.common.getDate(item.lastBlackDate),
+                create_time:this.common.getDate(item.subDate),
+                status: item.black ? '黑名单':"正常",
+                concernStatus: item.subscribed ? '关注':'取消关注',
+                bookMoney:item.coin,
+              })
             })
-          })
-          this.totalSize = parseInt(res.data.total)
+            this.totalSize = parseInt(res.data.total)
+          }
         })
       },
     }
