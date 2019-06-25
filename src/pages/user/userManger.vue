@@ -333,11 +333,12 @@
         })
       },
       onsubmit(type) {
+        var _this = this
         this.loading = true
         if(type != 1){
           this.pageNo = 1
-          this.pageSize = 5
           this.currentPage = 1
+          this.totalSize = 0
         }
         var params = {
           nickName: this.user_condition.nickName,
@@ -352,29 +353,28 @@
           page: this.pageNo ,
           size: this.pageSize,
         }
-        console.log(params)
         orgModuleApi.userManagerList(params).then(res=>{
-          console.log(res)
-//          this.$message.success('成功')
-          this.tableData = []
-          res.data.data.map((item,index) => {
-            this.tableData.push({
-              appid: item.appid,
-              headerImg: item.uicon,
-              openid: item.openid,
-              nickName: item.nickName,
-              channelid: item.qid,
-              channel: item.qname?item.qname:"-",
-              sex: item.sex>1?'女':(item.sex>0?'男':"-"),
-              create_time: this.common.getDate(item.subDate),
-              login_time:this.common.getDate(item.lastLoginDate),
-              register_time: this.common.getDate(item.registerDate),
-              status: item.black ? '黑名单':"正常",
-              concernStatus: item.subscribed ? '已关注':'取消关注',
-              bookMoney:item.coin,
+          if(res.success){
+            _this.tableData = []
+            res.data.data.map((item,index) => {
+              _this.tableData.push({
+                appid: item.appid,
+                headerImg: item.uicon,
+                openid: item.openid,
+                nickName: item.nickName,
+                channelid: item.qid,
+                channel: item.qname?item.qname:"-",
+                sex: item.sex>1?'女':(item.sex>0?'男':"-"),
+                create_time: this.common.getDate(item.subDate),
+                login_time:this.common.getDate(item.lastLoginDate),
+                register_time: this.common.getDate(item.registerDate),
+                status: item.black ? '黑名单':"正常",
+                concernStatus: item.subscribed ? '已关注':'取消关注',
+                bookMoney:item.coin,
+              })
             })
-          })
-          this.totalSize = parseInt(res.data.total)
+            _this.totalSize = parseInt(res.data.total)
+          }
         })
       },
     }

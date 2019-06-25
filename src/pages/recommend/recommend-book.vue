@@ -22,10 +22,8 @@
           <el-button type="info" @click="clearData">清空</el-button>
           <el-button type="primary" @click="getRecommendList">查找</el-button>
         </el-form-item>
-        <el-form-item >
-          <el-button style="float: right;" type="success" @click="getRecommendLogList">推荐列表</el-button>
-        </el-form-item>
       </el-form>
+      <div class="rem-list" @click="getRecommendLogList">推荐列表</div>
       <div style="width: 100%;">
         <div class="recommend-left">
           <div class="recommend-left-cond">
@@ -474,6 +472,15 @@
     .recommend-body {
       margin-left: 15px;
       margin-right: 15px;
+      position: relative;
+      .rem-list{
+        float: right;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #3a8ee6;
+        cursor: pointer;
+      }
       .recommend-form {
         display: flex;
         flex-direction: row;

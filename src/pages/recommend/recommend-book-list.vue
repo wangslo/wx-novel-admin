@@ -85,16 +85,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="bookName" label="书籍名称" min-width="50" align="center"></el-table-column>
-                <el-table-column  prop="position" label="位置" min-width="80" align="center">
-                    <!--<template slot-scope="scope">-->
-                        <!--<span>{{getNameById(scope.row.position)}}</span>-->
-                        <!--<el-cascader expand-trigger="hover"-->
-                                     <!--v-model="scope.row.position"-->
-                                     <!--:options="options"-->
-
-                        <!--&gt;</el-cascader>-->
-                    <!--</template>-->
-                </el-table-column>
+                <el-table-column  prop="position" label="位置" min-width="80" align="center"></el-table-column>
                 <el-table-column prop="author" label="作者" min-width="50" align="center"></el-table-column>
                 <el-table-column prop="category" label="书籍分类" min-width="30" align="center"></el-table-column>
                 <el-table-column prop="updateTime" label="推荐时间" min-width="55" align="center"></el-table-column>
