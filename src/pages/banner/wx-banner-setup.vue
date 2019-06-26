@@ -114,6 +114,7 @@
         min: this.common.getDateTime(5),
         ready: function () {
           $(".laydate-btns-now").hide();
+          $(".laydate-btns-clear").hide();
         },
         done: function (value, date, endDate) {
           if(value != ''){
@@ -131,6 +132,7 @@
         min: this.common.getDateTime(10),
         ready: function () {
           $(".laydate-btns-now").hide();
+          $(".laydate-btns-clear").hide();
         },
         done: function (value, date, endDate) {
           if(value != ''){
