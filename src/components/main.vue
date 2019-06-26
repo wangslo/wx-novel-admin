@@ -12,9 +12,9 @@
         <Vheader @switch="handleSideSwitch"></Vheader>
       </el-header>
       <el-main class="v-main">
-        <!--<keep-alive>-->
+        <keep-alive>
           <router-view></router-view>
-        <!--</keep-alive>-->
+        </keep-alive>
       </el-main>
     </el-container>
   </el-container>
